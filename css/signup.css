@@ -1,0 +1,186 @@
+/* 폰트 추가 */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+/* 페이지 설정 */
+body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;    
+    background: #F4F5F7;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+header {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    flex-direction: row; 
+    width: 1920px;
+    height: 103px;
+    border: 0px 0px 1px 0px;
+    border-bottom: 1px solid #000000;
+}
+
+header h1 {
+    display: flex;
+    width: 206px;
+    height: 32px;
+
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 32px;
+    text-align: center;
+    color: #000000;
+}
+header .backIconContainer {
+    width: 84px;
+    height: 77px;
+    position: absolute;
+    left: 680px;
+    display: flex;
+    align-items: center;
+}
+
+.wrap {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 392px;
+    background-color: transparent;
+    padding-top: 161px;
+    margin-top: 104px;
+}
+
+.wrap h2 {
+    display: flex;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 38.19px;
+    margin: auto;
+    text-align: center;
+}
+
+.profileArea {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 206px;
+    margin-bottom: 27px;
+}
+
+.profileArea .profile {
+    display: flex;
+    height: 18px;
+    
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 17.9px;
+    text-align: left;
+    margin: 12px 0px 4px 33px;
+
+}
+
+.profileArea small {
+    display: flex;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.52px;
+    text-align: left;
+    margin-left: 34px;
+    color: red;
+}
+
+.circle {
+    display: flex;
+    width: 149px;
+    height: 149px;
+    background: #C4C4C4;
+    border-radius: 50%;
+    margin: 8px auto auto;
+}
+
+.form {
+    display: flex;
+    position: relative;
+    width: 392px;
+    height: 406px;
+}
+
+label {
+    display: flex;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 17.9px;
+    text-align: center;
+    margin: 4px 0px 8px 19px;
+}
+
+input {
+    display: flex;
+    justify-content: center;
+    width: 333px;
+    height: 15px;
+    border-radius: 4px;
+    border: 1px solid #000000;
+    background-color: #F4F5F7;
+    margin: 0px 18px 0px 19px;
+    padding: 8px 10px;
+}
+
+input::placeholder {   
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.71px;
+    color: black;
+}
+
+.signupForm small {
+    display: flex;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.52px;
+    text-align: left;
+    color: red;
+    margin: 4px 0px 4px 20px;
+}
+
+.signupForm button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 355px;
+    height: 33px;
+    border-radius: 4px;
+    border: none;
+    background: #ACA0EB;
+    margin: 0px 19px 0px 18px; 
+
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 16.71px;
+    text-align: center;
+    color: white;
+}
+
+.loginLink {
+    display: flex;
+    margin: auto;
+    width: 346px;
+    height: 42px;
+    justify-content: center;
+}
+
+.loginLink a {
+    display: flex;
+    height: 17px;
+    margin: 6px auto 0px;
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.71px;
+    text-align: left;
+    color: black;
+    text-decoration-line: none;
+}
+
+
