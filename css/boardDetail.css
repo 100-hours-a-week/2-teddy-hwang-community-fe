@@ -1,0 +1,310 @@
+/* 폰트 추가 */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+/* 페이지 설정 */
+body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;    
+    background: #F4F5F7;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+header {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background: #F4F5F7;
+    width: 1920px;
+    height: 103px;
+    border-bottom: 1px solid #000000;
+    top: 0;
+}
+
+header h1 {
+    display: flex;
+    width: 206px;
+    height: 32px;
+
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 32px;
+    text-align: center;
+    color: #000000;
+}
+
+header .backIconContainer {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 684px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header .material-icons{
+    width: 10.93px;
+    height: 18.89px;
+}
+
+header .acountContainer {
+    position: absolute;
+    right: 688px;
+    display: flex;
+    align-items: center;
+}
+
+.accountBox {
+    width: 36px;
+    height: 36px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+
+.accountImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detailContainer {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 592px;
+    padding-top: 24px;
+    margin-top: 104px;
+}
+
+.boardTitle {
+    display: flex;
+    margin-right: auto;
+}
+
+.boardTitle .title {
+    display: inline-block;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 31.2px;
+    text-align: left;
+    padding-left: 24px;
+    margin-bottom: 12px;
+}
+
+.boardTop {
+    display: flex;
+    width: 595px;
+}
+
+.boardTop .box {
+    width: 36px;
+    height: 36px; 
+    border-radius: 70%;
+    overflow: hidden;
+    margin-left: 24px;
+}
+
+.boardTop .profileImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+.boardTop .username {
+    display: inline-block;
+    height: 20px;
+    
+    font-family: Pretendard;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 19.5px;
+    text-align: left;
+    padding-left: 10px;
+    margin-top: 8px;
+    margin-right: 24px;
+
+}
+
+.boardTop .createdAt {
+    display: inline-block;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18.2px;
+    text-align: right;
+    margin-top: 8px;
+}
+
+.btnContainer {
+    display: flex;
+    margin-left: auto;
+}
+
+.btnContainer .modifyBtn {
+    width: 50px;
+    height: 27px;
+    border-radius: 8px;
+    border: 1px solid #ACA0EB;
+
+    font-family: Pretendard;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 23.48px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.btnContainer .deleteBtn {
+    width: 50px;
+    height: 27px;
+    border-radius: 8px;
+    border: 1px solid #ACA0EB;
+    
+    font-family: Pretendard;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 23.48px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: 24px;
+}
+
+hr {
+    width: 592px;
+    border: 1px solid #00000029;
+    margin-top: 24px;
+}
+
+.boardMiddle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.boardMiddle .boardImage {
+    display: flex;
+    width: 544px;
+    height: 306px;
+    margin: 24px;
+
+    background: #D9D9D9;
+}
+
+.boardMiddle .boardContent {
+    display: flex;
+    width: 544px;
+
+    font-family: Pretendard;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 21.15px;
+    text-align: left;
+
+}
+
+.boardInfo {
+    display: flex;
+    width: 392px;
+    height: 105px;
+    justify-content: center;
+    align-items: center;
+}
+
+.boardInfo .likeSquare {
+    display: flex;
+    flex-direction: column;
+    width: 116px;
+    height: 77px;
+    border-radius: 16px;
+    background: #D9D9D9; 
+    margin-left: 21px;   
+    justify-content: center;
+    align-items: center;
+}
+
+.boardInfo .viewSquare {
+    display: flex;
+    flex-direction: column;
+    width: 116px;
+    height: 77px;
+    border-radius: 16px;
+    background: #D9D9D9;
+    margin: 0px 7px;   
+    justify-content: center;
+    align-items: center;
+}
+
+.boardInfo .replySquare {
+    display: flex;
+    flex-direction: column;
+    width: 116px;
+    height: 77px;
+    border-radius: 16px;
+    background: #D9D9D9;
+    margin-right: 7px;    
+    justify-content: center;
+    align-items: center;
+}
+
+.likeSquare .likeCount {
+    font-family: Pretendard;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
+    text-align: center;
+}
+
+.likeSquare .l{
+    font-family: Pretendard;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 25.04px;
+    text-align: center;
+
+}
+
+.viewSquare .viewCount {
+    font-family: Pretendard;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
+    text-align: center;
+}
+
+.viewSquare .v{
+    font-family: Pretendard;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 25.04px;
+    text-align: center;
+
+}
+
+.replySquare .replyCount {
+    font-family: Pretendard;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
+    text-align: center;
+}
+
+.replySquare .r{
+    font-family: Pretendard;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 25.04px;
+    text-align: center;
+
+}
+
+
+
+
+
