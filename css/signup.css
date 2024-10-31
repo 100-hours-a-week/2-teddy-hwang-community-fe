@@ -42,6 +42,11 @@ header .backIconContainer {
     align-items: center;
 }
 
+header .material-icons{
+    width: 10.93px;
+    height: 18.89px;
+}
+
 .wrap {
     display: flex;
     justify-content: center;
