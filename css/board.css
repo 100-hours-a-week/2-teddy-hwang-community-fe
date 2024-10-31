@@ -1,0 +1,207 @@
+/* 폰트 추가 */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+/* 페이지 설정 */
+body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;    
+    background: #F4F5F7;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+header {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background: #F4F5F7;
+    width: 1920px;
+    height: 103px;
+    border-bottom: 1px solid #000000;
+    top: 0;
+}
+
+header h1 {
+    display: flex;
+    width: 206px;
+    height: 32px;
+
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 32px;
+    text-align: center;
+    color: #000000;
+}
+
+header .acountContainer {
+    position: absolute;
+    right: 688px;
+    display: flex;
+    align-items: center;
+}
+
+header .material-icons {
+    font-size: 36px;
+}
+
+.welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 40px;
+    margin-top: 104px;
+}
+
+.welcome .hello {
+    display: flex;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 31.2px;
+    text-align: center;
+}
+
+.welcome .bold {
+    display: inline;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 31.2px;
+    text-align: center;
+    margin: 0;
+}
+
+.btnContainer .createBoardBtn {
+    width: 138px;
+    height: 39px;
+    border-radius: 16px;
+    background: #ACA0EB;
+    color: white;
+    border: none;
+    margin-left: 445px;
+    margin-bottom: 24px;
+}
+
+.boardContainer {
+    width: 600px;
+    height: 204px;
+}
+
+.boardContainer .board {
+    display: flex;
+    flex-direction: column;
+    width: 597px;
+    height: 169px;
+    border-radius: 16px;
+    background: #FFFFFF;
+    margin-bottom: 16px;
+    box-shadow: 3px 4px 4px 0px #CCCCCC40;
+}
+
+.board .title {
+    display: flex;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 31.2px;
+    text-align: left;
+    padding-top: 18px;
+    padding-left: 27px;
+}
+
+
+.boardInfo {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.boardInfo .likeCount {
+    display: inline;
+    font-family: Pretendard;
+    width: 49px;
+    height: 18px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18.2px;
+    text-align: left;
+    padding-left: 27px;
+}
+
+.boardInfo .replyCount {
+    display: inline;
+    width: 39px;
+    height: 18px;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18.2px;
+    text-align: left;
+}
+
+.boardInfo .viewCount {
+    display: inline;
+    width: 49px;
+    height: 18px;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18.2px;
+    text-align: left;
+}
+
+.boardInfo .createdAt {
+    display: inline;
+    width: 133px;
+    height: 18px;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18.2px;
+    text-align: left;
+    padding-right: 29px;
+    margin-left: auto;
+}
+
+
+hr {
+    width: 592px;
+    padding: 0px;
+    border: 1px solid #00000029;
+}
+
+.userInfo {
+    display: flex;
+    gap: 10px;
+}
+
+.userInfo .box{
+    width: 36px;
+    height: 36px; 
+    border-radius: 70%;
+    overflow: hidden;
+    margin-left: 27px;
+    margin-top: 16px;
+}
+
+.userInfo .profileImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.userInfo .username {
+    height: 20px;
+
+    font-family: Pretendard;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 19.5px;
+    text-align: left;
+    margin-top: 24px;
+}
+
+
