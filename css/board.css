@@ -42,8 +42,17 @@ header .acountContainer {
     align-items: center;
 }
 
-header .material-icons {
-    font-size: 36px;
+.accountBox {
+    width: 36px;
+    height: 36px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+
+.accountImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .welcome {
