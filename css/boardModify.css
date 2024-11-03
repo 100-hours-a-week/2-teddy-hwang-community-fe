@@ -193,8 +193,59 @@ hr {
 
 .wrap .image-container {
     display: flex;
-
+    flex-direction: column;
 }
+
+.image-container .file-container {
+    display: flex;
+}
+
+.file-container .select-file-btn {
+    width: 68px;
+    height: 29px;
+    border-radius: 4px;
+    background: #D9D9D9;
+    border: 1px solid #000000;
+
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.71px;
+    text-align: center;
+
+    margin: 8px 0px 0px 31px;
+}
+
+.file-container .file-name {
+
+    height: 17px;
+
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.71px;
+    text-align: left;
+
+    margin: 14px 0px 0px 12px;
+}
+
+.modify-btn {
+    width: 355px;
+    height: 33px;
+    border-radius: 4px;
+    border: none;
+    background: #7F6AEE;
+
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 16.71px;
+    text-align: center;
+    color: white;
+
+    margin: 18px auto auto auto;
+}
+
 
 
 

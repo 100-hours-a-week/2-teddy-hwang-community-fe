@@ -34,11 +34,14 @@
                 name="content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</textarea>
             <hr>
             <p class="helpertext">* helpertext</p>
-            <p class="image-text">이미지</p>
-            <div class="image-container">
-                <button type="file" name="select-file-btn">파일 선택</button>
-                <label for="file-name"></label>
-            </div>
+            <article class="image-container">
+                <p class="image-text">이미지</p>
+                <article class="file-container">
+                    <button type="file" class="select-file-btn">파일 선택</button>
+                    <p class="file-name">기존 파일 명</p>
+                </article>             
+            </article>
+            <button type="submit" class="modify-btn">수정하기</button>
         </form>
     </section>
 </body>
