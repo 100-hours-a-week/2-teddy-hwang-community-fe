@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../css/user-modify.css">
+    <title>회원정보수정 페이지</title>
+</head>
+
+<body>   
+    <header>
+        <div class="profile-container">
+            <span class="profile-box">
+                <img class="profile-image" src="../images/profile-image.jpg">
+            </span>
+        </div>
+        <h1>아무 말 대잔치</h1>
+    </header>
+    <section class="wrap">
+        <h2>회원정보수정</h2>
+        <article class="profile-area">
+            <p class="profile">프로필 사진*</p>
+            <span class="circle" id="upload-circle">
+                <button type="file" class="modify-file-btn">변경</button>
+            </span>
+        </article>
+        <article class="modify-form">
+            <form>
+                <label for="email">이메일</label>
+                <p class="user-email">startupcode@gmail.com</p>
+                <label for="nickname">닉네임</label>
+                <input type="text" id="nickname" value="스타트업코드" required>
+                <small>* helper text</small>
+                <button type="submit" class="modify-btn">수정하기</button>
+            </form>
+        </article>
+        <article class="delete-link">
+            <a href="/delete">회원 탈퇴</a>
+        </article>
+        <button type="submit" class="modify-user-btn">수정완료</button>
+    </section>
+</body>
+
+</html>
