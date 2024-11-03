@@ -11,31 +11,33 @@
 
 <body>
     <header>
-        <div class="backIconContainer">
+        <div class="back-icon-container">
             <span class="material-icons">arrow_back_ios</span>
         </div>
         <h1>아무 말 대잔치</h1>
-        <div class="acountContainer">
-            <span class="accountBox">
-                <img class="accountImage" src="../images/profile-image.jpg">
+        <div class="acount-container">
+            <span class="account-box">
+                <img class="account-image" src="../images/profile-image.jpg">
             </span>
         </div>
     </header>
     <section class="wrap">
         <h2>게시글 수정</h2>
         <form>
-            <p class="titleStar">제목*</p>
+            <p class="title-star">제목*</p>
             <hr>
             <input type="text" id="title" value="제목 1" required>
             <hr>
-            <p class="contentStar">내용*</p>
+            <p class="content-star">내용*</p>
             <hr>
             <textarea rows="11"
                 name="content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</textarea>
             <hr>
-            <p class="helpertext">*helpertext</p>
-            <div class="imageContainer">
-                <p class="imageText">이미지</p>
+            <p class="helpertext">* helpertext</p>
+            <p class="image-text">이미지</p>
+            <div class="image-container">
+                <button type="file" name="select-file-btn">파일 선택</button>
+                <label for="file-name"></label>
             </div>
         </form>
     </section>
