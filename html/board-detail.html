@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../css/board-detail.css">
+    <title>게시글 상세 페이지</title>
+</head>
+
+<body>
+    <header>
+        <div class="back-icon-container">
+            <span class="material-icons">arrow_back_ios</span>
+        </div>
+        <h1>아무 말 대잔치</h1>
+        <div class="acount-container">
+            <span class="account-box">
+                <img class="account-image" src="../images/profile-image.jpg">
+            </span>
+        </div>
+    </header>
+    <section class="detail-container">
+        <article class="board">
+            <article class="board-title">
+                <span class="title">제목 1</span>
+            </article>
+            <article class="board-top">
+                <span class="box">
+                    <img class="profile-image" src="../images/profile-image.jpg">
+                </span>
+                <span class="username">더미 작성자 1</span>
+                <span class="created-at">2021-01-01 00:00:00</span>
+                <article class="btn-container">
+                    <button type="button" class="modify-btn">수정</button>
+                    <button type="button" class="delete-btn">삭제</button>
+                </article>
+            </article>
+            <hr>
+            <article class="board-middle">
+                <span class="board-image"></span>
+                <p class="board-content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took
+                    a galley of type and scrambled it to make a type specimen book. It has survived not only five
+                    centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was
+                    popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and
+                    more recently with desktop publishing software like Aldus PageMaker including versions of Lorem
+                    Ipsum.</p>
+                <article class="board-info">
+                    <span class="like-square">
+                        <span class="like-count">123</span>
+                        <span class="l">좋아요수</span>
+                    </span>
+                    <span class="view-square">
+                        <span class="view-count">123</span>
+                        <span class="v">조회수</span>
+                    </span>
+                    <span class="reply-square">
+                        <span class="reply-count">123</span>
+                        <span class="r">댓글수</span>
+                    </span>
+                </article>
+            </article>
+            <hr>
+            <article class="board-bottom">
+                <article class="reply-container">
+                    <form>
+                        <textarea name="reply-textarea" placeholder="댓글을 남겨주세요!" required></textarea>
+                        <hr>
+                        <button type="submit" class="reply-btn">댓글 등록</button>
+                    </form>
+                </article>
+            </article>
+            <!-- <article class="reply-list">
+                <article class="reply-info">
+                    <article class="reply-info-wrap">
+                        <span class="reply-box">
+                            <img class="reply-profile-image" src="../images/profile-image.jpg">
+                        </span>
+                        <span class="reply-username">더미 작성자 1</span>
+                        <span class="reply-created-at">2021-01-01 00:00:00</span>
+                    </article>          
+                    <article class="reply-content-container">
+                        <p class="reply-content">댓글 내용</p>
+                    </article>
+                </article>
+                <article class="reply-btn-container">
+                    <button type="button" class="modify-reply-btn">수정</button>
+                    <button type="button" class="delete-reply-btn">삭제</button>
+                </article>
+            </article> -->
+        </article>
+    </section>
+</body>
+
+</html>
