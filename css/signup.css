@@ -33,7 +33,7 @@ header h1 {
     text-align: center;
     color: #000000;
 }
-header .backIconContainer {
+header .back-icon-container {
     width: 84px;
     height: 77px;
     position: absolute;
@@ -66,7 +66,7 @@ header .material-icons{
     text-align: center;
 }
 
-.profileArea {
+.profile-area {
     display: flex;
     flex-direction: column;
     width: 400px;
@@ -74,7 +74,7 @@ header .material-icons{
     margin-bottom: 27px;
 }
 
-.profileArea .profile {
+.profile-area .profile {
     display: flex;
     height: 18px;
     
@@ -86,7 +86,7 @@ header .material-icons{
 
 }
 
-.profileArea small {
+.profile-area small {
     display: flex;
     font-size: 12px;
     font-weight: 400;
@@ -140,7 +140,7 @@ input::placeholder {
     color: black;
 }
 
-.signupForm small {
+.signup-form small {
     display: flex;
     font-size: 12px;
     font-weight: 400;
@@ -150,7 +150,7 @@ input::placeholder {
     margin: 4px 0px 4px 20px;
 }
 
-.signupForm button {
+.signup-form button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -168,7 +168,7 @@ input::placeholder {
     color: white;
 }
 
-.loginLink {
+.login-link {
     display: flex;
     margin: auto;
     width: 346px;
@@ -176,7 +176,7 @@ input::placeholder {
     justify-content: center;
 }
 
-.loginLink a {
+.login-link a {
     display: flex;
     height: 17px;
     margin: 6px auto 0px;
