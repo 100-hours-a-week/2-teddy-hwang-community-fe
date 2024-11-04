@@ -92,6 +92,18 @@ header .acount-container {
     border: none;
     margin-left: 445px;
     margin-bottom: 24px;
+
+    font-family: Pretendard;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 25.04px;
+    text-align: center;
+    color: white;
+
+}
+
+.create-board-btn:hover {
+    background-color: #7f6aee;
 }
 
 .board-container {
