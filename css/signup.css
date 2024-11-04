@@ -108,6 +108,37 @@ header .material-icons{
     margin: 8px auto auto;
 }
 
+.cross-container {
+    width: 24px;
+    height: 24px;
+    margin: auto auto auto 73px;
+    
+}
+
+.cross {
+    position: absolute;
+    width: 1px;
+    height: 24px;
+    background-color: black;
+}
+
+.cross::before {
+    display: flex;
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 1px;
+    background-color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
 .form {
     display: flex;
     position: relative;
