@@ -443,7 +443,7 @@ input {
     display: flex;
     margin-left: auto;
     height: 27px;
-    margin-top: 40px;
+    margin-top: 22px;
 }
 
 .reply-btn-container .modify-reply-btn {
@@ -472,6 +472,89 @@ input {
     line-height: 23.48px;
     text-align: center;
     margin-right: 10px;
+}
+
+#board-modal {
+    display: none;
+    position: fixed;
+    left: 50%; 
+    top: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 408px;
+    height: 242px;
+    border-radius: 12px;
+    background: #FFFFFF;
+}
+
+#reply-modal {
+    display: none;
+    position: fixed;
+    left: 50%; 
+    top: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 408px;
+    height: 242px;
+    border-radius: 12px;
+    background: #FFFFFF;
+}
+
+.modal h2 {
+    font-family: Pretendard;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28.64px;
+    text-align: center;
+    margin: 0;
+    padding: 48px 70px 0px 70px;
+}
+
+.modal p {
+    font-family: Pretendard;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 23.87px;
+    text-align: center;
+    margin: 0;
+    margin-top: 24px;
+}
+
+.modal-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.cancel-btn {
+    width: 127px;
+    height: 44px;
+    border-radius: 12px;
+    border: none;
+    background: #242424;
+
+    font-family: Pretendard;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 23.87px;
+    text-align: center;
+    color: white;
+
+    margin-right: 16px;
+}
+
+.check-btn {
+    width: 127px;
+    height: 44px;
+    border-radius: 12px;
+    border: none;
+    background: #C4A5FA;
+
+    font-family: Pretendard;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 23.87px;
+    text-align: center;
+
 }
 
 
