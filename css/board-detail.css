@@ -377,6 +377,7 @@ input {
     margin: auto;
     width: 544px;
     height: 65px;
+    margin-bottom: 16px;
 }
 
 .reply-info {
