@@ -90,8 +90,7 @@ header .acount-container {
     background: #ACA0EB;
     color: white;
     border: none;
-    margin-left: 445px;
-    margin-bottom: 24px;
+    margin: 24px 0px 24px 445px;
 
     font-family: Pretendard;
     font-size: 16px;
