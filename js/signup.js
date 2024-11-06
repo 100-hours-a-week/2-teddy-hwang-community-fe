@@ -37,11 +37,15 @@ const loadImage = function(fileInput, uploadCircle){
             //helpertext 없애고 십자가 없애기
             profileHelpertext.textContent = '';
             crossContainer.style.display = 'none';
+            profileImageValid = true;
         }else{
             uploadCircle.style.backgroundImage = 'none';
             crossContainer.style.display = 'flex';
             profileHelpertext.textContent = '*프로필 사진을 추가해주세요.';
+            profileImageValid = false;
         }
+
+        createUserBtnState();
     });
 };
 /**
@@ -61,6 +65,7 @@ const emailInput = function(){
         //이메일이 비어있는 경우
         if(emailValue === ''){
             emailHelpertext.textContent = '*이메일을 입력해주세요.';
+            emailValid = false;
             return;
         }
 
@@ -70,9 +75,12 @@ const emailInput = function(){
         //이메일 형식이 안맞는 경우
         if(!emailIsValid(emailValue)){
             emailHelpertext.textContent = '*올바른 이메일 주소를 입력해주세요.(예:example@example.com)';
+            emailValid = false;
             return;
         }else{
             emailHelpertext.textContent = '';
+            emailValid = true;
+            createUserBtnState();
             return;
         }
        
@@ -96,46 +104,55 @@ const passwordInput = function() {
     const passwordCheckHelpertext = document.getElementById('password-check-helpertext');
 
      // 비밀번호 오류 메시지 처리 함수
-     const showPasswordError = function(inputValue, helpertext, checkMatch = false){
+     const showPasswordError = function(inputValue, helpertext, checkMatch){
         // 비밀번호 확인 검사
         if (checkMatch) {
             // 비밀번호 확인 입력이 비어있는 경우
             if (passwordCheckInput.value === '') {
                 helpertext.textContent = '*비밀번호를 한번 더 입력해주세요.';
-                return false;
+                passwordValid = false;
+                return;
             }
             // 비밀번호와 비밀번호 확인 값이 일치하지 않는 경우
             if (passwordInput.value !== passwordCheckInput.value) {
                 helpertext.textContent = '*비밀번호가 다릅니다.';
                 passwordHelpertext.textContent = '*비밀번호가 다릅니다.';
-                return false;
+                passwordValid = false;
+                return;
             }else{
                 helpertext.textContent = '';
                 passwordHelpertext.textContent = '';
+                passwordValid = true;
             }
         }
         // 비밀번호 입력이 비어있는 경우
         if (inputValue === '') {
             helpertext.textContent = '*비밀번호를 입력해주세요.';
-            return false;
+            passwordValid = false;
+            return;
         }
 
         // 비밀번호 형식이 맞지 않는 경우
         if (!passwordIsValid(inputValue)) {
             helpertext.textContent = '*비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.';
-            return false;
+            passwordValid = false;
+            return;
+        }else{
+            helpertext.textContent = '';
         }    
 
-        helpertext.textContent = '';
-        return true;
+        passwordValid = true;
+        return;
     };
 
     passwordInput.addEventListener('blur', () => {
-        showPasswordError(passwordInput.value, passwordHelpertext);
+        showPasswordError(passwordInput.value, passwordHelpertext, false);
+        createUserBtnState();
     });
 
     passwordCheckInput.addEventListener('blur', () => {
-        showPasswordError(passwordCheckInput.value, passwordCheckHelpertext, checkMatch = true);
+        showPasswordError(passwordCheckInput.value, passwordCheckHelpertext, true);
+        createUserBtnState();
     })
     
 };
@@ -165,27 +182,32 @@ const nicknameInput = function(){
         //닉네임을 입력하지 않은 경우
         if(nickname === ''){
             nicknameHelpertext.textContent = '*닉네임을 입력해주세요.';
-            return false;
+            nicknameValid = false;
+            return;
         }
         if(!nicknameIsValid(nickname)){       
             //닉네임에 띄어쓰기가 포함된 경우
             if(nickname.includes(' ')){
                 nicknameHelpertext.textContent = '*띄어쓰기를 없애주세요.';
-                return false;
+                nicknameValid = false;
+                return;
             }
             //닉네임 길이가 10글자 초과하는 경우
             if(nickname.length > 10){
                 nicknameHelpertext.textContent = '*닉네임은 최대 10자 까지 작성 가능합니다.';
-                return false;
+                nicknameValid = false;
+                return;
             }
             //닉네임 중복시 추가 작성해야함
         }
         nicknameHelpertext.textContent = '';
-        return true;
+        nicknameValid = true;
+        return;
     }
 
     nicknameInput.addEventListener('blur', () => {
         showNicknameError(nicknameInput.value);
+        createUserBtnState();
     });
 
 };
@@ -194,6 +216,22 @@ const nicknameInput = function(){
     //띄어쓰기 없이 최대 10글자
     const nicknamePattern = /^[^\s]{1,10}$/; 
     return nicknamePattern.test(nickname);
+};
+
+let profileImageValid = false;
+let emailValid = false;
+let passwordValid = false;
+let nicknameValid = false;
+
+const createUserBtnState = function(){
+    const createUserBtn = document.getElementById('create-user-btn');
+    if(profileImageValid && emailValid && passwordValid && nicknameValid){
+        createUserBtn.style.backgroundColor = '#7F6AEE';
+        createUserBtn.disabled = false;
+    } else {
+        createUserBtn.style.backgroundColor = '#ACA0EB';
+        createUserBtn.disabled = true;
+    }
 };
 
 
