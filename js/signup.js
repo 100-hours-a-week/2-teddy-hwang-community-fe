@@ -2,7 +2,7 @@
  * 프로필 이미지 올리기
  * 동그라미 클릭 시 file-input이 클릭되도록 설정
  */ 
-const uploadProfileImage = () => {
+const uploadProfileImage = function(){
     const uploadCircle = document.getElementById('upload-circle');
     const fileInput = document.getElementById('file-input');
     
@@ -20,7 +20,7 @@ const uploadProfileImage = () => {
  * 이미지는 하나만 등록 가능
  * 이미지가 있다면 이미지를 원에 넣기 -> helpertext 없애기 -> 십자가 없애기
  */
-const loadImage = (fileInput, uploadCircle) => {
+const loadImage = function(fileInput, uploadCircle){
     fileInput.addEventListener("change", (event) => {
         const fileReader = new FileReader();
         //이미지 하나만 등록
@@ -52,7 +52,7 @@ const loadImage = (fileInput, uploadCircle) => {
  * 이메일 형식이 안맞는 경우 -> *올바른 이메일 주소를 입력해주세요.(예:example@example.com)
  * 중복된 이메일인 경우 -> *중복된 이메일 입니다.
  */
-const emailInput = () => {
+const emailInput = function(){
     const emailInput = document.getElementById('email');
     const emailHelpertext = document.getElementById('email-helpertext');
 
@@ -99,7 +99,7 @@ const passwordInput = function() {
     const passwordCheckHelpertext = document.getElementById('password-check-helpertext');
 
      // 비밀번호 오류 메시지 처리 함수
-     const showPasswordError = (inputValue, helpertext, checkMatch = false) => {
+     const showPasswordError = function(inputValue, helpertext, checkMatch = false){
         // 비밀번호 확인 검사
         if (checkMatch) {
             // 비밀번호 확인 입력이 비어있는 경우
@@ -112,6 +112,9 @@ const passwordInput = function() {
                 helpertext.textContent = '*비밀번호가 다릅니다.';
                 passwordHelpertext.textContent = '*비밀번호가 다릅니다.';
                 return false;
+            }else{
+                helpertext.textContent = '';
+                passwordHelpertext.textContent = '';
             }
         }
         // 비밀번호 입력이 비어있는 경우
@@ -155,45 +158,3 @@ const passwordIsValid = function(password) {
 uploadProfileImage();
 emailInput();
 passwordInput();
-
-// passwordInput.addEventListener('blur', () => {
-//     passwordValue = passwordInput.value;
-//     passwordCheckValue = passwordCheckInput.value;
-//     //비밀번호 입력이 비어있는 경우
-//     if(passwordValue === ''){
-//         passwordHelpertext.textContent = '*비밀번호를 입력해주세요.';
-//         return;
-//     }
-
-//     //비밀번호 형식이 안맞는 경우 
-//     if(!passwordIsValid(passwordValue)){
-//         passwordHelpertext.textContent = '*비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.';
-//         return;
-//     }
-       
-//     passwordHelpertext.textContent = '';    
-// });
-
-// passwordCheckInput.addEventListener('blur', () => {
-//     passwordValue = passwordInput.value;
-//     passwordCheckValue = passwordCheckInput.value;
-//     //비밀번호 확인과 다를 경우
-//     if(passwordCheckValue !== '' && passwordValue !== passwordCheckValue){
-//         passwordCheckHelpertext.textContent = '*비밀번호가 다릅니다.';
-//         passwordHelpertext.textContent = '*비밀번호가 다릅니다.'
-//         return;
-//     }
-//     //비밀번호 형식이 안맞는 경우 
-//     if(!passwordIsValid(passwordCheckValue)){
-//         passwordCheckHelpertext.textContent = '*비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.';
-//         return;
-//     }
-//     //비밀번호 입력이 비어있는 경우
-//     if(passwordCheckValue === ''){
-//         passwordCheckHelpertext.textContent = '*비밀번호를 입력해주세요.';
-//         return;
-//     }
-         
-//     passwordCheckHelpertext.textContent = '';
-//     passwordHelpertext.textContent = '';
-// });
