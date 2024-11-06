@@ -12,7 +12,6 @@ const uploadProfileImage = function(){
     
     loadImage(fileInput, uploadCircle);
 };
-
 /** 
  * @param fileInput -> 이미지를 불러올 수 있는 창을 열어줌
  * @param uploadCircle -> 프로필 이미지가 들어갈 원
@@ -79,13 +78,11 @@ const emailInput = function(){
        
     });
 };
-
 //이메일 유효성 검사 함수
 const emailIsValid = function(email) {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     return emailPattern.test(email);
 };
-
 /**
  * 비밀번호 유효성 검사 -> *비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.
  * 비밀번호 입력 안했을 시 -> *비밀번호를 입력해주세요.
@@ -142,7 +139,6 @@ const passwordInput = function() {
     })
     
 };
-
 /**
  * @param password -> 입력받은 비밀번호
  * 비밀번호는 8자리 이상 20자리 이하
@@ -152,9 +148,57 @@ const passwordIsValid = function(password) {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.~_-])[A-Za-z\d@$!%*?&#.~_-]{8,20}$/
     return passwordPattern.test(password);
 };
+/**
+ * 닉네임 입력 조건
+ * 닉네임 유효성: 띄어쓰기 불가, 10글자 이내
+ * 닉네임 입력하지 않을 시: *닉네임을 입력해주세요.
+ * 닉네임 띄어쓰기 입력 시: *띄어쓰기를 없애주세요.
+ * 닉네임 중복 시: *중복된 닉네임 입니다.
+ * 닉네임 11자 이상 작성시: *닉네임은 최대 10자 까지 작성 가능합니다.
+ */
+const nicknameInput = function(){
+    const nicknameInput = document.getElementById('nickname');
+    const nicknameHelpertext = document.getElementById('nickname-helpertext');
+
+    const showNicknameError = function(nickname){
+
+        //닉네임을 입력하지 않은 경우
+        if(nickname === ''){
+            nicknameHelpertext.textContent = '*닉네임을 입력해주세요.';
+            return false;
+        }
+        if(!nicknameIsValid(nickname)){       
+            //닉네임에 띄어쓰기가 포함된 경우
+            if(nickname.includes(' ')){
+                nicknameHelpertext.textContent = '*띄어쓰기를 없애주세요.';
+                return false;
+            }
+            //닉네임 길이가 10글자 초과하는 경우
+            if(nickname.length > 10){
+                nicknameHelpertext.textContent = '*닉네임은 최대 10자 까지 작성 가능합니다.';
+                return false;
+            }
+            //닉네임 중복시 추가 작성해야함
+        }
+        nicknameHelpertext.textContent = '';
+        return true;
+    }
+
+    nicknameInput.addEventListener('blur', () => {
+        showNicknameError(nicknameInput.value);
+    });
+
+};
+
+ const nicknameIsValid = (nickname) => {
+    //띄어쓰기 없이 최대 10글자
+    const nicknamePattern = /^[^\s]{1,10}$/; 
+    return nicknamePattern.test(nickname);
+};
 
 
 
 uploadProfileImage();
 emailInput();
 passwordInput();
+nicknameInput();
