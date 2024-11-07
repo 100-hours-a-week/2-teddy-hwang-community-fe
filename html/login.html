@@ -15,16 +15,17 @@
         <article class="login-form">
             <form>
                 <label for="email">이메일</label>
-                <input type="email" id="email" placeholder="이메일을 입력하세요" required>
+                <input type="text" id="email" placeholder="이메일을 입력하세요" required>
                 <label for="password">비밀번호</label>
                 <input type="password" id="password" placeholder="비밀번호를 입력하세요" required>
-                <small>* helper text</small>
-                <button type="submit">로그인</button>
+                <small id="password-helpertext"></small>
+                <button type="submit" id="login-btn">로그인</button>
             </form>
             <article class="signup-link">
                 <a href="/signup">회원가입</a>
             </article>
         </article>
     </section>
+    <script src="../js/login.js"></script>
 </body>
 </html>
