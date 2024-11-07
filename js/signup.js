@@ -153,7 +153,7 @@ const passwordInput = function() {
     passwordCheckInput.addEventListener('blur', () => {
         showPasswordError(passwordCheckInput.value, passwordCheckHelpertext, true);
         createUserBtnState();
-    })
+    });
     
 };
 /**
