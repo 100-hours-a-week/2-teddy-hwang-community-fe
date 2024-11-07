@@ -57,19 +57,29 @@ header h1 {
     margin-bottom: 20px;
 }
 
-label {
+
+#email-label {
     display: flex;
     font-size: 15px;
     font-weight: 700;
     line-height: 17.9px;
-    margin: 8px 18px;
     text-align: center;
+    margin: 18px 18px 8px 18px;
+}
+
+#password-label {
+    display: flex;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 17.9px;
+    text-align: center;
+    margin: 16px 18px 8px 18px;
 }
 
 input {
     display: flex;
     justify-content: center;
-    width: 345px;
+    width: 341px;
     height: 29px;
     padding-left: 10px;
     border-radius: 4px;
