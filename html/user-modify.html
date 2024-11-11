@@ -13,7 +13,14 @@
     <header>
         <div class="profile-container">
             <span class="profile-box">
-                <img class="profile-image" src="../images/profile-image.jpg">
+                <img class="profile-image" id="profile-image" src="../images/profile-image.jpg">
+                <div class="dropdown" id="dropdown">
+                    <ul>
+                        <li><a href="../html/user-modify.html">회원정보수정</a></li>
+                        <li><a href="../html/password-modify.html">비밀번호수정</a></li> 
+                        <li><a href="../html/login.html">로그아웃</a></li> 
+                    </ul>
+                </div>
             </span>
         </div>
         <h1>아무 말 대잔치</h1>
@@ -41,6 +48,8 @@
         </article>
         <button type="submit" class="modify-user-btn">수정완료</button>
     </section>
+
+    <script src="../js/user-modify.js"></script>
 </body>
 
 </html>

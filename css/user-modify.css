@@ -57,6 +57,46 @@ header .profile-container {
     object-fit: cover;
 }
 
+.dropdown {
+    display: none;
+    position: absolute;
+    width: 115px;
+    height: 105px;
+    background: #F4F5F7;
+    margin-top: 8px;
+    right: 0px;
+}
+
+.dropdown ul {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown li {
+    display: block;
+    list-style: none;
+    padding: 6px 0px;
+    text-align: center;
+}
+
+.dropdown li:hover {
+    background-color: #E9E9E9; 
+    cursor: pointer; 
+}
+
+.dropdown a {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.52px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    text-decoration-line: none;
+    color: #000000;
+}
+
 .wrap {
     display: flex;
     justify-content: center;
