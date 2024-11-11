@@ -80,7 +80,7 @@ header .profile-container {
     text-align: center;
 }
 
-.dropdown li:hover {
+.dropdown:hover {
     background-color: #E9E9E9; 
     cursor: pointer; 
 }
