@@ -16,19 +16,19 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, '/html/signup.html'));
 });
 //게시글 목록 조회
-app.get('/boards', (req, res) => {
+app.get('/posts', (req, res) => {
     res.sendFile(path.join(__dirname, '/html/board.html'));
 });
 //게시글 상세 조회
-app.get('/board', (req, res) => {
+app.get('/post', (req, res) => {
     res.sendFile(path.join(__dirname, '/html/board-detail.html'));
 });
 //게시글 추가
-app.get('/board/create', (req, res) => {
+app.get('/post/create', (req, res) => {
     res.sendFile(path.join(__dirname, '/html/board-create.html'));
 });
 //게시글 수정
-app.get('/board/modify', (req, res) => {
+app.get('/post/modify', (req, res) => {
     res.sendFile(path.join(__dirname, '/html/board-modify.html'));
 });
 //회원정보 수정
