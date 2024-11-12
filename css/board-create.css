@@ -10,6 +10,10 @@ body {
     font-family: "Noto Sans KR", sans-serif;
 }
 
+span, label, h1, h2, p, small{
+    cursor: default;
+}
+
 header {
     display: flex;
     position: fixed;
@@ -48,6 +52,7 @@ header .back-icon-container {
 header .material-icons{
     width: 10.93px;
     height: 18.89px;
+    cursor: pointer;
 }
 
 header .account-container {
@@ -68,6 +73,7 @@ header .account-container {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .wrap{
@@ -234,6 +240,7 @@ hr {
     text-align: center;
 
     margin: 8px 0px 0px 31px;
+    cursor: pointer;
 }
 
 .file-container .file-name {
@@ -264,6 +271,7 @@ hr {
     color: white;
 
     margin: 18px auto auto auto;
+    cursor: pointer;
 }
 
 
