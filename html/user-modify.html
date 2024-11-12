@@ -44,9 +44,20 @@
             </form>
         </article>
         <article class="delete-link">
-            <a href="/delete">회원 탈퇴</a>
+            <p class="user-delete" id="user-delete">회원 탈퇴</p>
         </article>
         <button type="submit" class="modify-user-btn">수정완료</button>
+
+        <section class="modal-container">
+            <article class="modal" id="user-modal">
+                <h2>회원탈퇴 하시겠습니까?</h2>
+                <p>작성된 게시글과 댓글은 삭제됩니다.</p>
+                <article class="modal-btn-container">
+                    <button type="button" class="cancel-btn" id="user-cancel-btn">취소</button>
+                    <button type="button" class="check-btn" id="user-check-btn">확인</button>
+                </article>
+            </article>
+        </section>
     </section>
 
     <script src="../js/user-modify.js"></script>
