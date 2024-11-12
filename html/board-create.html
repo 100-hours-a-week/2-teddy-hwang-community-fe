@@ -33,22 +33,22 @@
         <form>
             <p class="title-star">제목*</p>
             <hr>
-            <input type="text" id="title" placeholder="제목을 입력해주세요. (최대 26글자)" required>
+            <input type="text" id="title" placeholder="제목을 입력해주세요. (최대 26글자)">
             <hr>
             <p class="content-star">내용*</p>
             <hr>
             <textarea rows="11" id="content" placeholder="내용을 입력해주세요."></textarea>
             <hr>
-            <p class="helpertext">* helpertext</p>
+            <p class="helpertext" id="helpertext">* helpertext</p>
             <article class="image-container">
                 <p class="image-text">이미지</p>
                 <article class="file-container">
                     <input type="file" id="file-input" accept="image/*" style="display: none;">
-                    <button type="button" class="select-file-btn">파일 선택</button>
-                    <p class="file-name">파일을 선택해주세요.</p>
+                    <button type="button" class="select-file-btn" id="select-file-btn">파일 선택</button>
+                    <p class="file-name" id="file-name">파일을 선택해주세요.</p>
                 </article>             
             </article>
-            <button type="submit" class="create-btn">완료</button>
+            <button type="submit" class="create-btn" id="create-btn">완료</button>
         </form>
     </section>
     <script src="../js/board-create.js"></script>
