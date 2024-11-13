@@ -91,10 +91,8 @@ const loginBtnState = function(){
     const loginBtn = document.getElementById('login-btn');
     if(emailValid && passwordValid){
         loginBtn.style.backgroundColor = '#7F6AEE';
-        loginBtn.disabled = false;
     } else {
         loginBtn.style.backgroundColor = '#ACA0EB';
-        loginBtn.disabled = true;
     }
 };
 
@@ -103,6 +101,35 @@ const loginBtnState = function(){
  * 로그인 로직 작성
  * 로그인 버튼 클릭 시 게시글 목록 조회로 이동
  */
+const login = function(){
+    const loginBtn = document.getElementById('login-btn');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const helpertext = document.getElementById('helpertext');
+
+    loginBtn.addEventListener('click', () => {
+        fetch('../data/user.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json(); // JSON 데이터로 변환
+        })
+        .then(data => {
+            const user = data.user.find(u => u.email === emailInput.value && u.password === passwordInput.value);
+            if (user) {
+                location.href = '../html/board.html';
+            } else {
+                helpertext.textContent = '*비밀번호가 다릅니다.'
+            }
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+    });
+      
+}
 
 emailInput();
 passwordInput();
+login();
