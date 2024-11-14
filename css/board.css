@@ -10,6 +10,10 @@ body {
     font-family: "Noto Sans KR", sans-serif;
 }
 
+span, label, h1, h2, p{
+    cursor: default;
+}
+
 header {
     display: flex;
     position: fixed;
@@ -104,16 +108,19 @@ header .account-container {
     line-height: 25.04px;
     text-align: center;
     color: white;
+    cursor: pointer;
 
 }
 
 .create-board-btn:hover {
     background-color: #7f6aee;
+
 }
 
 .board-container {
     width: 592px;
     height: 204px;
+    cursor: pointer;
 }
 
 .board-container .board {
