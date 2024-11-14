@@ -96,8 +96,7 @@ const loadImage = function(fileInput){
         
         if(profileImage){
             fileName.textContent = profileImage.name;
-            const imageUrl = profileImage.imageUrl;
-            console.log(imageUrl);
+            //이미지 이름 띄우는거 까진됨 보내는 로직은 추후 작성
         }
     });
 };
