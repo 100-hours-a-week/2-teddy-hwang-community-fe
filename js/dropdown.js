@@ -14,3 +14,5 @@ const dropdown = function(){
         dropdown.classList.remove('show');   
     }); 
 }
+
+dropdown();
