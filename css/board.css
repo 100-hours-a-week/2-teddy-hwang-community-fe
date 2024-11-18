@@ -193,7 +193,6 @@ header .account-container {
 .board-info .like-count {
     display: inline;
     font-family: Pretendard;
-    width: 49px;
     height: 18px;
     font-size: 14px;
     font-weight: 400;
@@ -204,7 +203,6 @@ header .account-container {
 
 .board-info .reply-count {
     display: inline;
-    width: 39px;
     height: 18px;
     font-family: Pretendard;
     font-size: 14px;
@@ -215,7 +213,6 @@ header .account-container {
 
 .board-info .view-count {
     display: inline;
-    width: 49px;
     height: 18px;
     font-family: Pretendard;
     font-size: 14px;
