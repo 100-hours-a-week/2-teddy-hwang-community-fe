@@ -14,6 +14,10 @@ body {
     font-family: "Noto Sans KR", sans-serif;
 }
 
+span, label, h1, h2, p, small {
+    cursor: default;
+}
+
 header {
     display: flex;
     position: fixed;
@@ -37,24 +41,25 @@ header h1 {
     text-align: center;
     color: #000000;
 }
-header .profile-container {
+header .account-container {
     position: absolute;
     right: 688px;
     display: flex;
     align-items: center;
 }
 
-.profile-box {
+.account-box {
     width: 36px;
     height: 36px; 
     border-radius: 70%;
     overflow: hidden;
 }
 
-.profile-image {
+.account-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .dropdown {
@@ -155,6 +160,15 @@ header .profile-container {
     background: #C4C4C4;
     border-radius: 50%;
     margin: 8px auto auto;
+
+    position: relative;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .circle .modify-file-btn {
@@ -165,6 +179,10 @@ header .profile-container {
     border: 1px solid #FFFFFF;
     justify-content: center;
     align-items: center;
+    
+    position: absolute;
+    left: 48.5px;
+    top: 61px;
 
     font-family: Pretendard;
     font-size: 15px;
@@ -173,8 +191,7 @@ header .profile-container {
     text-align: center;
     color: #FFFFFF;
 
-    margin: auto;
-
+    cursor: pointer;
 }
 
 .form {
