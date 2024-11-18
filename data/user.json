@@ -1,0 +1,18 @@
+{
+  "user": [
+    {
+      "user_id": 1,
+      "email": "test@google.com",
+      "password": "Test12345@",
+      "nickname": "test",
+      "profile_image": "../images/profile-image.jpg"
+    },
+    {
+      "user_id": 2,
+      "email": "test2@google.com",
+      "password": "Test54321@",
+      "nickname": "test2",
+      "profile_image": "../images/back.png"
+    }
+  ]
+}

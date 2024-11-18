@@ -1,127 +1,175 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../css/board-detail.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/board-detail.css" />
     <title>게시글 상세 페이지</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <div class="back-icon-container">
-            <span class="material-icons">arrow_back_ios</span>
-        </div>
-        <h1>아무 말 대잔치</h1>
-        <div class="account-container">
-            <span class="account-box">
-                <img class="account-image" src="../images/profile-image.jpg">
-                <div class="dropdown" id="dropdown">
-                    <ul>
-                        <li><a href="../html/user-modify.html">회원정보수정</a></li>
-                        <li><a href="../html/password-modify.html">비밀번호수정</a></li> 
-                        <li><a href="../html/login.html">로그아웃</a></li> 
-                    </ul>
-                </div>
-            </span>
-        </div>
+      <div class="back-icon-container">
+        <span class="material-icons">arrow_back_ios</span>
+      </div>
+      <h1>아무 말 대잔치</h1>
+      <div class="account-container">
+        <span class="account-box">
+          <img class="account-image" src="../images/profile-image.jpg" />
+          <div class="dropdown" id="dropdown">
+            <ul>
+              <li><a href="../html/user-modify.html">회원정보수정</a></li>
+              <li><a href="../html/password-modify.html">비밀번호수정</a></li>
+              <li><a href="../html/login.html">로그아웃</a></li>
+            </ul>
+          </div>
+        </span>
+      </div>
     </header>
     <section class="detail-container">
-        <article class="board">
-            <article class="board-title">
-                <span class="title" id="title">제목 1</span>
-            </article>
-            <article class="board-top">
-                <span class="box">
-                    <img class="profile-image" src="../images/profile-image.jpg">
-                </span>
-                <span class="username" id="username">더미 작성자 1</span>
-                <span class="created-at" id="created-at">2021-01-01 00:00:00</span>
-                <article class="btn-container">
-                    <button type="button" class="modify-btn" id="modify-btn">수정</button>
-                    <button type="button" class="delete-btn" id="delete-btn">삭제</button>
-                </article>
-            </article>
-            <hr>
-            <article class="board-middle">
-                <img class="board-image" id="board-image" src="../images/profile-image.jpg"></img>
-                <p class="board-content" id="board-content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took
-                    a galley of type and scrambled it to make a type specimen book. It has survived not only five
-                    centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was
-                    popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and
-                    more recently with desktop publishing software like Aldus PageMaker including versions of Lorem
-                    Ipsum.</p>
-                <article class="board-info">
-                    <span class="like-square">
-                        <span class="like-count" id="like-count">123</span>
-                        <span class="l">좋아요수</span>
-                    </span>
-                    <span class="view-square">
-                        <span class="view-count" id="view-count">123</span>
-                        <span class="v">조회수</span>
-                    </span>
-                    <span class="reply-square">
-                        <span class="reply-count" id="reply-count">123</span>
-                        <span class="r">댓글수</span>
-                    </span>
-                </article>
-            </article>
-            <hr>
-            <article class="board-bottom">
-                <article class="reply-container">
-                    <form>
-                        <textarea name="reply-textarea" placeholder="댓글을 남겨주세요!" id="reply-textarea" required></textarea>
-                        <hr>
-                        <button type="submit" class="reply-btn" id="reply-btn">댓글 등록</button>
-                    </form>
-                </article>
-            </article>
-            <article class="reply-list">
-                <article class="reply-info">
-                    <article class="reply-info-wrap">
-                        <span class="reply-box">
-                            <img class="reply-profile-image" id="reply-profile-image" src="../images/profile-image.jpg">
-                        </span>
-                        <span class="reply-username" id="reply-username">더미 작성자 1</span>
-                        <span class="reply-created-at" id="reply-created-at">2021-01-01 00:00:00</span>
-                    </article>          
-                    <article class="reply-content-container">
-                        <p class="reply-content" id="reply-content">댓글 내용</p>
-                    </article>
-                </article>
-                <article class="reply-btn-container">
-                    <button type="button" class="modify-reply-btn" id="modify-reply-btn">수정</button>
-                    <button type="button" class="delete-reply-btn" id="delete-reply-btn">삭제</button>
-                </article>
-            </article>
+      <article class="board">
+        <article class="board-title">
+          <span class="title" id="title">제목 1</span>
         </article>
+        <article class="board-top">
+          <span class="box">
+            <img class="profile-image" src="../images/profile-image.jpg" />
+          </span>
+          <span class="username" id="username">더미 작성자 1</span>
+          <span class="created-at" id="created-at">2021-01-01 00:00:00</span>
+          <article class="btn-container">
+            <button type="button" class="modify-btn" id="modify-btn">
+              수정
+            </button>
+            <button type="button" class="delete-btn" id="delete-btn">
+              삭제
+            </button>
+          </article>
+        </article>
+        <hr />
+        <article class="board-middle">
+          <img
+            class="board-image"
+            id="board-image"
+            src="../images/profile-image.jpg"
+          />
+          <p class="board-content" id="board-content">
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not
+            only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s
+            with the release of Letraset sheets containing Lorem Ipsum passages,
+            and more recently with desktop publishing software like Aldus
+            PageMaker including versions of Lorem Ipsum.
+          </p>
+          <article class="board-info">
+            <span class="like-square">
+              <span class="like-count" id="like-count">123</span>
+              <span class="l">좋아요수</span>
+            </span>
+            <span class="view-square">
+              <span class="view-count" id="view-count">123</span>
+              <span class="v">조회수</span>
+            </span>
+            <span class="reply-square">
+              <span class="reply-count" id="reply-count">123</span>
+              <span class="r">댓글수</span>
+            </span>
+          </article>
+        </article>
+        <hr />
+        <article class="board-bottom">
+          <article class="reply-container">
+            <form>
+              <textarea
+                name="reply-textarea"
+                placeholder="댓글을 남겨주세요!"
+                id="reply-textarea"
+                required
+              ></textarea>
+              <hr />
+              <button type="submit" class="reply-btn" id="reply-btn">
+                댓글 등록
+              </button>
+            </form>
+          </article>
+        </article>
+        <article class="reply-list">
+          <article class="reply-info">
+            <article class="reply-info-wrap">
+              <span class="reply-box">
+                <img
+                  class="reply-profile-image"
+                  id="reply-profile-image"
+                  src="../images/profile-image.jpg"
+                />
+              </span>
+              <span class="reply-username" id="reply-username"
+                >더미 작성자 1</span
+              >
+              <span class="reply-created-at" id="reply-created-at"
+                >2021-01-01 00:00:00</span
+              >
+            </article>
+            <article class="reply-content-container">
+              <p class="reply-content" id="reply-content">댓글 내용</p>
+            </article>
+          </article>
+          <article class="reply-btn-container">
+            <button
+              type="button"
+              class="modify-reply-btn"
+              id="modify-reply-btn"
+            >
+              수정
+            </button>
+            <button
+              type="button"
+              class="delete-reply-btn"
+              id="delete-reply-btn"
+            >
+              삭제
+            </button>
+          </article>
+        </article>
+      </article>
     </section>
 
     <section class="modal-container">
-        <article class="modal" id="board-modal">
-            <h2>게시글을 삭제하시겠습니까?</h2>
-            <p>삭제한 내용은 복구 할 수 없습니다.</p>
-            <article class="modal-btn-container">
-                <button type="button" class="cancel-btn" id="board-cancel-btn">취소</button>
-                <button type="button" class="check-btn" id="board-check-btn">확인</button>
-            </article>
+      <article class="modal" id="board-modal">
+        <h2>게시글을 삭제하시겠습니까?</h2>
+        <p>삭제한 내용은 복구 할 수 없습니다.</p>
+        <article class="modal-btn-container">
+          <button type="button" class="cancel-btn" id="board-cancel-btn">
+            취소
+          </button>
+          <button type="button" class="check-btn" id="board-check-btn">
+            확인
+          </button>
         </article>
-        <article class="modal" id="reply-modal">
-            <h2>댓글을 삭제하시겠습니까?</h2>
-            <p>삭제한 내용은 복구 할 수 없습니다.</p>
-            <article class="modal-btn-container">
-                <button type="button" class="cancel-btn" id="reply-cancel-btn">취소</button>
-                <button type="button" class="check-btn" id="reply-check-btn">확인</button>
-            </article>
+      </article>
+      <article class="modal" id="reply-modal">
+        <h2>댓글을 삭제하시겠습니까?</h2>
+        <p>삭제한 내용은 복구 할 수 없습니다.</p>
+        <article class="modal-btn-container">
+          <button type="button" class="cancel-btn" id="reply-cancel-btn">
+            취소
+          </button>
+          <button type="button" class="check-btn" id="reply-check-btn">
+            확인
+          </button>
         </article>
+      </article>
     </section>
 
     <script src="../js/board-detail.js"></script>
     <script src="../js/back.js"></script>
     <script src="../js/dropdown.js"></script>
-</body>
-
+  </body>
 </html>

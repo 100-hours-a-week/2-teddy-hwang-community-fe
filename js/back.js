@@ -1,11 +1,10 @@
 //뒤로가기
-const back = function(){
-    const backIcon = document.querySelector('.material-icons');
-    console.log(backIcon);
+const back = function () {
+  const backIcon = document.querySelector(".material-icons");
 
-    backIcon.addEventListener('click', () => {
-        history.back();
-    });
-}
+  backIcon.addEventListener("click", () => {
+    history.back();
+  });
+};
 
 back();

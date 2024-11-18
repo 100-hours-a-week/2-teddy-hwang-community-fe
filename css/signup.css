@@ -3,231 +3,226 @@
 
 /* 페이지 설정 */
 body {
-    display: flex;
-    align-items: center;
-    flex-direction: column;    
-    background: #F4F5F7;
-    font-family: "Noto Sans KR", sans-serif;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: #f4f5f7;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 header {
-    display: flex;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row; 
-    width: 1920px;
-    height: 103px;
-    border-bottom: 1px solid #000000;
-    top: 0;
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 1920px;
+  height: 103px;
+  border-bottom: 1px solid #000000;
+  top: 0;
 }
 
 header h1 {
-    display: flex;
-    width: 206px;
-    height: 32px;
+  display: flex;
+  width: 206px;
+  height: 32px;
 
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 32px;
-    text-align: center;
-    color: #000000;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: center;
+  color: #000000;
 }
 header .back-icon-container {
-    width: 84px;
-    height: 77px;
-    position: absolute;
-    left: 680px;
-    display: flex;
-    align-items: center;
+  width: 84px;
+  height: 77px;
+  position: absolute;
+  left: 680px;
+  display: flex;
+  align-items: center;
 }
 
-header .material-icons{
-    width: 10.93px;
-    height: 18.89px;
+header .material-icons {
+  width: 10.93px;
+  height: 18.89px;
 }
 
 .wrap {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    max-width: 392px;
-    background-color: transparent;
-    padding-top: 161px;
-    margin-top: 104px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 392px;
+  background-color: transparent;
+  padding-top: 161px;
+  margin-top: 104px;
 }
 
 .wrap h2 {
-    display: flex;
-    font-family: Pretendard;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 38.19px;
-    margin: auto;
-    text-align: center;
+  display: flex;
+  font-family: Pretendard;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 38.19px;
+  margin: auto;
+  text-align: center;
 }
 
 .profile-area {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-    height: 206px;
-    margin-bottom: 27px;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 206px;
+  margin-bottom: 27px;
 }
 
 .profile-area .profile {
-    display: flex;
-    height: 18px;
-    
-    font-family: Pretendard;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 17.9px;
-    text-align: left;
-    margin: 12px 0px 4px 33px;
+  display: flex;
+  height: 18px;
 
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 17.9px;
+  text-align: left;
+  margin: 12px 0px 4px 33px;
 }
 
 .profile-area small {
-    display: flex;
-    height: 15px;
-    font-family: Inter;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 14.52px;
-    text-align: left;
-    margin-left: 34px;
-    color: red;
+  display: flex;
+  height: 15px;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  text-align: left;
+  margin-left: 34px;
+  color: red;
 }
 
 .circle {
-    display: flex;
-    width: 149px;
-    height: 149px;
-    background: #C4C4C4;
-    border-radius: 50%;
-    margin: 8px auto auto;
-    background-size: cover;
+  display: flex;
+  width: 149px;
+  height: 149px;
+  background: #c4c4c4;
+  border-radius: 50%;
+  margin: 8px auto auto;
+  background-size: cover;
 }
 
 .cross-container {
-    width: 24px;
-    height: 24px;
-    margin: auto auto auto 73px;
-    
+  width: 24px;
+  height: 24px;
+  margin: auto auto auto 73px;
 }
 
 .cross {
-    position: absolute;
-    width: 1px;
-    height: 24px;
-    background-color: black;
+  position: absolute;
+  width: 1px;
+  height: 24px;
+  background-color: black;
 }
 
 .cross::before {
-    display: flex;
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 1px;
-    background-color: black;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  display: flex;
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 1px;
+  background-color: black;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-
-    justify-content: center;
-    align-items: center;
-    margin: auto;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 }
 
 .form {
-    display: flex;
-    position: relative;
-    width: 392px;
-    height: 406px;
+  display: flex;
+  position: relative;
+  width: 392px;
+  height: 406px;
 }
 
 label {
-    display: flex;
-    font-family: Pretendard;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 17.9px;
-    text-align: center;
-    margin: 4px 0px 8px 19px;
+  display: flex;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 17.9px;
+  text-align: center;
+  margin: 4px 0px 8px 19px;
 }
 
 input {
-    display: flex;
-    justify-content: center;
-    width: 333px;
-    height: 15px;
-    border-radius: 4px;
-    border: 1px solid #000000;
-    background-color: #F4F5F7;
-    margin: 0px 18px 0px 19px;
-    padding: 8px 10px;
+  display: flex;
+  justify-content: center;
+  width: 333px;
+  height: 15px;
+  border-radius: 4px;
+  border: 1px solid #000000;
+  background-color: #f4f5f7;
+  margin: 0px 18px 0px 19px;
+  padding: 8px 10px;
 }
 
-input::placeholder { 
-    font-family: Pretendard;  
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16.71px;
-    color: black;
+input::placeholder {
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.71px;
+  color: black;
 }
 
 .signup-form small {
-    display: flex;
-    height: 15px;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 14.52px;
-    text-align: left;
-    color: red;
-    margin: 4px 0px 4px 20px;
+  display: flex;
+  height: 15px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  text-align: left;
+  color: red;
+  margin: 4px 0px 4px 20px;
 }
 
 .signup-form button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 355px;
-    height: 33px;
-    border-radius: 4px;
-    border: none;
-    background: #ACA0EB;
-    margin: 0px 19px 0px 18px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 355px;
+  height: 33px;
+  border-radius: 4px;
+  border: none;
+  background: #aca0eb;
+  margin: 0px 19px 0px 18px;
 
-    font-family: Pretendard;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 16.71px;
-    text-align: center;
-    color: white;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16.71px;
+  text-align: center;
+  color: white;
 }
 
 .login-link {
-    display: flex;
-    margin: auto;
-    width: 346px;
-    height: 42px;
-    justify-content: center;
+  display: flex;
+  margin: auto;
+  width: 346px;
+  height: 42px;
+  justify-content: center;
 }
 
 .login-link a {
-    display: flex;
-    height: 17px;
-    margin: 6px auto 0px;
+  display: flex;
+  height: 17px;
+  margin: 6px auto 0px;
 
-    font-family: Pretendard;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16.71px;
-    text-align: left;
-    color: black;
-    text-decoration-line: none;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.71px;
+  text-align: left;
+  color: black;
+  text-decoration-line: none;
 }
-
-
