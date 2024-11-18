@@ -55,21 +55,21 @@ header .material-icons{
     cursor: pointer;
 }
 
-header .profile-container {
+header .account-container {
     position: absolute;
     right: 688px;
     display: flex;
     align-items: center;
 }
 
-.profile-box {
+.account-box {
     width: 36px;
     height: 36px; 
     border-radius: 70%;
     overflow: hidden;
 }
 
-.profile-image {
+.account-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
