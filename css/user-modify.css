@@ -242,6 +242,7 @@ input::placeholder {
 }
 
 .modify-form small {
+    height: 15px;
     display: flex;
     font-family: Inter;
     font-size: 12px;
@@ -269,6 +270,8 @@ input::placeholder {
     line-height: 16.71px;
     text-align: center;
     color: white;
+
+    cursor: pointer;
 }
 
 .delete-link {
@@ -295,14 +298,16 @@ input::placeholder {
     cursor: pointer;
 }
 
-.modify-user-btn {
+#toast {
+    display: flex;
     width: 102px;
     height: 46px;
-    padding: 12px 20px 12px 20px;
     border-radius: 30px;
     border: none;
     background: #ACA0EB;
     margin: 61px auto auto auto;
+    justify-content: center;
+    align-items: center;
 
     font-family: Pretendard;
     font-size: 18px;
@@ -311,6 +316,11 @@ input::placeholder {
     letter-spacing: -0.01em;
     text-align: center;
     color: #FFFFFF;
+    opacity: 0;
+}
+
+#toast.show {
+    opacity: 1;
 }
 
 .modal-container {

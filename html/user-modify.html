@@ -11,9 +11,9 @@
 
 <body>   
     <header>
-        <div class="profile-container">
-            <span class="profile-box">
-                <img class="profile-image" id="profile-image" src="../images/profile-image.jpg">
+        <div class="account-container">
+            <span class="account-box">
+                <img class="account-image" id="account-image" src="../images/profile-image.jpg">
                 <div class="dropdown" id="dropdown">
                     <ul>
                         <li><a href="../html/user-modify.html">회원정보수정</a></li>
@@ -30,6 +30,7 @@
         <article class="profile-area">
             <p class="profile">프로필 사진*</p>
             <span class="circle" id="upload-circle">
+                <img class="profile-image" src=""/>
                 <input type="file" id="file-input" accept="image/*" style="display: none;">
                 <button type="button" class="modify-file-btn">변경</button>
             </span>
@@ -37,17 +38,17 @@
         <article class="modify-form">
             <form>
                 <label for="email">이메일</label>
-                <p class="user-email">startupcode@gmail.com</p>
+                <p class="user-email"></p>
                 <label for="nickname">닉네임</label>
-                <input type="text" id="nickname" value="스타트업코드" required>
-                <small>* helper text</small>
-                <button type="submit" class="modify-btn">수정하기</button>
+                <input type="text" id="nickname">
+                <small id="helpertext"></small>
+                <button type="button" class="modify-btn" id="modify-btn">수정하기</button>
             </form>
         </article>
         <article class="delete-link">
             <p class="user-delete" id="user-delete">회원 탈퇴</p>
         </article>
-        <button type="submit" class="modify-user-btn">수정완료</button>
+        <div class="toast" id="toast">수정완료</div>
 
         <section class="modal-container">
             <article class="modal" id="user-modal">
@@ -62,7 +63,6 @@
     </section>
 
     <script src="../js/user-modify.js"></script>
-    <script src="../js/back.js"></script>
     <script src="../js/dropdown.js"></script>
 </body>
 
