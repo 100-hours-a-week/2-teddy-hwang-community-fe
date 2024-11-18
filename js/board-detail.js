@@ -1,3 +1,6 @@
+document.addEventListener('DOMContentLoaded', () => {
+    loadBoardData();
+});
 // 공통으로 사용할 스타일 설정 함수
 const openModal = function(modal) {
     const activeModal = document.querySelector('.modal.active');
@@ -112,11 +115,82 @@ const commentModal = function(){
     });
 }
 
-//글이랑 댓글 뿌려주기
-//게시글 뿌리기
-const displayBoardDetail = function(){
+//게시글 데이터를 가져오는 함수
+const fetchData = async (url) => {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
+    return await response.json();
+};
 
+//게시판을 렌더링하는 함수
+const loadBoardData = async () => {
+    try {
+        //querystring 추출
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('postId');
+
+        const postData = await fetchData('../data/post.json');
+        const userData = await fetchData('../data/user.json');
+        const commentData = await fetchData('../data/comment.json');
+        
+        // postId에 맞는 게시글 찾기
+        const post = postData.post.find(item => String(item.post_id) === postId);
+        if (!post) {
+            throw new Error('게시글을 찾을 수 없습니다.');
+        }
+
+        // 게시글 작성자 정보 찾기
+        const user = userData.user.find(item => item.user_id == post.user_id);
+        if (!user) {
+            throw new Error('게시글 작성자를 찾을 수 없습니다.');
+        }
+
+        displayPostAndUser(post, user);
+
+    } catch (error) {
+        console.error('잘못된 요청입니다.', error);
+    }
+};
+
+const displayPostAndUser = function(post, user){
+    // 게시글 정보 표시
+    document.getElementById('title').textContent = post.title; // 제목
+    document.getElementById('board-content').textContent = post.content; // 내용    
+    document.getElementById('like-count').textContent = numToK(post.like_count); // 좋아요수
+    document.getElementById('view-count').textContent = numToK(post.view_count); // 조회수
+    document.getElementById('reply-count').textContent = numToK(post.comment_count); // 댓글수
+    
+    if(post.image !== ''){
+        document.getElementById('board-image').src = post.image;
+    }else{
+        document.getElementById('board-image').style.display = 'none';
+    }
+
+    // 작성자 정보 표시
+    document.getElementById('username').textContent = user.nickname; // 작성자 이름
+    document.getElementById('created-at').textContent = post.created_at; // 작성일
+    document.querySelector('.profile-image').src = user.profile_image; // 프로필 이미지
 }
+/**
+ * 좋아요수, 댓글수, 조회수
+ * 1000이상 1k
+ * 10000이상 10k
+ * 100000이상 100k
+ */
+const numToK = function(num){
+    if(num >= 100000){
+        return Math.floor(num/1000) + 'k';
+    }else if(num >= 10000){
+        return Math.floor(num/1000) + 'k';
+    }else if(num >= 1000){
+        return Math.floor(num/1000) + 'k';
+    }else{
+        return num;
+    }
+}
+
+const modalContainer = document.getElementById('modal-container');
+const body = document.body;
 
 
 postDelete();
@@ -124,4 +198,3 @@ postModal();
 commentModify();
 commentDelete();
 commentModal();
-displayBoardDetail();
