@@ -112,11 +112,16 @@ const commentModal = function(){
     });
 }
 
-const modalContainer = document.querySelector('.modal-container');
-const body = document.body;
+//글이랑 댓글 뿌려주기
+//게시글 뿌리기
+const displayBoardDetail = function(){
+
+}
+
 
 postDelete();
 postModal();
 commentModify();
 commentDelete();
 commentModal();
+displayBoardDetail();

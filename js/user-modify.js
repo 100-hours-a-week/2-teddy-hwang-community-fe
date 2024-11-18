@@ -1,19 +1,3 @@
-const dropdown = function(){
-    const profileImage = document.getElementById("profile-image");
-    const dropdown = document.getElementById('dropdown');
-
-    //프로필 클릭하면 드롭다운
-    profileImage.addEventListener('click', () => {
-        dropdown.style.display = 'block'; 
-        dropdown.classList.toggle('show');   
-    });
-    //마우스가 영역 밖으로 나가면 사라지게하기
-    dropdown.addEventListener('mouseleave', () => {
-        dropdown.style.display = 'none'; 
-        dropdown.classList.remove('show');   
-    }); 
-}
-
 // 공통으로 사용할 스타일 설정 함수
 const openModal = function(modal) {
     const activeModal = document.querySelector('.modal.active');
