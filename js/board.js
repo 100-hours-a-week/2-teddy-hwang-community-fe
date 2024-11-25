@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   displayBoard();
+  createPostBtn();
 });
 /**
  * 게시글 작성 버튼을 누를 시 게시글 작성 페이지로 이동
@@ -14,14 +15,15 @@ const createPostBtn = function () {
 const fetchData = async (url) => {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
+  console.log(response);
   return await response.json();
 };
 
 //게시글의 HTML 요소 생성 함수
-const createBoardArticle = (post, user) => {
+const createBoardArticle = (post) => {
   const boardArticle = document.createElement("article");
   boardArticle.classList.add("board");
-  boardArticle.setAttribute("id", `${post.post_id}`);
+  boardArticle.setAttribute("id", `${post.id}`);
   boardArticle.innerHTML = `
         <span class="title">${post.title}</span>
         <article class="board-info">
@@ -33,9 +35,9 @@ const createBoardArticle = (post, user) => {
         <hr> 
         <article class="user-info">
             <span class="box">
-                <img class="profile-image" src="${user.profile_image}" alt="Profile Image">
+                <img class="profile-image" src="${post.author.profile_image}" alt="Profile Image">
             </span>
-            <span class="username">${user.nickname}</span>
+            <span class="username">${post.author.nickname}</span>
         </article>     
     `;
 
@@ -49,19 +51,14 @@ const createBoardArticle = (post, user) => {
 //게시판을 렌더링하는 함수
 const displayBoard = async () => {
   try {
-    const postData = await fetchData("../data/post.json");
-    const userData = await fetchData("../data/user.json");
+    const postData = await fetchData("http://localhost:8080/api/posts");
     const boardContainer = document.querySelector(".board-container");
 
-    postData.post.forEach((post) => {
-      const user = userData.user.find((u) => u.user_id === post.user_id);
-      if (user) {
-        const boardArticle = createBoardArticle(post, user);
-        boardContainer.appendChild(boardArticle);
-      } else {
-        console.error(`유저 ID가 ${post.user_id} 없습니다.`);
-      }
+    postData.data.forEach((post) => {
+      const boardArticle = createBoardArticle(post);
+      boardContainer.appendChild(boardArticle);
     });
+    
   } catch (error) {
     console.error("잘못된 요청입니다.", error);
   }
@@ -83,5 +80,3 @@ const numToK = function (num) {
     return num;
   }
 };
-
-createPostBtn();
