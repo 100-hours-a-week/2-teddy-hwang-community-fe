@@ -1,3 +1,9 @@
+document.addEventListener('DOMContentLoaded', () => {
+  uploadProfileImage();
+  emailInput();
+  passwordInput();
+  nicknameInput();
+});
 /**
  * 프로필 이미지 올리기
  * 동그라미 클릭 시 file-input이 클릭되도록 설정
@@ -64,7 +70,7 @@ const emailInput = function () {
   const emailInput = document.getElementById("email");
   const emailHelpertext = document.getElementById("email-helpertext");
 
-  emailInput.addEventListener("blur", () => {
+  emailInput.addEventListener("blur", async () => {
     const emailValue = emailInput.value;
 
     //이메일이 비어있는 경우
@@ -72,9 +78,7 @@ const emailInput = function () {
       emailHelpertext.textContent = "*이메일을 입력해주세요.";
       emailValid = false;
       return;
-    }
-
-    //중복된 이메일인 경우(서버 만들고 추후 추가)
+    }   
 
     //이메일 형식이 안맞는 경우
     if (!emailIsValid(emailValue)) {
@@ -83,12 +87,20 @@ const emailInput = function () {
       emailValid = false;
       return;
     } else {
-      emailHelpertext.textContent = "";
-      emailValid = true;
-      emailData = emailValue;
-      createUserBtnState();
-      return;
+      //이메일 중복시
+      const existByEmail = await fetchData(`http://localhost:8080/api/users/email/${emailValue}`);
+      if(!existByEmail.data) {
+        emailHelpertext.textContent = "*중복된 이메일 입니다.";
+        emailValid = false;
+        return;
+      }
     }
+
+    emailHelpertext.textContent = "";
+    emailValid = true;
+    emailData = emailValue;
+    createUserBtnState();
+    return;
   });
 };
 //이메일 유효성 검사 함수
@@ -185,7 +197,7 @@ const nicknameInput = function () {
   const nicknameInput = document.getElementById("nickname");
   const nicknameHelpertext = document.getElementById("nickname-helpertext");
 
-  const showNicknameError = function (nickname) {
+  const showNicknameError = async (nickname) => {
     //닉네임을 입력하지 않은 경우
     if (nickname === "") {
       nicknameHelpertext.textContent = "*닉네임을 입력해주세요.";
@@ -206,7 +218,14 @@ const nicknameInput = function () {
         nicknameValid = false;
         return;
       }
-      //닉네임 중복시 추가 작성해야함
+    }else {
+      //닉네임 중복시 
+      const existByEmail = await fetchData(`http://localhost:8080/api/users/nickname/${nickname}`);
+      if(!existByEmail.data) {
+        nicknameHelpertext.textContent = "*중복된 닉네임 입니다.";
+        nicknameValid = false;
+        return;
+      }
     }
     nicknameHelpertext.textContent = "";
     nicknameValid = true;
@@ -230,18 +249,50 @@ let emailValid = false;
 let passwordValid = false;
 let nicknameValid = false;
 
-const createUserBtnState = function () {
-  const createUserBtn = document.getElementById("create-user-btn");
-  if (profileImageValid && emailValid && passwordValid && nicknameValid) {
-    createUserBtn.style.backgroundColor = "#7F6AEE";
-    createUserBtn.disabled = false;
-  } else {
-    createUserBtn.style.backgroundColor = "#ACA0EB";
-    createUserBtn.disabled = true;
+const createUserBtnState = () => {
+  try {
+    const createUserBtn = document.getElementById("create-user-btn");
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const nickname = document.getElementById("nickname").value;
+    //모든 조건 만족 시
+    if (profileImageValid && emailValid && passwordValid && nicknameValid) {
+      createUserBtn.style.backgroundColor = "#7F6AEE";
+      createUserBtn.disabled = false;
+
+      createUserBtn.addEventListener('click', async () => {
+        //body 데이터
+        const userData = {
+          email: email,
+          password: password,
+          nickname: nickname,
+          profile_image: ".jpg"
+        }
+        //POST 요청
+        const response = await fetch('http://localhost:8080/api/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(userData)
+        });
+
+        if(!response.ok) throw new Error('회원가입에 실패했습니다.');
+
+        const result = await response.json();
+        if(result) location.href = '../html/login.html';
+      });     
+    } else {
+      createUserBtn.style.backgroundColor = "#ACA0EB";
+      createUserBtn.disabled = true;
+    }
+  }catch(error) {
+    throw new Error('회원가입에 실패했습니다', error);
   }
 };
-
-uploadProfileImage();
-emailInput();
-passwordInput();
-nicknameInput();
+//데이터를 가져오는 함수
+const fetchData = async (url) => {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
+  return await response.json();
+};
