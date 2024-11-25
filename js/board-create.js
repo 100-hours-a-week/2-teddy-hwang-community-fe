@@ -1,3 +1,9 @@
+document.addEventListener('DOMContentLoaded', () => {
+  titleBanEnter();
+  completeBtn();
+  uploadImage();
+});
+let boardImage = '';
 /**
  * 제목은 26자까지 작성 가능
  * 27자 이상 작성시 작성 안됨
@@ -38,15 +44,46 @@ const completeBtn = function () {
   title.addEventListener("input", completeBtnStyle);
   content.addEventListener("input", completeBtnStyle);
 
-  completeBtn.addEventListener("click", () => {
+  completeBtn.addEventListener("click", async() => {
     if (title.value.trim() == "" || content.value.trim() == "") {
       helpertext.textContent = "제목,내용을 모두 작성해주세요";
     } else {
-      helpertext.textContent = "";
-      console.log("제출 완료!", title.value, content.value);
+      helpertext.textContent = "";     
       //이후 완료 로직 처리
+      await createBoard(title.value, content.value, boardImage);
     }
   });
+};
+//게시글 저장 함수
+const createBoard = async (title, content, image) => {
+  try {
+    //게시글 데이터 유저ID 추후 수정
+    const boardData = {
+      title: title,
+      content: content,
+      image: image,
+      user_id: 1
+    }
+
+    const response = await fetch('http://localhost:8080/api/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(boardData)
+    });
+
+    if(!response.ok) {
+      throw new Error('게시글 저장에 실패했습니다');
+    }
+    
+    const result = await response.json();
+    console.log(result);
+    location.href = `../html/board-detail.html?postId=${result.data.post_id}`;
+    
+  }catch(error) {
+    throw new Error('게시글을 저장하는데 오류가 발생했습니다.', error);
+  }
 };
 /**
  * 파일 선택 누르면 컴퓨터에서 이미지 파일 업로드
@@ -72,11 +109,9 @@ const loadImage = function (fileInput) {
 
     if (profileImage) {
       fileName.textContent = profileImage.name;
-      //이미지 이름 띄우는거 까진됨 보내는 로직은 추후 작성
+      
+      //s3 이용해서 개발 예정
     }
   });
 };
 
-titleBanEnter();
-completeBtn();
-uploadImage();
