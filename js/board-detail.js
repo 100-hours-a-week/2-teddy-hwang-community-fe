@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     commentDelete();
     commentModal();
     handleComment();
+    postModify();
 });
 
 const modalContainer = document.querySelector('.modal-container');
@@ -12,7 +13,7 @@ const body = document.body;
 let deleteCommentId = null;
 
 // 공통으로 사용할 스타일 설정 함수
-const openModal = function (modal) {
+const openModal = (modal) => {
     const activeModal = document.querySelector('.modal.active');
     //기존에 열려있는 모달 닫기
     if (activeModal) {
@@ -25,7 +26,7 @@ const openModal = function (modal) {
     body.style.overflow = 'hidden'; // 스크롤 막기
 };
 
-const closeModal = function () {
+const closeModal = () => {
     const activeModal = document.querySelector('.modal.active');
     //모달 닫기
     if (activeModal) {
@@ -40,11 +41,17 @@ const closeModal = function () {
 /**
  * 우측 상단 수정 버튼 누르면 수정창으로 이동
  */
-const postModify = function () {
-    const postDeleteBtn = document.getElementById('delete-btn');
-
-    postDeleteBtn.addEventListener('click', () => {
+const postModify = () => {
+    //현재 주소 및 쿼리 파라미터 추출
+    const url = new URL(window.location.href);
+    const urlParams = url.searchParams;
+    const postId = urlParams.get('postId');
+    console.log(postId);
+    
+    const postModifyBtn = document.getElementById('modify-btn');
+    postModifyBtn.addEventListener('click', () => {
         //수정창 이동 로직 넣기(글 id를 가진 채)
+        location.href = `../html/board-modify.html?postId=${postId}`;
     });
 };
 
@@ -54,7 +61,7 @@ const postModify = function () {
  * 1. 백그라운드 불투명도 50% 블랙
  * 2. 백그라운드 스크롤, 클릭 안됨
  */
-const postDelete = function () {
+const postDelete = () => {
     const postDeleteBtn = document.getElementById('delete-btn');
     const postDeleteModal = document.getElementById('board-modal');
 
@@ -64,7 +71,7 @@ const postDelete = function () {
 };
 
 //글 삭제 모달창 취소, 확인
-const postModal = function () {
+const postModal = () => {
     const postCancelBtn = document.getElementById('board-cancel-btn');
     const postCheckBtn = document.getElementById('board-check-btn');
     //취소
@@ -83,7 +90,7 @@ const postModal = function () {
  * 1. 백그라운드 불투명도 50% 블랙
  * 2. 백그라운드 스크롤, 클릭 안됨
  */
-const commentDelete = function () {
+const commentDelete = () => {
     const commentDeleteModal = document.getElementById('reply-modal');
 
     const commentList = document.querySelector('.reply-list');
@@ -148,7 +155,7 @@ const loadBoardData = async () => {
     }
 };
 
-const displayPost = function (post) {
+const displayPost = (post) => {
     //게시글 정보 표시
     document.getElementById('title').textContent = post.title; // 제목
     document.getElementById('board-content').textContent = post.content; // 내용    
@@ -297,7 +304,7 @@ const handleComment = () => {
  * 10000이상 10k
  * 100000이상 100k
  */
-const numToK = function (num) {
+const numToK = (num) => {
     if (num >= 100000) {
         return Math.floor(num / 1000) + 'k';
     } else if (num >= 10000) {
