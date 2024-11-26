@@ -5,11 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     commentModify();
     commentDelete();
     commentModal();
-    createComment();
+    handleComment();
 });
 
 let modalContainer = document.getElementById('modal-container');
 let body = document.body;
+let commentId = null;
 
 // 공통으로 사용할 스타일 설정 함수
 const openModal = function (modal) {
@@ -125,7 +126,7 @@ const commentModal = function () {
     });
 }
 
-//게시글 데이터를 가져오는 함수
+//데이터를 가져오는 함수
 const fetchData = async (url) => {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
@@ -182,7 +183,7 @@ const displayPost = function (post) {
                             <img class="reply-profile-image" src="${comment.author.profile_image}" />
                         </span>
                         <span class="reply-username">${comment.author.nickname}</span>
-                        <span class="reply-created-at">${comment.created_at}</span>
+                        <span class="reply-created-at">${comment.modified_at}</span>
                     </article>
                     <article class="reply-content-container">
                         <p class="reply-content">${comment.content}</p>
@@ -190,8 +191,8 @@ const displayPost = function (post) {
                 </article>
                 ${comment.user_id === parseInt(currentUserId) ? `
                     <article class="reply-btn-container">
-                        <button type="button" class="modify-reply-btn">수정</button>
-                        <button type="button" class="delete-reply-btn">삭제</button>
+                        <button type="button" class="modify-reply-btn" comment-id=${comment.id}>수정</button>
+                        <button type="button" class="delete-reply-btn" comment-id=${comment.id}>삭제</button>
                     </article>
                 ` : ''}
             </div>
@@ -199,54 +200,100 @@ const displayPost = function (post) {
         replyListContainer.insertAdjacentHTML('beforeend', replyHTML);
     });
 }
-//댓글 작성
-const createComment = () => {
-    const commentInput = document.getElementById('reply-textarea');
-    const createCommentBtn = document.getElementById('reply-btn');
 
-    // 댓글 입력 시 버튼 스타일 변경
-    commentInput.addEventListener('input', () => {
-        if (commentInput.value.trim()) {
-            createCommentBtn.style.backgroundColor = '#7F6AEE';
-            createCommentBtn.disabled = false;
+// 댓글 작성 및 수정 통합
+const handleComment = () => {
+    const commentList = document.querySelector('.reply-list');
+    const commentInput = document.getElementById('reply-textarea');
+    const commentBtn = document.getElementById('reply-btn');
+    let commentId = null;
+
+    //버튼 스타일 변경 함수
+    const updateButtonStyle = (value) => {
+        if (value.trim()) {
+            commentBtn.style.backgroundColor = '#7F6AEE';
+            commentBtn.disabled = false;
         } else {
-            createCommentBtn.style.backgroundColor = '#ACA0EB';
-            createCommentBtn.disabled = true;
+            commentBtn.style.backgroundColor = '#ACA0EB';
+            commentBtn.disabled = true;
+        }
+    };
+    
+    //댓글 입력 시 버튼 스타일 변경
+    commentInput.addEventListener('input', () => {
+        updateButtonStyle(commentInput.value);
+    });
+
+    //수정 버튼 클릭 이벤트를 댓글 목록 컨테이너에 위임
+    commentList.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modify-reply-btn')) {
+            const editCommentId = e.target.getAttribute('comment-id');
+            const replyContent = e.target.closest('.reply-item').querySelector('.reply-content').textContent;
+
+            commentInput.value = replyContent;
+            commentId = editCommentId;
+            commentBtn.textContent = '댓글 수정';
+            updateButtonStyle(replyContent);
         }
     });
 
-    createCommentBtn.addEventListener('click', async () => {
-        const comment = commentInput.value.trim();
+    //댓글 작성/수정 이벤트
+    commentBtn.addEventListener('click', async () => {
+        const content = commentInput.value;
 
-        //댓글이 비어있으면 요청X
-        if(!comment) return;
+        if(!content) {
+            return;
+        }
 
         try {
+            let response; 
             const commentData = {
-                user_id: 2,
+                user_id: 1,
                 post_id: 1,
-                content: commentInput.value
+                content: content
             }
-            //POST 요청
-            const response = await fetch('http://localhost:8080/api/comments', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(commentData)
-            });
 
-            if(response.ok) {
-                commentInput.value = '';
-                location.reload();
-            } 
+            //수정 모드와 작성 구분
+            if(commentId) {
+                // 수정 
+                response = await fetch(`http://localhost:8080/api/comments/${commentId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(commentData)
+                });
+                
+            } else {
+                //작성
+                response = await fetch(`http://localhost:8080/api/comments`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(commentData)
+                });
+            }
+
+            if(!response.ok) {
+                throw new Error(commentId ? '댓글 수정에 실패했습니다.' : '댓글 작성에 실패했습니다.');
+            }
+
+            // 입력창 초기화
+            commentInput.value = '';
+            commentId = null;
+            commentBtn.textContent = '댓글 등록';
+            updateButtonStyle('');
+
+            location.reload();
+
         } catch (error) {
-            throw new Error('댓글 작성을 실패했습니다', error);
+            console.error('Error:', error);
+            alert(error.message);
         }
     });
-
 }
-
+//
 /**
  * 좋아요수, 댓글수, 조회수
  * 1000이상 1k
