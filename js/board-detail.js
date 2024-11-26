@@ -2,15 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     loadBoardData();
     postDelete();
     postModal();
-    commentModify();
     commentDelete();
     commentModal();
     handleComment();
 });
 
-let modalContainer = document.getElementById('modal-container');
-let body = document.body;
-let commentId = null;
+const modalContainer = document.querySelector('.modal-container');
+const body = document.body;
+let deleteCommentId = null;
 
 // 공통으로 사용할 스타일 설정 함수
 const openModal = function (modal) {
@@ -74,28 +73,9 @@ const postModal = function () {
     });
     //확인
     postCheckBtn.addEventListener('click', () => {
-
+        
     });
 }
-
-/**
- * 댓글 수정 버튼 누르면 기존 댓글 입력창에 기존 텍스트 내용이 보여짐
- * 댓글 등록 버튼이 댓글 수정으로 변경
- */
-const commentModify = function () {
-    const commentModifyBtn = document.getElementById('modify-reply-btn');
-    const commentTextarea = document.getElementById('reply-textarea');
-    const commentBtn = document.getElementById('reply-btn');
-
-    commentModifyBtn.addEventListener('click', () => {
-        console.log('click!!');
-        //기존 댓글 내용을 댓글 창에 띄워주기
-        commentTextarea.value = '기존 내용 넣기';
-
-        //댓글 등록 버튼 댓글 수정으로 변경
-        commentBtn.textContent = '댓글 수정';
-    });
-};
 
 /**
  * 댓글 삭제 버튼 누르면 삭제 모달창 띄우기
@@ -104,11 +84,15 @@ const commentModify = function () {
  * 2. 백그라운드 스크롤, 클릭 안됨
  */
 const commentDelete = function () {
-    const commentDeleteBtn = document.getElementById('delete-reply-btn');
     const commentDeleteModal = document.getElementById('reply-modal');
 
-    commentDeleteBtn.addEventListener('click', () => {
-        openModal(commentDeleteModal);
+    const commentList = document.querySelector('.reply-list');
+    //삭제 버튼 클릭 이벤트를 댓글 목록 컨테이너에 위임
+    commentList.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-reply-btn')) {
+            deleteCommentId = e.target.getAttribute('comment-id');
+            openModal(commentDeleteModal);
+        }
     });
 };
 
@@ -119,10 +103,25 @@ const commentModal = function () {
     //취소
     commentCancelBtn.addEventListener('click', () => {
         closeModal();
+        deleteCommentId = null;
     });
     //확인
-    commentCheckBtn.addEventListener('click', () => {
-
+    commentCheckBtn.addEventListener('click', async () => {
+        if(!deleteCommentId) return;
+        try {
+            const response = await fetch(`http://localhost:8080/api/comments/${deleteCommentId}`, {
+                method: 'DELETE'
+            });
+            
+            if(!response.ok){
+                throw new Error('댓글 삭제에 실패했습니다.');
+            }
+            closeModal();
+            deleteCommentId = null;
+            location.reload();
+        } catch (error) {
+            throw new Error('댓글 삭제에 실패했습니다.', error);           
+        }        
     });
 }
 
@@ -267,7 +266,7 @@ const handleComment = () => {
             } else {
                 //작성
                 response = await fetch(`http://localhost:8080/api/comments`, {
-                    method: 'PATCH',
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -289,11 +288,9 @@ const handleComment = () => {
 
         } catch (error) {
             console.error('Error:', error);
-            alert(error.message);
         }
     });
 }
-//
 /**
  * 좋아요수, 댓글수, 조회수
  * 1000이상 1k
