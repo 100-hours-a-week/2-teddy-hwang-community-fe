@@ -1,3 +1,8 @@
+document.addEventListener('DOMContentLoaded', () => {
+  emailInput();
+  passwordInput();
+  login();
+});
 /**
  * 이메일 유효성 검사
  * 인풋 값을 입력하다 포커스 아웃됐을 때 helpertext 띄워야함
@@ -107,35 +112,41 @@ const login = function () {
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
   const helpertext = document.getElementById("helpertext");
+  try{
+    loginBtn.addEventListener('click', async () => {     
+      const loginData = {
+        email: emailInput.value,
+        password: passwordInput.value
+      };
 
-  loginBtn.addEventListener("click", () => {
-    fetch("../data/user.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
-        }
-        return response.json(); // JSON 데이터로 변환
-      })
-      .then((data) => {
-        const user = data.user.find(
-          (u) =>
-            u.email === emailInput.value && u.password === passwordInput.value,
-        );
-        if (user) {
-          location.href = "../html/board.html";
-        } else {
-          helpertext.textContent = "*비밀번호가 다릅니다.";
-        }
-      })
-      .catch((error) => {
-        console.error(
-          "There has been a problem with your fetch operation:",
-          error,
-        );
+      const response = await fetch('http://localhost:8080/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginData)
       });
-  });
-};
 
-emailInput();
-passwordInput();
-login();
+      const result = await response.json();
+
+      if(response.status === 401) {
+        helpertext.textContent = '*비밀번호가 다릅니다.';
+        return;
+      }
+
+      if(!response.ok) throw new Error('로그인에 실패했습니다.');
+      
+      if(result) location.href = '../html/board.html';
+      
+  }); 
+  }catch(error) {
+    throw new Error('로그인에 실패했습니다', error);
+  }
+
+};
+//데이터를 가져오는 함수
+const fetchData = async (url) => {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
+  return await response.json();
+};
