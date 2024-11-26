@@ -3,7 +3,7 @@ const back = function () {
   const backIcon = document.querySelector(".material-icons");
 
   backIcon.addEventListener("click", () => {
-    history.back();
+    location.href = document.referrer;
   });
 };
 
