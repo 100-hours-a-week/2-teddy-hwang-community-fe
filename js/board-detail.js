@@ -46,7 +46,6 @@ const postModify = () => {
     const url = new URL(window.location.href);
     const urlParams = url.searchParams;
     const postId = urlParams.get('postId');
-    console.log(postId);
     
     const postModifyBtn = document.getElementById('modify-btn');
     postModifyBtn.addEventListener('click', () => {
@@ -79,8 +78,24 @@ const postModal = () => {
         closeModal();
     });
     //확인
-    postCheckBtn.addEventListener('click', () => {
-        
+    postCheckBtn.addEventListener('click', async () => {
+        //현재 주소 및 쿼리 파라미터 추출
+        const url = new URL(window.location.href);
+        const urlParams = url.searchParams;
+        const postId = urlParams.get('postId');
+        try {
+            const response = await fetch(`http://localhost:8080/api/posts/${postId}`, {
+                method: 'DELETE'
+            });
+            
+            if(!response.ok){
+                throw new Error('글 삭제에 실패했습니다.');
+            }
+            closeModal();
+            location.href = '../html/board.html';
+        } catch (error) {
+            throw new Error('글 삭제에 실패했습니다.', error);           
+        }        
     });
 }
 
