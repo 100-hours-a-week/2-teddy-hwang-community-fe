@@ -206,6 +206,8 @@ header .account-container {
   text-align: center;
   margin-left: auto;
   margin-right: 10px;
+
+  cursor: pointer;
 }
 
 .btn-container .delete-btn {
@@ -221,6 +223,8 @@ header .account-container {
   text-align: center;
   margin-left: auto;
   margin-right: 24px;
+
+  cursor: pointer;
 }
 
 hr {
@@ -275,6 +279,7 @@ hr {
   margin-left: 21px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .board-info .view-square {
@@ -287,6 +292,7 @@ hr {
   margin: 0px 7px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .board-info .reply-square {
@@ -299,6 +305,7 @@ hr {
   margin-right: 7px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .like-square .like-count {
@@ -413,19 +420,31 @@ input {
   align-items: center;
   text-align: center;
   color: white;
+  cursor: pointer;
 }
 
 .reply-list {
   display: flex;
+  flex-direction: column;
   margin: auto;
   width: 544px;
   height: 65px;
-  margin-bottom: 16px;
+}
+
+.reply-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
 }
 
 .reply-info {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  margin-bottom: 16px;
 }
 
 .reply-info .reply-info-wrap {
@@ -502,6 +521,7 @@ input {
   line-height: 23.48px;
   text-align: center;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .reply-btn-container .delete-reply-btn {
@@ -516,6 +536,7 @@ input {
   line-height: 23.48px;
   text-align: center;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .modal-container {
@@ -594,6 +615,7 @@ input {
   color: white;
 
   margin-right: 16px;
+  cursor: pointer;
 }
 
 .check-btn {
@@ -608,4 +630,5 @@ input {
   font-weight: 400;
   line-height: 23.87px;
   text-align: center;
+  cursor: pointer;
 }
