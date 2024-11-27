@@ -6,11 +6,16 @@ document.addEventListener('DOMContentLoaded', () => {
     commentModal();
     handleComment();
     postModify();
+    handleLike();
 });
 
 const modalContainer = document.querySelector('.modal-container');
 const body = document.body;
 let deleteCommentId = null;
+//현재 주소 및 쿼리 파라미터 추출
+const url = new URL(window.location.href);
+const urlParams = url.searchParams;
+const postId = Number(urlParams.get('postId'));
 
 // 공통으로 사용할 스타일 설정 함수
 const openModal = (modal) => {
@@ -42,10 +47,7 @@ const closeModal = () => {
  * 우측 상단 수정 버튼 누르면 수정창으로 이동
  */
 const postModify = () => {
-    //현재 주소 및 쿼리 파라미터 추출
-    const url = new URL(window.location.href);
-    const urlParams = url.searchParams;
-    const postId = urlParams.get('postId');
+
     
     const postModifyBtn = document.getElementById('modify-btn');
     postModifyBtn.addEventListener('click', () => {
@@ -79,10 +81,6 @@ const postModal = () => {
     });
     //확인
     postCheckBtn.addEventListener('click', async () => {
-        //현재 주소 및 쿼리 파라미터 추출
-        const url = new URL(window.location.href);
-        const urlParams = url.searchParams;
-        const postId = urlParams.get('postId');
         try {
             const response = await fetch(`http://localhost:8080/api/posts/${postId}`, {
                 method: 'DELETE'
@@ -157,10 +155,6 @@ const fetchData = async (url) => {
 //게시판을 렌더링하는 함수
 const loadBoardData = async () => {
     try {
-        //querystring 추출
-        const urlParams = new URLSearchParams(window.location.search);
-        const postId = urlParams.get('postId');
-
         const post = await fetchData(`http://localhost:8080/api/posts/${postId}`);
 
         displayPost(post.data);
@@ -270,7 +264,7 @@ const handleComment = () => {
             let response; 
             const commentData = {
                 user_id: 1,
-                post_id: 1,
+                post_id: postId,
                 content: content
             }
 
@@ -313,6 +307,48 @@ const handleComment = () => {
         }
     });
 }
+//좋아요 기능 구현
+const handleLike = () => {
+    const likeBtn = document.querySelector('.like-square');   
+    const userId = 1; // 현재 로그인한 사용자 ID
+    
+    likeBtn.addEventListener('click', async () => {
+        try {
+            // 좋아요 상태 조회
+            const response = await fetchData(`http://localhost:8080/api/posts/${postId}/like?userId=${userId}`);
+            
+            if(!response.is_liked) {
+                // 좋아요 추가
+                const addResponse = await fetch(`http://localhost:8080/api/posts/${postId}/like`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ user_id: userId })
+                });
+                
+                if(!addResponse.ok) {
+                    throw new Error('좋아요 추가를 실패했습니다.');
+                }
+            } else {
+                // 좋아요 취소 - DELETE 요청도 쿼리 파라미터 사용
+                const deleteResponse = await fetch(`http://localhost:8080/api/posts/${postId}/like?userId=${userId}`, {
+                    method: 'DELETE'
+                });
+                
+                if(!deleteResponse.ok) {
+                    throw new Error('좋아요 취소를 실패했습니다.');
+                }
+            }
+            
+            // 성공적으로 처리된 후 페이지 새로고침
+            location.reload();
+            
+        } catch (error) {
+            console.error('좋아요 처리 중 오류가 발생했습니다', error);
+        }
+    }); 
+};
 /**
  * 좋아요수, 댓글수, 조회수
  * 1000이상 1k
