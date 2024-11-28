@@ -1,5 +1,17 @@
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('../html/dropdown.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('dropdown-container').innerHTML = data;
+
+    //dropdown.html이 로드된 이후에 초기화
+    dropdown();
+    link();
+  })
+});
+
 //프로필 이미지 클릭 시 드롭다운
-const dropdown = function () {
+const dropdown = () => {
   const profileImage = document.querySelector(".account-image");
   const dropdown = document.getElementById("dropdown");
 
@@ -14,5 +26,23 @@ const dropdown = function () {
     dropdown.classList.remove("show");
   });
 };
+//드롭다운 링크
+const link = () => {
+  const userId = 1;
+  const userModifyLink = document.getElementById('user-modify-link');
+  const passwordModifyLink = document.getElementById('password-modify-link');
+  const logoutLink = document.getElementById('logout-link');
 
-dropdown();
+  
+  userModifyLink.addEventListener('click', () => {
+    window.location.href = `../html/user-modify.html?userId=${userId}`;
+  });
+
+  passwordModifyLink.addEventListener('click', () => {
+    window.location.href = `../html/password-modify.html?userId=${userId}`;
+  });
+
+  logoutLink.addEventListener('click', () => {
+    window.location.href = '../html/login.html';
+  });
+}
