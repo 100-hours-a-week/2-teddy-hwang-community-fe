@@ -112,13 +112,14 @@ const login = function () {
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
   const helpertext = document.getElementById("helpertext");
-  try{
-    loginBtn.addEventListener('click', async () => {     
+  
+  loginBtn.addEventListener('click', async () => {   
+    try{
       const loginData = {
         email: emailInput.value,
         password: passwordInput.value
       };
-
+  
       const response = await fetch('http://localhost:8080/api/users/login', {
         method: 'POST',
         headers: {
@@ -126,23 +127,22 @@ const login = function () {
         },
         body: JSON.stringify(loginData)
       });
-
+  
       const result = await response.json();
-
+  
       if(response.status === 401) {
         helpertext.textContent = '*비밀번호가 다릅니다.';
         return;
       }
-
+  
       if(!response.ok) throw new Error('로그인에 실패했습니다.');
       
       if(result) location.href = '../html/board.html';
-      
+    
+    }catch(error) {
+      throw new Error('로그인에 실패했습니다', error);
+    }    
   }); 
-  }catch(error) {
-    throw new Error('로그인에 실패했습니다', error);
-  }
-
 };
 //데이터를 가져오는 함수
 const fetchData = async (url) => {
