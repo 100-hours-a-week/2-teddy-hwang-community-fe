@@ -42,7 +42,7 @@ const createBoardArticle = (post) => {
     `;
 
   boardArticle.addEventListener("click", () => {
-    location.href = `../html/board-detail.html?postId=${post.post_id}`;
+    location.href = `../html/board-detail.html?postId=${post.id}`;
   });
 
   return boardArticle;
