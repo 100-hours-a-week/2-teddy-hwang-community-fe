@@ -1,5 +1,24 @@
+document.addEventListener('DOMContentLoaded', () => {
+  userDeleteText();
+  userModal();
+  nicknameInput();
+  loadUser();
+  changeImage();
+});
+
+let nicknameValid = false;
+const modalContainer = document.querySelector(".modal-container");
+const body = document.body;
+
+//현재 주소 및 쿼리 파라미터 추출
+const url = new URL(window.location.href);
+const urlParams = url.searchParams;
+const userId = Number(urlParams.get('userId'));
+
+let selectedImageFile = '';
+
 // 공통으로 사용할 스타일 설정 함수
-const openModal = function (modal) {
+const openModal = (modal) => {
   const activeModal = document.querySelector(".modal.active");
   //기존에 열려있는 모달 닫기
   if (activeModal) {
@@ -12,7 +31,7 @@ const openModal = function (modal) {
   body.style.overflow = "hidden"; // 스크롤 막기
 };
 
-const closeModal = function () {
+const closeModal = () => {
   const activeModal = document.querySelector(".modal.active");
   //모달 닫기
   if (activeModal) {
@@ -26,7 +45,7 @@ const closeModal = function () {
 /**
  * 회원탈퇴 클릭 시 모달 창 띄움
  */
-const userDeleteText = function () {
+const userDeleteText = () => {
   const userDeleteText = document.getElementById("user-delete");
   const userModal = document.getElementById("user-modal");
 
@@ -35,7 +54,7 @@ const userDeleteText = function () {
   });
 };
 //회원탈퇴 모달창 취소, 확인
-const userModal = function () {
+const userModal = () => {
   const userCancelBtn = document.getElementById("user-cancel-btn");
   const userCheckBtn = document.getElementById("user-check-btn");
   //취소
@@ -57,12 +76,12 @@ const userModal = function () {
  * 닉네임 중복시 -> *중복된 닉네임 입니다.
  * 닉네임 11자 이상 작성시 -> *닉네임은 최대 10자 까지 작성 가능합니다.
  */
-const nicknameInput = function () {
+const nicknameInput = () => {
   const nicknameInput = document.getElementById("nickname");
   const modifyBtn = document.getElementById("modify-btn");
   const helpertext = document.getElementById("helpertext");
 
-  const showNicknameError = function (nickname) {
+  const showNicknameError = async (nickname) => {
     //닉네임을 입력하지 않은 경우
     if (nickname === "") {
       helpertext.textContent = "*닉네임을 입력해주세요.";
@@ -82,16 +101,31 @@ const nicknameInput = function () {
         nicknameValid = false;
         return;
       }
-      //닉네임 중복시 추가 작성해야함
     }
-    helpertext.textContent = "";
-    nicknameValid = true;
-    return;
+     //닉네임 중복시 추가 작성해야함
+    try {
+      const response = await fetch(`http://localhost:8080/api/users/nickname/${nickname}`);
+      result = await response.json();
+      if(!result.data) {
+        helpertext.textContent = "*중복된 닉네임 입니다.";
+        nicknameValid = false;
+        return;
+      }else {
+        helpertext.textContent = "";
+        nicknameValid = true;
+        toastMessage();
+        return;
+      }
+    } catch (error) {
+      throw new Error('닉네임 중복 확인에 실패했습니다', error);
+    }
   };
 
-  modifyBtn.addEventListener("click", () => {
-    showNicknameError(nicknameInput.value);
-    if (nicknameValid) toastMessage();
+  modifyBtn.addEventListener("click", async () => {
+    await showNicknameError(nicknameInput.value);
+    if (nicknameValid) {
+      updateUser(nicknameInput);
+    }
   });
 };
 
@@ -101,7 +135,7 @@ const nicknameIsValid = (nickname) => {
   return nicknamePattern.test(nickname);
 };
 //토스트 메시지 1초 보여주기
-const toastMessage = function () {
+const toastMessage = () => {
   const toast = document.getElementById("toast");
   toast.classList.add("show");
   setTimeout(() => {
@@ -109,10 +143,80 @@ const toastMessage = function () {
   }, 1000);
 };
 
-let nicknameValid;
-const modalContainer = document.getElementById("modal-container");
-const body = document.body;
+const loadUser = async () => {
+  const email = document.querySelector('.user-email');
+  const nicknameInput = document.getElementById('nickname');
+  const profileImage = document.querySelector('.profile-image');
+  try {
+    const response = await fetch(`http://localhost:8080/api/users/${userId}`);
+    
+    if(!response.ok) {
+      throw new Error('유저 조회를 실패했습니다.');   
+    }
 
-userDeleteText();
-userModal();
-nicknameInput();
+    const result = await response.json();
+    //유저 정보 채우기
+    email.textContent = result.data.email;
+    nicknameInput.value = result.data.nickname;
+    profileImage.src = result.data.profile_image;
+
+  } catch (error) {
+    throw new Error('유저 조회를 실패했습니다.', error);
+  }
+}
+//유저 정보 수정 api
+const updateUser = async (nicknameInput) => {
+  const profileImage = document.querySelector('.profile-image');
+
+  const userData = {
+    nickname: nicknameInput.value,
+    profile_image: profileImage.src
+  }
+  try {
+    const response = await fetch(`http://localhost:8080/api/users/${userId}/profile`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    });
+
+    if(!response.ok) {
+      throw new Error('유저 수정을 실패했습니다.');       
+    }
+  } catch (error) {
+    throw new Error('유저 수정을 실패했습니다.', error);
+  }
+}
+//이미지 올리는 함수(s3로 올리는건 따로 구현해야함)
+const loadImage = (fileInput) => {
+  fileInput.addEventListener("change", (event) => {
+    const fileReader = new FileReader();
+    //이미지 하나만 등록
+    const image = event.target.files[0];
+    const profileImage = document.querySelector('.profile-image');
+    
+    if (image) {
+      //선택된 파일 저장
+      selectedImageFile = image;
+      //이미지를 읽어서 원에 넣기
+      fileReader.onload = (e) => {
+        profileImage.src = e.target.result;      
+      };    
+      fileReader.readAsDataURL(image); 
+    } 
+  });
+};
+//이미지 변경(원 안에만 변경 src는 추후 구현)
+const changeImage = () => {
+  const fileInput = document.getElementById('file-input');
+  const modifyFileBtn = document.querySelector('.modify-file-btn');
+
+  modifyFileBtn.addEventListener('click', () => {
+    fileInput.click();
+  });
+
+  loadImage(fileInput);
+}
+
+
