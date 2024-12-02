@@ -3,13 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
   passwordInput();
   login();
 });
+let emailValid = false;
+let passwordValid = false;
 /**
  * 이메일 유효성 검사
  * 인풋 값을 입력하다 포커스 아웃됐을 때 helpertext 띄워야함
  * 이메일 형식이 안맞는 경우 -> *올바른 이메일 주소를 입력해주세요.(예:example@example.com)
  * 중복된 이메일인 경우 -> *중복된 이메일 입니다.
  */
-const emailInput = function () {
+const emailInput = () => {
   const emailInput = document.getElementById("email");
   const helpertext = document.getElementById("helpertext");
 
@@ -47,12 +49,12 @@ const emailIsValid = function (email) {
  * 비밀번호 유효성 검사 -> *비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.
  * 비밀번호 입력 안했을 시 -> *비밀번호를 입력해주세요.
  */
-const passwordInput = function () {
+const passwordInput = () => {
   const passwordInput = document.getElementById("password");
   const helperText = document.getElementById("helpertext");
 
   // 비밀번호 오류 메시지 처리 함수
-  const showPasswordError = function (inputValue, helperText) {
+  const showPasswordError = (inputValue, helperText) => {
     // 비밀번호 입력이 비어있는 경우
     if (inputValue === "") {
       helperText.textContent = "*비밀번호를 입력해주세요.";
@@ -84,16 +86,13 @@ const passwordInput = function () {
  * 비밀번호는 8자리 이상 20자리 이하
  * 대문자, 소문자, 숫자, 특수문자 최소 한개씩 포함
  */
-const passwordIsValid = function (password) {
+const passwordIsValid = (password) => {
   const passwordPattern =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.~_-])[A-Za-z\d@$!%*?&#.~_-]{8,20}$/;
   return passwordPattern.test(password);
 };
 
-let emailValid = false;
-let passwordValid = false;
-
-const loginBtnState = function () {
+const loginBtnState = () => {
   const loginBtn = document.getElementById("login-btn");
   if (emailValid && passwordValid) {
     loginBtn.style.backgroundColor = "#7F6AEE";
@@ -107,7 +106,7 @@ const loginBtnState = function () {
  * 로그인 로직 작성
  * 로그인 버튼 클릭 시 게시글 목록 조회로 이동
  */
-const login = function () {
+const login = () => {
   const loginBtn = document.getElementById("login-btn");
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");

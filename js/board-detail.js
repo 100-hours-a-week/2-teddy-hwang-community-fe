@@ -15,7 +15,6 @@ let deleteCommentId = null;
 //경로 파라미터 추출
 const pathname = window.location.pathname;
 const postId = Number(pathname.split('/')[2]); 
-console.log(postId);
 
 // 공통으로 사용할 스타일 설정 함수
 const openModal = (modal) => {
@@ -115,7 +114,7 @@ const commentDelete = () => {
 };
 
 //댓글 삭제 모달창 취소, 확인
-const commentModal = function () {
+const commentModal = () => {
     const commentCancelBtn = document.getElementById('reply-cancel-btn');
     const commentCheckBtn = document.getElementById('reply-check-btn');
     //취소

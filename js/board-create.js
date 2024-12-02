@@ -8,13 +8,13 @@ let boardImage = '';
  * 제목은 26자까지 작성 가능
  * 27자 이상 작성시 작성 안됨
  */
-const titleMaxLength = function (input, maxLength) {
+const titleMaxLength = (input, maxLength) => {
   if (input.value.length > maxLength) {
     input.value = input.value.slice(0, maxLength);
   }
 };
 //title enter키 입력 방지
-const titleBanEnter = function () {
+const titleBanEnter = () => {
   const title = document.getElementById("title");
   //enter키 막기
   title.addEventListener("keydown", (event) => {
@@ -26,7 +26,7 @@ const titleBanEnter = function () {
  * 제목 및 본문이 다 작성되면 ACA0EB -> 7F6AEE
  * 버튼 클릭시 제목, 본문이 작성 안되어 있으면 제목,내용을 모두 작성해주세요
  */
-const completeBtn = function () {
+const completeBtn = () => {
   const completeBtn = document.getElementById("create-btn");
   const helpertext = document.getElementById("helpertext");
   const title = document.getElementById("title");
@@ -89,7 +89,7 @@ const createBoard = async (title, content, image) => {
  * 파일 선택 누르면 컴퓨터에서 이미지 파일 업로드
  * 파일명 보여주기
  */
-const uploadImage = function () {
+const uploadImage = () => {
   const selectFileBtn = document.getElementById("select-file-btn");
   const fileInput = document.getElementById("file-input");
 
@@ -100,7 +100,7 @@ const uploadImage = function () {
   loadImage(fileInput);
 };
 //이미지 업로드
-const loadImage = function (fileInput) {
+const loadImage = (fileInput) => {
   fileInput.addEventListener("change", (event) => {
     const fileName = document.getElementById("file-name");
     const fileReader = new FileReader();

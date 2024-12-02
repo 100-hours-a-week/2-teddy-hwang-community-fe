@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /**
  * 게시글 작성 버튼을 누를 시 게시글 작성 페이지로 이동
  */
-const createPostBtn = function () {
+const createPostBtn = () => {
   const createPostBtn = document.getElementById("create-board-btn");
   createPostBtn.addEventListener("click", () => {
     location.href = `/posts/create`;
@@ -69,7 +69,7 @@ const displayBoard = async () => {
  * 10000이상 10k
  * 100000이상 100k
  */
-const numToK = function (num) {
+const numToK = (num) => {
   if (num >= 100000) {
     return Math.floor(num / 1000) + "k";
   } else if (num >= 10000) {

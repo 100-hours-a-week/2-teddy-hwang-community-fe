@@ -1,5 +1,8 @@
+document.addEventListener('DOMContentLoaded', () => {
+  back();
+});
 //뒤로가기
-const back = function () {
+const back = () => {
   const backIcon = document.querySelector(".material-icons");
 
   backIcon.addEventListener("click", () => {
@@ -7,4 +10,3 @@ const back = function () {
   });
 };
 
-back();

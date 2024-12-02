@@ -6,14 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
 //경로 파라미터 추출
 const pathname = window.location.pathname;
 const postId = Number(pathname.split('/')[2]); 
+
 //데이터를 가져오는 함수
 const fetchData = async (url) => {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
     return await response.json();
 };
-
-
 /**
  * 1. 글 조회
  * 2. 제목, 내용, 이미지에 넣어주기
@@ -69,7 +68,7 @@ const updatePost = () => {
     const helpertext = document.querySelector('.helpertext');
     const modifyBtn = document.getElementById('modify-btn');
     const fileName = document.getElementById("file-name");
-    modifyBtn.addEventListener("click", async() => {
+    modifyBtn.addEventListener("click", async () => {
         if (title.value.trim() === "" || content.value.trim() === "") {
           helpertext.textContent = "제목,내용을 모두 작성해주세요";
         } else {
