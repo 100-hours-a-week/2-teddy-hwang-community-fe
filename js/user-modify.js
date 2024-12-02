@@ -11,9 +11,9 @@ const modalContainer = document.querySelector(".modal-container");
 const body = document.body;
 
 //현재 주소 및 쿼리 파라미터 추출
-const url = new URL(window.location.href);
-const urlParams = url.searchParams;
-const userId = Number(urlParams.get('userId'));
+const pathname = window.location.pathname;
+const userId = Number(pathname.split('/')[2]); 
+
 
 let selectedImageFile = '';
 
@@ -66,7 +66,7 @@ const userModal = () => {
     //탈퇴 처리
 
     //로그인으로 이동
-    location.href = "../html/login.html";
+    location.href = "/";
   });
 };
 

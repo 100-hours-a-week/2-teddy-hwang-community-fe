@@ -4,10 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let passwordValid = false;
 
-//현재 주소 및 쿼리 파라미터 추출
-const url = new URL(window.location.href);
-const urlParams = url.searchParams;
-const userId = Number(urlParams.get('userId'));
+const pathname = window.location.pathname;
+const userId = Number(pathname.split('/')[2]); 
 
 /**
  * @param password -> 입력받은 비밀번호
@@ -112,7 +110,7 @@ const modifyBtnState = () => {
           if(!response.ok) throw new Error('비밀번호 수정에 실패했습니다.');
   
           const result = await response.json();
-          if(result) location.href = '../html/login.html';
+          if(result) location.href = '/';
         });     
       } else {
         modifyBtn.style.backgroundColor = "#ACA0EB";

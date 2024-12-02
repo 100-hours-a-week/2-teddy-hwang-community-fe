@@ -3,11 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     uploadImage();
     updatePost();
 });
-//현재 주소 및 쿼리 파라미터 추출
-const url = new URL(window.location.href);
-const urlParams = url.searchParams;
-const postId = urlParams.get('postId');
-
+//경로 파라미터 추출
+const pathname = window.location.pathname;
+const postId = Number(pathname.split('/')[2]); 
 //데이터를 가져오는 함수
 const fetchData = async (url) => {
     const response = await fetch(url);
@@ -98,7 +96,7 @@ const updatePost = () => {
                 throw new Error('글 수정에 실패했습니다.')
             }
 
-            location.href = `../html/board-detail.html?postId=${postId}`;
+            location.href = `/posts/${postId}`;
           } catch (error) {
             throw new Error('글 수정에 실패했습니다.', error);
           }        

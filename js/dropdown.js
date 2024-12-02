@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('../html/dropdown.html')
+  fetch('/html/dropdown.html')
   .then(response => response.text())
   .then(data => {
     document.getElementById('dropdown-container').innerHTML = data;
@@ -35,14 +35,14 @@ const link = () => {
 
   
   userModifyLink.addEventListener('click', () => {
-    window.location.href = `../html/user-modify.html?userId=${userId}`;
+    window.location.href = `/users/${userId}/profile`;
   });
 
   passwordModifyLink.addEventListener('click', () => {
-    window.location.href = `../html/password-modify.html?userId=${userId}`;
+    window.location.href = `/users/${userId}/password`;
   });
 
   logoutLink.addEventListener('click', () => {
-    window.location.href = '../html/login.html';
+    window.location.href = `/`;
   });
 }

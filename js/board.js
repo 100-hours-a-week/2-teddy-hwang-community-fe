@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const createPostBtn = function () {
   const createPostBtn = document.getElementById("create-board-btn");
   createPostBtn.addEventListener("click", () => {
-    location.href = "../html/board-create.html";
+    location.href = `/posts/create`;
   });
 };
 //게시글 데이터를 가져오는 함수
@@ -42,7 +42,7 @@ const createBoardArticle = (post) => {
     `;
 
   boardArticle.addEventListener("click", () => {
-    location.href = `../html/board-detail.html?postId=${post.id}`;
+    location.href = `/posts/${post.id}`;
   });
 
   return boardArticle;

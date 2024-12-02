@@ -12,10 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
 const modalContainer = document.querySelector('.modal-container');
 const body = document.body;
 let deleteCommentId = null;
-//현재 주소 및 쿼리 파라미터 추출
-const url = new URL(window.location.href);
-const urlParams = url.searchParams;
-const postId = Number(urlParams.get('postId'));
+//경로 파라미터 추출
+const pathname = window.location.pathname;
+const postId = Number(pathname.split('/')[2]); 
+console.log(postId);
 
 // 공통으로 사용할 스타일 설정 함수
 const openModal = (modal) => {
@@ -47,12 +47,10 @@ const closeModal = () => {
  * 우측 상단 수정 버튼 누르면 수정창으로 이동
  */
 const postModify = () => {
-
-    
     const postModifyBtn = document.getElementById('modify-btn');
     postModifyBtn.addEventListener('click', () => {
         //수정창 이동 로직 넣기(글 id를 가진 채)
-        location.href = `../html/board-modify.html?postId=${postId}`;
+        location.href = `/posts/${postId}/edit`;
     });
 };
 
@@ -90,7 +88,7 @@ const postModal = () => {
                 throw new Error('글 삭제에 실패했습니다.');
             }
             closeModal();
-            location.href = '../html/board.html';
+            location.href = `/posts`;
         } catch (error) {
             throw new Error('글 삭제에 실패했습니다.', error);           
         }        

@@ -161,7 +161,7 @@ const passwordInput = function () {
       helpertext.textContent = "";
     }
 
-    passwordValid = true;
+    passwordValid = checkMatch;
     return;
   };
 
@@ -280,7 +280,7 @@ const createUserBtnState = () => {
         if(!response.ok) throw new Error('회원가입에 실패했습니다.');
 
         const result = await response.json();
-        if(result) location.href = '../html/login.html';
+        if(result) location.href = '/';
       });     
     } else {
       createUserBtn.style.backgroundColor = "#ACA0EB";

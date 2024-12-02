@@ -78,9 +78,9 @@ const createBoard = async (title, content, image) => {
     }
     
     const result = await response.json();
-    console.log(result);
-    location.href = `../html/board-detail.html?postId=${result.data.post_id}`;
-    
+
+    location.href = `/posts/${result.data.post_id}`;
+
   }catch(error) {
     throw new Error('게시글을 저장하는데 오류가 발생했습니다.', error);
   }
