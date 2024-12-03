@@ -7,37 +7,38 @@ const PORT = 3000;
 //경로 설정
 app.use(express.static(path.join(__dirname)));
 
+
 //로그인
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "/html/login.html"));
+  res.sendFile(path.join(__dirname, "/html/login.html")); // 로그인
 });
 //회원가입
 app.get("/signup", (req, res) => {
-  res.sendFile(path.join(__dirname, "/html/signup.html"));
+  res.sendFile(path.join(__dirname, "/html/signup.html")); // 회원가입
 });
 //게시글 목록 조회
 app.get("/posts", (req, res) => {
-  res.sendFile(path.join(__dirname, "/html/board.html"));
+  res.sendFile(path.join(__dirname, "/html/board.html")); // 목록
+});
+//게시글 생성
+app.get("/posts/create", (req, res) => {
+  res.sendFile(path.join(__dirname, "/html/board-create.html")); // 생성
 });
 //게시글 상세 조회
-app.get("/post", (req, res) => {
-  res.sendFile(path.join(__dirname, "/html/board-detail.html"));
-});
-//게시글 추가
-app.get("/post/create", (req, res) => {
-  res.sendFile(path.join(__dirname, "/html/board-create.html"));
+app.get("/posts/:id", (req, res) => {
+  res.sendFile(path.join(__dirname, "/html/board-detail.html")); // 상세
 });
 //게시글 수정
-app.get("/post/modify", (req, res) => {
-  res.sendFile(path.join(__dirname, "/html/board-modify.html"));
+app.get("/posts/:id/edit", (req, res) => {
+  res.sendFile(path.join(__dirname, "/html/board-modify.html")); // 수정
 });
-//회원정보 수정
-app.get("/user/modify", (req, res) => {
-  res.sendFile(path.join(__dirname, "/html/user-modify.html"));
+//유저 정보 수정
+app.get("/users/:id/profile", (req, res) => {
+  res.sendFile(path.join(__dirname, "/html/user-modify.html")); // 프로필 수정
 });
 //비밀번호 수정
-app.get("/user/password", (req, res) => {
-  res.sendFile(path.join(__dirname, "/html/password-modify.html"));
+app.get("/users/:id/password", (req, res) => {
+  res.sendFile(path.join(__dirname, "/html/password-modify.html")); // 비밀번호 수정
 });
 
 app.listen(PORT, () => {
