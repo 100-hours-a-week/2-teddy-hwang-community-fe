@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let passwordValid = false;
-const userId = sessionStorage.getItem('userId');
+const userId = Number(sessionStorage.getItem('userId'));
 
 /**
  * @param password -> 입력받은 비밀번호

@@ -10,7 +10,7 @@ let nicknameValid = false;
 const modalContainer = document.querySelector(".modal-container");
 const body = document.body;
 
-const userId = sessionStorage.getItem('userId');
+const userId = Number(sessionStorage.getItem('userId'));
 
 
 let selectedImageFile = '';

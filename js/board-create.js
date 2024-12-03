@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   uploadImage();
 });
 let boardImage = '';
-const userId = sessionStorage.getItem('userId');
+const userId = Number(sessionStorage.getItem('userId'));
 /**
  * 제목은 26자까지 작성 가능
  * 27자 이상 작성시 작성 안됨
