@@ -124,6 +124,7 @@ const login = () => {
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(loginData)
       });
   
@@ -142,10 +143,4 @@ const login = () => {
       throw new Error('로그인에 실패했습니다', error);
     }    
   }); 
-};
-//데이터를 가져오는 함수
-const fetchData = async (url) => {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
-  return await response.json();
 };

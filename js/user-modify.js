@@ -104,7 +104,9 @@ const nicknameInput = () => {
     }
      //닉네임 중복시 추가 작성해야함
     try {
-      const response = await fetch(`http://localhost:8080/api/users/nickname/${nickname}`);
+      const response = await fetch(`http://localhost:8080/api/users/nickname/${nickname}`, {
+        credentials: 'include'
+      });
       result = await response.json();
       if(!result.data) {
         helpertext.textContent = "*중복된 닉네임 입니다.";
@@ -148,7 +150,9 @@ const loadUser = async () => {
   const nicknameInput = document.getElementById('nickname');
   const profileImage = document.querySelector('.profile-image');
   try {
-    const response = await fetch(`http://localhost:8080/api/users/${userId}`);
+    const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+      credentials: 'include'
+    });
     
     if(!response.ok) {
       throw new Error('유저 조회를 실패했습니다.');   
@@ -178,6 +182,7 @@ const updateUser = async (nicknameInput) => {
       headers: {
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify(userData)
     });
 

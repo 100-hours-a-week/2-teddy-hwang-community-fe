@@ -13,9 +13,10 @@ const createPostBtn = () => {
 };
 //게시글 데이터를 가져오는 함수
 const fetchData = async (url) => {
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    credentials: 'include'
+  });
   if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
-  console.log(response);
   return await response.json();
 };
 
