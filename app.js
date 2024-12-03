@@ -33,11 +33,11 @@ app.get("/posts/:id/edit", (req, res) => {
   res.sendFile(path.join(__dirname, "/html/board-modify.html")); // 수정
 });
 //유저 정보 수정
-app.get("/users/:id/profile", (req, res) => {
+app.get("/users/profile", (req, res) => {
   res.sendFile(path.join(__dirname, "/html/user-modify.html")); // 프로필 수정
 });
 //비밀번호 수정
-app.get("/users/:id/password", (req, res) => {
+app.get("/users/password", (req, res) => {
   res.sendFile(path.join(__dirname, "/html/password-modify.html")); // 비밀번호 수정
 });
 
