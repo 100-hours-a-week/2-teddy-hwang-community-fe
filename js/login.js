@@ -129,6 +129,7 @@ const login = () => {
       });
   
       const result = await response.json();
+      sessionStorage.setItem('userId', result.data.user_id);
   
       if(response.status === 401) {
         helpertext.textContent = '*비밀번호가 다릅니다.';

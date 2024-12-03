@@ -15,6 +15,7 @@ let deleteCommentId = null;
 //경로 파라미터 추출
 const pathname = window.location.pathname;
 const postId = Number(pathname.split('/')[2]); 
+const userId = Number(sessionStorage.getItem('userId'));
 
 // 공통으로 사용할 스타일 설정 함수
 const openModal = (modal) => {
@@ -80,7 +81,8 @@ const postModal = () => {
     postCheckBtn.addEventListener('click', async () => {
         try {
             const response = await fetch(`http://localhost:8080/api/posts/${postId}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             });
             
             if(!response.ok){
@@ -127,7 +129,8 @@ const commentModal = () => {
         if(!deleteCommentId) return;
         try {
             const response = await fetch(`http://localhost:8080/api/comments/${deleteCommentId}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             });
             
             if(!response.ok){
@@ -177,6 +180,15 @@ const displayPost = (post) => {
         document.getElementById('board-image').style.display = 'none';
     }
 
+    // 게시글 작성자인 경우 수정/삭제 버튼 표시
+    if (userId === post.user_id) {
+        document.getElementById('modify-btn').style.display = 'block';
+        document.getElementById('delete-btn').style.display = 'block';
+    }else {
+        document.getElementById('modify-btn').style.display = 'none';
+        document.getElementById('delete-btn').style.display = 'none';
+    }
+
     //작성자 정보 표시
     document.getElementById('username').textContent = post.post_author.nickname; // 작성자 이름
     document.getElementById('created-at').textContent = post.post_modified_at; // 작성일
@@ -187,8 +199,6 @@ const displayPost = (post) => {
     replyListContainer.innerHTML = ''; // 기존 내용 초기화
 
     post.comments.forEach(comment => {
-        const currentUserId = 1; // 로그인한 사용자 ID 가져오기
-
         const replyHTML = `
             <div class="reply-item">
                 <article class="reply-info">
@@ -203,7 +213,7 @@ const displayPost = (post) => {
                         <p class="reply-content">${comment.content}</p>
                     </article>
                 </article>
-                ${comment.user_id === parseInt(currentUserId) ? `
+                ${comment.user_id === parseInt(userId) ? `
                     <article class="reply-btn-container">
                         <button type="button" class="modify-reply-btn" comment-id=${comment.id}>수정</button>
                         <button type="button" class="delete-reply-btn" comment-id=${comment.id}>삭제</button>
@@ -275,6 +285,7 @@ const handleComment = () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    credentials: 'include',
                     body: JSON.stringify(commentData)
                 });
                 
@@ -285,6 +296,7 @@ const handleComment = () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    credentials: 'include',
                     body: JSON.stringify(commentData)
                 });
             }
@@ -308,8 +320,7 @@ const handleComment = () => {
 }
 //좋아요 기능 구현
 const handleLike = () => {
-    const likeBtn = document.querySelector('.like-square');   
-    const userId = 1; // 현재 로그인한 사용자 ID
+    const likeBtn = document.querySelector('.like-square'); 
     
     likeBtn.addEventListener('click', async () => {
         try {
@@ -323,6 +334,7 @@ const handleLike = () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    credentials: 'include',
                     body: JSON.stringify({ user_id: userId })
                 });
                 
@@ -332,7 +344,8 @@ const handleLike = () => {
             } else {
                 // 좋아요 취소 - DELETE 요청도 쿼리 파라미터 사용
                 const deleteResponse = await fetch(`http://localhost:8080/api/posts/${postId}/like?userId=${userId}`, {
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    credentials: 'include'
                 });
                 
                 if(!deleteResponse.ok) {

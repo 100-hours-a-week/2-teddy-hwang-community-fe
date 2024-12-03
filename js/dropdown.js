@@ -28,11 +28,10 @@ const dropdown = () => {
 };
 //드롭다운 링크
 const link = () => {
-  const userId = 1;
+  const userId = sessionStorage.getItem('userId');
   const userModifyLink = document.getElementById('user-modify-link');
   const passwordModifyLink = document.getElementById('password-modify-link');
   const logoutLink = document.getElementById('logout-link');
-
   
   userModifyLink.addEventListener('click', () => {
     window.location.href = `/users/${userId}/profile`;

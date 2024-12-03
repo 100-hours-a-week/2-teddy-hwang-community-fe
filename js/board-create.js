@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   uploadImage();
 });
 let boardImage = '';
+const userId = sessionStorage.getItem('userId');
 /**
  * 제목은 26자까지 작성 가능
  * 27자 이상 작성시 작성 안됨
@@ -62,7 +63,7 @@ const createBoard = async (title, content, image) => {
       title: title,
       content: content,
       image: image,
-      user_id: 1
+      user_id: userId
     }
 
     const response = await fetch('http://localhost:8080/api/posts', {

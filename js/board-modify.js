@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //경로 파라미터 추출
 const pathname = window.location.pathname;
 const postId = Number(pathname.split('/')[2]); 
+const userId = Number(sessionStorage.getItem('userId'));
 
 //데이터를 가져오는 함수
 const fetchData = async (url) => {
@@ -81,7 +82,7 @@ const updatePost = () => {
             title: title.value,
             content: content.value,
             image: fileName.textContent,
-            user_id: 1
+            user_id: userId
           }
           try {
             //게시글 수정 api 호출

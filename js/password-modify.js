@@ -3,9 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let passwordValid = false;
-
-const pathname = window.location.pathname;
-const userId = Number(pathname.split('/')[2]); 
+const userId = sessionStorage.getItem('userId');
 
 /**
  * @param password -> 입력받은 비밀번호

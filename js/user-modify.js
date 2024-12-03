@@ -10,9 +10,7 @@ let nicknameValid = false;
 const modalContainer = document.querySelector(".modal-container");
 const body = document.body;
 
-//현재 주소 및 쿼리 파라미터 추출
-const pathname = window.location.pathname;
-const userId = Number(pathname.split('/')[2]); 
+const userId = sessionStorage.getItem('userId');
 
 
 let selectedImageFile = '';
