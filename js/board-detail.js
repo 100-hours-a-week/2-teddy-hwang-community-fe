@@ -272,7 +272,7 @@ const handleComment = () => {
         try {
             let response; 
             const commentData = {
-                user_id: 1,
+                user_id: userId,
                 post_id: postId,
                 content: content
             }
