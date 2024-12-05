@@ -319,17 +319,33 @@ const handleComment = () => {
     });
 }
 //좋아요 기능 구현
-const handleLike = () => {
+const handleLike = async () => {
     const likeBtn = document.querySelector('.like-square'); 
-    
-    likeBtn.addEventListener('click', async () => {
+    const likeCount = document.getElementById('like-count');
+
+    //초기 좋아요 상태 로드
+    const loadLikeStatus = async () => {
         try {
-            // 좋아요 상태 조회
             const response = await fetchData(`http://localhost:8080/api/posts/${postId}/like?userId=${userId}`);
-            
-            if(!response.is_liked) {
+            isLiked = response.is_liked;
+            //UI 업데이트
+            updateLikeUI();
+        } catch (error) {
+            console.error('좋아요 상태 조회 중 오류가 발생했습니다', error);
+        }
+    };
+    //UI 업데이트 함수
+    const updateLikeUI = () => {
+        likeBtn.style.backgroundColor = isLiked ? '#ACA0EB' : '#D9D9D9';
+    };
+
+   // 좋아요 토글 함수
+   const toggleLike = async () => {
+        try {
+            let apiResponse;
+            if (!isLiked) {
                 // 좋아요 추가
-                const addResponse = await fetch(`http://localhost:8080/api/posts/${postId}/like`, {
+                apiResponse = await fetch(`http://localhost:8080/api/posts/${postId}/like`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -338,28 +354,35 @@ const handleLike = () => {
                     body: JSON.stringify({ user_id: userId })
                 });
                 
-                if(!addResponse.ok) {
+                if (!apiResponse.ok) {
                     throw new Error('좋아요 추가를 실패했습니다.');
                 }
             } else {
-                // 좋아요 취소 - DELETE 요청도 쿼리 파라미터 사용
-                const deleteResponse = await fetch(`http://localhost:8080/api/posts/${postId}/like?userId=${userId}`, {
+                // 좋아요 취소
+                apiResponse = await fetch(`http://localhost:8080/api/posts/${postId}/like?userId=${userId}`, {
                     method: 'DELETE',
                     credentials: 'include'
                 });
                 
-                if(!deleteResponse.ok) {
+                if (!apiResponse.ok) {
                     throw new Error('좋아요 취소를 실패했습니다.');
                 }
             }
             
-            // 성공적으로 처리된 후 페이지 새로고침
-            location.reload();
-            
+            const result = await apiResponse.json();
+            likeCount.textContent = numToK(result.data.like_count);
+            isLiked = !isLiked; // 상태 토글
+            updateLikeUI(); // UI 업데이트
+
         } catch (error) {
             console.error('좋아요 처리 중 오류가 발생했습니다', error);
         }
-    }); 
+    };
+
+    likeBtn.addEventListener('click', toggleLike);
+    
+    //초기 상태 로드
+    loadLikeStatus();
 };
 /**
  * 좋아요수, 댓글수, 조회수
@@ -378,6 +401,3 @@ const numToK = (num) => {
         return num;
     }
 }
-
-
-
