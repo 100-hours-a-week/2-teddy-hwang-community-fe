@@ -16,7 +16,7 @@ const generateHeaderHtml = () => {
 
     const headerConfig = {
         //모두 없는 페이지
-        '/': {showBackIcon: false, showAccount: false},
+        '/': { showBackIcon: false, showAccount: false },
 
         //프로필 이미지만 있는 페이지
         '/posts': { showBackIcon: false, showAccount: true },
@@ -60,7 +60,7 @@ const generateHeaderHtml = () => {
 const initializeHeader = async () => {
     try {
         const hasAccountImage = document.querySelector(".account-image");
-        
+
         // 계정 이미지가 있을 때만 드롭다운 로드
         if (hasAccountImage) {
             const dropdownResponse = await fetch('/html/dropdown.html');
@@ -79,10 +79,20 @@ const initializeHeader = async () => {
 
 const initializeBackButton = () => {
     const headerContainer = document.getElementById('header-container');
-    headerContainer.addEventListener('click', (e) => {
+
+    // 뒤로가기 감지 이벤트 리스너
+    if (document.addEventListener) {
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || window.performance && window.performance.navigation.type == 2) {
+                location.reload();
+            }
+        }, false);
+    }
+
+    headerContainer.addEventListener('click', (e) => {    
         if (e.target.classList.contains('material-icons')) {
-            if (window.history.length > 1) {
-                window.history.back();
+            if (window.history.length > 1) {  
+                history.back();  
             } else {
                 window.location.href = '/';
             }
@@ -93,7 +103,7 @@ const initializeBackButton = () => {
 const initializeDropdown = () => {
     const profileImage = document.querySelector(".account-image");
     const dropdown = document.getElementById("dropdown");
-    
+
     if (!profileImage || !dropdown) return;
 
     profileImage.addEventListener("click", () => {
