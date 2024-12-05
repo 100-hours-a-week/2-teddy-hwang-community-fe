@@ -1,60 +1,90 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
+document.addEventListener('DOMContentLoaded', async () => {   
+    try {     
         // 동적으로 header HTML 생성
-        const headerHtml = generateHeaderHtml();
-        document.getElementById('header-container').innerHTML = headerHtml;
-
-        // header 초기화 진행
+        const headerHtml = await generateHeaderHtml();
+        
+        const headerContainer = document.getElementById('header-container');
+        if (!headerContainer) {
+            throw new Error('header-container element not found');
+        }
+        
+        headerContainer.innerHTML = headerHtml;
         await initializeHeader();
     } catch (error) {
         console.error('Failed to load header:', error);
     }
 });
 
-const generateHeaderHtml = () => {
+const getProfileImage = async () => {
+    try {
+        const userId = Number(sessionStorage.getItem('userId'));
+        const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+            credentials: 'include'
+        });
+        if(!response.ok) throw new Error('유저 정보 조회에 실패했습니다.');
+        const result = await response.json();
+        return result.data.profile_image;
+    } catch (error) {
+        throw new Error('유저 정보 조회에 실패했습니다', error);
+    }
+}
+
+//html을 뿌려줄 건데 동적인 요소가 들어감
+const generateHeaderHtml = async () => {
     const path = window.location.pathname;
+    let profileImage;
+    try {
+        const userId = Number(sessionStorage.getItem('userId'));
+        if(userId !== 0) {
+            profileImage = await getProfileImage();
+        }else {
+            profileImage = '/images/profile-image.jpg';
+        }
+        const headerConfig = {
+            //모두 없는 페이지
+            '/': { showBackIcon: false, showAccount: false },
 
-    const headerConfig = {
-        //모두 없는 페이지
-        '/': { showBackIcon: false, showAccount: false },
+            //프로필 이미지만 있는 페이지
+            '/posts': { showBackIcon: false, showAccount: true },
+            '/users/profile': { showBackIcon: false, showAccount: true },
+            '/users/password': { showBackIcon: false, showAccount: true },
 
-        //프로필 이미지만 있는 페이지
-        '/posts': { showBackIcon: false, showAccount: true },
-        '/users/profile': { showBackIcon: false, showAccount: true },
-        '/users/password': { showBackIcon: false, showAccount: true },
+            //둘 다 있는 페이지
+            '/posts/create': { showBackIcon: true, showAccount: true },
 
-        //둘 다 있는 페이지
-        '/posts/create': { showBackIcon: true, showAccount: true },
+            //뒤로가기만 있는 페이지
+            '/signup': { showBackIcon: true, showAccount: false }
+        }   
 
-        //뒤로가기만 있는 페이지
-        '/signup': { showBackIcon: true, showAccount: false }
+        //게시글 상세조회, 수정은 동적 경로 처리 필요
+        if (path.match(/^\/posts\/\d+$/)) {
+            headerConfig[path] = { showBackIcon: true, showAccount: true };
+        }
+        if (path.match(/^\/posts\/\d+\/edit$/)) {
+            headerConfig[path] = { showBackIcon: true, showAccount: true };
+        }
+
+        const config = headerConfig[path];
+        return `
+            <header>
+                <div class="back-icon-container">
+                    ${config.showBackIcon ? '<span class="material-icons">arrow_back_ios</span>' : ''}
+                </div>
+                <h1>아무 말 대잔치</h1>
+                <div class="account-container">
+                    ${config.showAccount ? `
+                        <span class="account-box">
+                            <img class="account-image" src="${profileImage}" alt="profile" />
+                            <div id="dropdown-container"></div>
+                        </span>
+                    ` : ''}
+                </div>
+            </header>
+        `;
+    } catch (error) {
+        throw new Error('html를 동적으로 불러오지 못했습니다.', error);
     }
-
-    //게시글 상세조회, 수정은 동적 경로 처리 필요
-    if (path.match(/^\/posts\/\d+$/)) {
-        headerConfig[path] = { showBackIcon: true, showAccount: true };
-    }
-    if (path.match(/^\/posts\/\d+\/edit$/)) {
-        headerConfig[path] = { showBackIcon: true, showAccount: true };
-    }
-
-    const config = headerConfig[path];
-    return `
-        <header>
-            <div class="back-icon-container">
-                ${config.showBackIcon ? '<span class="material-icons">arrow_back_ios</span>' : ''}
-            </div>
-            <h1>아무 말 대잔치</h1>
-            <div class="account-container">
-                ${config.showAccount ? `
-                    <span class="account-box">
-                        <img class="account-image" src="/images/profile-image.jpg" alt="profile" />
-                        <div id="dropdown-container"></div>
-                    </span>
-                ` : ''}
-            </div>
-        </header>
-    `;
+    
 };
 
 const initializeHeader = async () => {
@@ -76,7 +106,7 @@ const initializeHeader = async () => {
         console.error('Header initialization failed:', error);
     }
 };
-
+//뒤로가기 버튼 초기화
 const initializeBackButton = () => {
     const headerContainer = document.getElementById('header-container');
 
@@ -99,7 +129,7 @@ const initializeBackButton = () => {
         }
     });
 };
-
+//드롭다운 초기화
 const initializeDropdown = () => {
     const profileImage = document.querySelector(".account-image");
     const dropdown = document.getElementById("dropdown");
