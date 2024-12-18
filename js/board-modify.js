@@ -8,6 +8,7 @@ const pathname = window.location.pathname;
 const postId = Number(pathname.split('/')[2]); 
 const userId = Number(sessionStorage.getItem('userId'));
 
+let boardImage = "";
 
 //데이터를 가져오는 함수
 const fetchData = async (url) => {
@@ -61,12 +62,11 @@ const loadImage = (fileInput) => {
         const fileName = document.getElementById("file-name");
         const fileReader = new FileReader();
         //이미지 하나만 등록
-        const profileImage = event.target.files[0];
+        const image = event.target.files[0];
 
-        if (profileImage) {
-        fileName.textContent = profileImage.name;
-
-        //s3 이용해서 개발 예정
+        if (image) {
+          fileName.textContent = image.name;
+          boardImage = image;
         }
     });
 };
@@ -84,21 +84,25 @@ const updatePost = () => {
           helpertext.textContent = ""; 
           
           //수정할 데이터(이미지, 유저ID 추후 수정)
-          const updateData = {
-            title: title.value,
-            content: content.value,
-            image: fileName.textContent,
-            user_id: userId
+          const formData = new FormData();
+
+          formData.append('title', title.value);
+          formData.append('content', content.value);
+          formData.append('user_id', userId);
+          
+          //이미지 파일이 없을 때도 처리
+          if (boardImage) {
+            formData.append('image', boardImage);
+          }else {
+            formData.append('image', "");
           }
+     
           try {
             //게시글 수정 api 호출
             const response = await fetch(`${address}/api/posts/${postId}`, {
                 method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 credentials: 'include',
-                body: JSON.stringify(updateData)
+                body: formData
             });
 
             if(!response.ok){
