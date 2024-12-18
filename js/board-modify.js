@@ -8,6 +8,7 @@ const pathname = window.location.pathname;
 const postId = Number(pathname.split('/')[2]); 
 const userId = Number(sessionStorage.getItem('userId'));
 
+
 //데이터를 가져오는 함수
 const fetchData = async (url) => {
     const response = await fetch(url, {
@@ -27,7 +28,7 @@ const loadPost = async () => {
 
     try {
         //해당 글 조회
-        const response = await fetchData(`http://localhost:8080/api/posts/${postId}`);
+        const response = await fetchData(`${address}/api/posts/${postId}`);
         title.value = response.data.title;
         content.value = response.data.content;
         fileName.textContent = response.data.post_image;
@@ -86,7 +87,7 @@ const updatePost = () => {
           }
           try {
             //게시글 수정 api 호출
-            const response = await fetch(`http://localhost:8080/api/posts/${postId}`, {
+            const response = await fetch(`${address}/api/posts/${postId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'

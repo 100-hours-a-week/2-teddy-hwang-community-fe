@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 let emailValid = false;
 let passwordValid = false;
+
 /**
  * 이메일 유효성 검사
  * 인풋 값을 입력하다 포커스 아웃됐을 때 helpertext 띄워야함
@@ -112,6 +113,7 @@ const login = () => {
   const passwordInput = document.getElementById("password");
   const helpertext = document.getElementById("helpertext");
   
+
   loginBtn.addEventListener('click', async () => {   
     try{
       const loginData = {
@@ -119,7 +121,7 @@ const login = () => {
         password: passwordInput.value
       };
   
-      const response = await fetch('http://localhost:8080/api/users/login', {
+      const response = await fetch(`${address}/api/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -8,6 +8,8 @@ let profileImageValid = false;
 let emailValid = false;
 let passwordValid = false;
 let nicknameValid = false;
+
+
 /**
  * 프로필 이미지 올리기
  * 동그라미 클릭 시 file-input이 클릭되도록 설정
@@ -92,7 +94,7 @@ const emailInput = () => {
       return;
     } else {
       //이메일 중복시
-      const existByEmail = await fetchData(`http://localhost:8080/api/users/email/${emailValue}`);
+      const existByEmail = await fetchData(`${address}/api/users/email/${emailValue}`);
       if(!existByEmail.data) {
         emailHelpertext.textContent = "*중복된 이메일 입니다.";
         emailValid = false;
@@ -224,7 +226,7 @@ const nicknameInput = () => {
       }
     }else {
       //닉네임 중복시 
-      const existByEmail = await fetchData(`http://localhost:8080/api/users/nickname/${nickname}`);
+      const existByEmail = await fetchData(`${address}/api/users/nickname/${nickname}`);
       if(!existByEmail.data) {
         nicknameHelpertext.textContent = "*중복된 닉네임 입니다.";
         nicknameValid = false;
@@ -268,7 +270,7 @@ const createUserBtnState = () => {
           profile_image: ".jpg"
         }
         //POST 요청
-        const response = await fetch('http://localhost:8080/api/users', {
+        const response = await fetch(`${address}/api/users`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

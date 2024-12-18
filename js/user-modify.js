@@ -12,7 +12,6 @@ const body = document.body;
 
 const userId = Number(sessionStorage.getItem('userId'));
 
-
 let selectedImageFile = '';
 
 // 공통으로 사용할 스타일 설정 함수
@@ -102,7 +101,7 @@ const nicknameInput = () => {
     }
      //닉네임 중복시 추가 작성해야함
     try {
-      const response = await fetch(`http://localhost:8080/api/users/nickname/${nickname}`, {
+      const response = await fetch(`${address}/api/users/nickname/${nickname}`, {
         credentials: 'include'
       });
       result = await response.json();
@@ -148,7 +147,7 @@ const loadUser = async () => {
   const nicknameInput = document.getElementById('nickname');
   const profileImage = document.querySelector('.profile-image');
   try {
-    const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+    const response = await fetch(`${address}/api/users/${userId}`, {
       credentials: 'include'
     });
     
@@ -175,7 +174,7 @@ const updateUser = async (nicknameInput) => {
     profile_image: profileImage.src
   }
   try {
-    const response = await fetch(`http://localhost:8080/api/users/${userId}/profile`, {
+    const response = await fetch(`${address}/api/users/${userId}/profile`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'

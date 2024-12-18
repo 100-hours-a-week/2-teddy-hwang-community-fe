@@ -58,20 +58,23 @@ const completeBtn = () => {
 //게시글 저장 함수
 const createBoard = async (title, content, image) => {
   try {
-    //게시글 데이터 유저ID 추후 수정
-    const boardData = {
-      title: title,
-      content: content,
-      image: image,
-      user_id: userId
+    
+    const formData = new FormData();
+
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('user_id', userId);
+    
+    //이미지 파일이 없을 때도 처리
+    if (image) {
+      formData.append('image', image);
+    }else {
+      formData.append('image', "");
     }
 
-    const response = await fetch('http://localhost:8080/api/posts', {
+    const response = await fetch(`${address}/api/posts`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(boardData)
+      body: formData
     });
 
     if(!response.ok) {
@@ -110,8 +113,7 @@ const loadImage = (fileInput) => {
 
     if (profileImage) {
       fileName.textContent = profileImage.name;
-      
-      //s3 이용해서 개발 예정
+      boardImage = profileImage;     
     }
   });
 };

@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   displayBoard();
   createPostBtn();
 });
+
+
 /**
  * 게시글 작성 버튼을 누를 시 게시글 작성 페이지로 이동
  */
@@ -52,7 +54,7 @@ const createBoardArticle = (post) => {
 //게시판을 렌더링하는 함수
 const displayBoard = async () => {
   try {
-    const postData = await fetchData("http://localhost:8080/api/posts");
+    const postData = await fetchData(`${address}/api/posts`);
     const boardContainer = document.querySelector(".board-container");
 
     postData.data.forEach((post) => {

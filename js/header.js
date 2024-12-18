@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', async () => {   
     try {     
         // 동적으로 header HTML 생성
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 const getProfileImage = async () => {
     try {
         const userId = Number(sessionStorage.getItem('userId'));
-        const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+        const response = await fetch(`${address}/api/users/${userId}`, {
             credentials: 'include'
         });
         if(!response.ok) throw new Error('유저 정보 조회에 실패했습니다.');

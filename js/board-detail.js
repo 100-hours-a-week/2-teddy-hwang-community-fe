@@ -17,6 +17,7 @@ const pathname = window.location.pathname;
 const postId = Number(pathname.split('/')[2]); 
 const userId = Number(sessionStorage.getItem('userId'));
 
+
 // 공통으로 사용할 스타일 설정 함수
 const openModal = (modal) => {
     const activeModal = document.querySelector('.modal.active');
@@ -80,7 +81,7 @@ const postModal = () => {
     //확인
     postCheckBtn.addEventListener('click', async () => {
         try {
-            const response = await fetch(`http://localhost:8080/api/posts/${postId}`, {
+            const response = await fetch(`${address}/api/posts/${postId}`, {
                 method: 'DELETE',
                 credentials: 'include'
             });
@@ -128,7 +129,7 @@ const commentModal = () => {
     commentCheckBtn.addEventListener('click', async () => {
         if(!deleteCommentId) return;
         try {
-            const response = await fetch(`http://localhost:8080/api/comments/${deleteCommentId}`, {
+            const response = await fetch(`${address}/api/comments/${deleteCommentId}`, {
                 method: 'DELETE',
                 credentials: 'include'
             });
@@ -157,7 +158,7 @@ const fetchData = async (url) => {
 //게시판을 렌더링하는 함수
 const loadBoardData = async () => {
     try {
-        const post = await fetchData(`http://localhost:8080/api/posts/${postId}`);
+        const post = await fetchData(`${address}/api/posts/${postId}`);
 
         displayPost(post.data);
 
@@ -280,7 +281,7 @@ const handleComment = () => {
             //수정 모드와 작성 구분
             if(commentId) {
                 // 수정 
-                response = await fetch(`http://localhost:8080/api/comments/${commentId}`, {
+                response = await fetch(`${address}/api/comments/${commentId}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
@@ -291,7 +292,7 @@ const handleComment = () => {
                 
             } else {
                 //작성
-                response = await fetch(`http://localhost:8080/api/comments`, {
+                response = await fetch(`${address}/api/comments`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -326,7 +327,7 @@ const handleLike = async () => {
     //초기 좋아요 상태 로드
     const loadLikeStatus = async () => {
         try {
-            const response = await fetchData(`http://localhost:8080/api/posts/${postId}/like?userId=${userId}`);
+            const response = await fetchData(`${address}/api/posts/${postId}/like?userId=${userId}`);
             isLiked = response.is_liked;
             //UI 업데이트
             updateLikeUI();
@@ -345,7 +346,7 @@ const handleLike = async () => {
             let apiResponse;
             if (!isLiked) {
                 // 좋아요 추가
-                apiResponse = await fetch(`http://localhost:8080/api/posts/${postId}/like`, {
+                apiResponse = await fetch(`${address}/api/posts/${postId}/like`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -359,7 +360,7 @@ const handleLike = async () => {
                 }
             } else {
                 // 좋아요 취소
-                apiResponse = await fetch(`http://localhost:8080/api/posts/${postId}/like?userId=${userId}`, {
+                apiResponse = await fetch(`${address}/api/posts/${postId}/like?userId=${userId}`, {
                     method: 'DELETE',
                     credentials: 'include'
                 });

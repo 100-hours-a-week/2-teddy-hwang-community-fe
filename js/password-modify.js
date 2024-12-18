@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let passwordValid = false;
 const userId = Number(sessionStorage.getItem('userId'));
 
+
 /**
  * @param password -> 입력받은 비밀번호
  * 비밀번호는 8자리 이상 20자리 이하
@@ -97,7 +98,7 @@ const modifyBtnState = () => {
             password: password,
           }
           //PATCH 요청
-          const response = await fetch(`http://localhost:8080/api/users/${userId}/password`, {
+          const response = await fetch(`${address}/api/users/${userId}/password`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json'
