@@ -31,12 +31,17 @@ const loadPost = async () => {
         const response = await fetchData(`${address}/api/posts/${postId}`);
         title.value = response.data.title;
         content.value = response.data.content;
-        fileName.textContent = response.data.post_image;
+        //파일명 추출
+        const decodeFilename = decodeURIComponent(response.data.post_image);
+        const originalFilename = decodeFilename.split('/').pop();
+        //UUID 이후 문자열은 파일명
+        const realFilename = originalFilename.replace(/^.*?-[\da-f]{8}(-[\da-f]{4}){3}-[\da-f]{12}-/, '');
+        fileName.textContent = realFilename;
     } catch (error) {
         throw new Error('게시글 조회에 실패했습니다.', error);
     }
 }
-/**
+/** 
  * 파일 선택 누르면 컴퓨터에서 이미지 파일 업로드
  * 파일명 보여주기
  */
