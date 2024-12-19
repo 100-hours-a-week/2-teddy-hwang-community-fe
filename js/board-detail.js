@@ -139,7 +139,7 @@ const commentModal = () => {
             }
             closeModal();
             deleteCommentId = null;
-            location.reload();
+            await loadBoardData(false); 
         } catch (error) {
             throw new Error('댓글 삭제에 실패했습니다.', error);           
         }        
