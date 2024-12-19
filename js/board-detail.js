@@ -156,9 +156,13 @@ const fetchData = async (url) => {
 };
 
 //게시판을 렌더링하는 함수
-const loadBoardData = async () => {
+const loadBoardData = async (increaseView = true) => {
     try {
-        const post = await fetchData(`${address}/api/posts/${postId}`);
+        const endpoint = increaseView 
+        ? `${address}/api/posts/${postId}`
+        : `${address}/api/posts/${postId}/without-view`; 
+        
+        const post = await fetchData(endpoint);
 
         displayPost(post.data);
 
@@ -280,7 +284,7 @@ const handleComment = () => {
 
             //수정 모드와 작성 구분
             if(commentId) {
-                // 수정 
+                //수정 
                 response = await fetch(`${address}/api/comments/${commentId}`, {
                     method: 'PATCH',
                     headers: {
@@ -299,20 +303,19 @@ const handleComment = () => {
                     },
                     credentials: 'include',
                     body: JSON.stringify(commentData)
-                });
+                });   
             }
 
             if(!response.ok) {
                 throw new Error(commentId ? '댓글 수정에 실패했습니다.' : '댓글 작성에 실패했습니다.');
             }
+            await loadBoardData(false); 
 
             // 입력창 초기화
             commentInput.value = '';
             commentId = null;
             commentBtn.textContent = '댓글 등록';
             updateButtonStyle('');
-
-            location.reload();
 
         } catch (error) {
             console.error('Error:', error);
