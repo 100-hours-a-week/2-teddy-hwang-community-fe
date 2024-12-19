@@ -140,6 +140,8 @@ hr {
   font-weight: 400;
   line-height: 21.15px;
   text-align: left;
+
+  word-break: break-all;
 }
 
 .board-info {
@@ -376,12 +378,14 @@ input {
 
 .reply-content-container .reply-content {
   display: flex;
+  width: 100%; 
   font-family: Pretendard;
   font-size: 15px;
   font-weight: 400;
   line-height: 21.15px;
   text-align: left;
   margin: 8px 0px 0px 46px;
+  word-break: break-all;
 }
 
 .reply-btn-container {
