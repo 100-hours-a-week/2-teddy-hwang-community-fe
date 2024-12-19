@@ -3,12 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
   emailInput();
   passwordInput();
   nicknameInput();
+
 });
 let profileImageValid = false;
 let emailValid = false;
 let passwordValid = false;
 let nicknameValid = false;
-
 
 /**
  * 프로필 이미지 올리기
@@ -28,6 +28,8 @@ let profileImageData = ""; // 프로필 이미지의 base64 데이터
 let emailData = "";
 let passwordData = "";
 let nicknameData = "";
+//s3에 보낼 유저 프로필 이미지
+let userImage = "";
 /**
  * @param fileInput -> 이미지를 불러올 수 있는 창을 열어줌
  * @param uploadCircle -> 프로필 이미지가 들어갈 원
@@ -51,6 +53,8 @@ const loadImage = (fileInput, uploadCircle) => {
         profileImageData = base64Data;
         uploadCircle.style.backgroundImage = `url(${base64Data})`;
       };
+      userImage = profileImage;
+      
       //helpertext 없애고 십자가 없애기
       profileHelpertext.textContent = "";
       crossContainer.style.display = "none";
@@ -76,37 +80,44 @@ const emailInput = () => {
   const emailInput = document.getElementById("email");
   const emailHelpertext = document.getElementById("email-helpertext");
 
-  emailInput.addEventListener("blur", async () => {
-    const emailValue = emailInput.value;
-
-    //이메일이 비어있는 경우
-    if (emailValue === "") {
+  const showEmailError = async (email) => {
+    //빈 값 체크
+    if (email === "") {
       emailHelpertext.textContent = "*이메일을 입력해주세요.";
       emailValid = false;
       return;
-    }   
-
-    //이메일 형식이 안맞는 경우
-    if (!emailIsValid(emailValue)) {
-      emailHelpertext.textContent =
-        "*올바른 이메일 주소를 입력해주세요.(예:example@example.com)";
+    }
+ 
+    //이메일 형식 체크
+    if (!emailIsValid(email)) {
+      emailHelpertext.textContent = "*올바른 이메일 주소를 입력해주세요.(예:example@example.com)";
       emailValid = false;
       return;
-    } else {
-      //이메일 중복시
-      const existByEmail = await fetchData(`${address}/api/users/email/${emailValue}`);
-      if(!existByEmail.data) {
+    }
+ 
+    //중복 체크
+    try {
+      const existByEmail = await fetchData(`${address}/api/users/email/${email}`);
+      if (!existByEmail.data) {
         emailHelpertext.textContent = "*중복된 이메일 입니다.";
         emailValid = false;
         return;
       }
+    } catch (error) {
+      emailHelpertext.textContent = "*이메일 확인 중 오류가 발생했습니다.";
+      emailValid = false;
+      return;
     }
-
+ 
+    //모든 검증 통과
     emailHelpertext.textContent = "";
     emailValid = true;
-    emailData = emailValue;
+    emailData = email;
+  }; 
+
+  emailInput.addEventListener("blur", async () => {
+    await showEmailError(emailInput.value);
     createUserBtnState();
-    return;
   });
 };
 //이메일 유효성 검사 함수
@@ -128,56 +139,55 @@ const passwordInput = () => {
     "password-check-helpertext",
   );
 
-  // 비밀번호 오류 메시지 처리 함수
-  const showPasswordError = (inputValue, helpertext, checkMatch) => {
-    // 비밀번호 확인 검사
-    if (checkMatch) {
-      // 비밀번호 확인 입력이 비어있는 경우
-      if (passwordCheckInput.value === "") {
-        helpertext.textContent = "*비밀번호를 한번 더 입력해주세요.";
-        passwordValid = false;
-        return;
-      }
-      // 비밀번호와 비밀번호 확인 값이 일치하지 않는 경우
-      if (passwordInput.value !== passwordCheckInput.value) {
-        helpertext.textContent = "*비밀번호가 다릅니다.";
-        passwordHelpertext.textContent = "*비밀번호가 다릅니다.";
-        passwordValid = false;
-        return;
-      } else {
-        helpertext.textContent = "";
-        passwordHelpertext.textContent = "";
-        passwordValid = true;
-      }
-    }
-    // 비밀번호 입력이 비어있는 경우
-    if (inputValue === "") {
-      helpertext.textContent = "*비밀번호를 입력해주세요.";
+  //비밀번호 오류 메시지 처리 함수
+  const showPasswordError = () => {
+    const password = passwordInput.value;
+    const passwordCheck = passwordCheckInput.value;
+
+    //비밀번호 입력값 검사
+    if (password === "") {
+      passwordHelpertext.textContent = "*비밀번호를 입력해주세요.";
       passwordValid = false;
       return;
     }
 
-    // 비밀번호 형식이 맞지 않는 경우
-    if (!passwordIsValid(inputValue)) {
-      helpertext.textContent =
-        "*비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.";
+    if (!passwordIsValid(password)) {
+      passwordHelpertext.textContent = "*비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.";
       passwordValid = false;
       return;
     } else {
-      helpertext.textContent = "";
+      passwordHelpertext.textContent = "";
     }
 
-    passwordValid = checkMatch;
-    return;
+    //비밀번호 확인 검사
+    if (passwordCheck === "") {
+      passwordCheckHelpertext.textContent = "*비밀번호를 한번 더 입력해주세요.";
+      passwordValid = false;
+      return;
+    }
+
+    //비밀번호 일치 여부 검사
+    if (password !== passwordCheck) {
+      passwordHelpertext.textContent = "*비밀번호가 다릅니다.";
+      passwordCheckHelpertext.textContent = "*비밀번호가 다릅니다.";
+      passwordValid = false;
+      return;
+    }
+
+    //모든 조건 만족
+    passwordHelpertext.textContent = "";
+    passwordCheckHelpertext.textContent = "";
+    passwordValid = true;
   };
 
+  //blur 이벤트 모두 등록
   passwordInput.addEventListener("blur", () => {
-    showPasswordError(passwordInput.value, passwordHelpertext, false);
+    showPasswordError();
     createUserBtnState();
   });
 
   passwordCheckInput.addEventListener("blur", () => {
-    showPasswordError(passwordCheckInput.value, passwordCheckHelpertext, true);
+    showPasswordError();
     createUserBtnState();
   });
 };
@@ -256,32 +266,38 @@ const createUserBtnState = () => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const nickname = document.getElementById("nickname").value;
-    //모든 조건 만족 시
+    
     if (profileImageValid && emailValid && passwordValid && nicknameValid) {
       createUserBtn.style.backgroundColor = "#7F6AEE";
       createUserBtn.disabled = false;
 
       createUserBtn.addEventListener('click', async () => {
         //body 데이터
-        const userData = {
-          email: email,
-          password: password,
-          nickname: nickname,
-          profile_image: ".jpg"
+        const formData = new FormData();
+
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('nickname', nickname);
+        
+        if(userImage) {
+          formData.append('image', userImage);
+        } else {
+          formData.append('image', "");
         }
-        //POST 요청
-        const response = await fetch(`${address}/api/users`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(userData)
-        });
+        try {
+          //POST 요청
+          const response = await fetch(`${address}/api/users`, {
+            method: 'POST',
+            body: formData
+          });
+          if(!response.ok) throw new Error('회원가입에 실패했습니다.');
 
-        if(!response.ok) throw new Error('회원가입에 실패했습니다.');
-
-        const result = await response.json();
-        if(result) location.href = '/';
+          const result = await response.json();
+          
+          if(result) location.href = '/';
+        } catch (error) {
+          throw new Error('회원가입에 실패했습니다.', error);
+        }    
       });     
     } else {
       createUserBtn.style.backgroundColor = "#ACA0EB";
