@@ -103,9 +103,9 @@ const nicknameInput = () => {
         return;
       }
     }
-     //닉네임 중복시 추가 작성해야함
+    // 닉네임 중복시 
     try {
-      const response = await fetch(`${address}/api/users/nickname/${nickname}`, {
+      const response = await fetch(`${address}/api/users/profile/nickname/${nickname}`, {
         credentials: 'include'
       });
       result = await response.json();
