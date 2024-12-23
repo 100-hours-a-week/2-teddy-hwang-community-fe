@@ -60,11 +60,26 @@ const userModal = () => {
     closeModal();
   });
   //확인
-  userCheckBtn.addEventListener("click", () => {
-    //탈퇴 처리
+  userCheckBtn.addEventListener("click", async () => {
+      //탈퇴 처리
+      try {
+        const response = await fetch(`${address}/api/users/${userId}`, {
+          method: 'DELETE',
+          credentials: 'include' 
+        });
 
-    //로그인으로 이동
-    location.href = "/";
+        if(!response.ok) {
+          throw new Error('회원탈퇴에 실패했습니다');
+        }
+        //세션 제거
+        sessionStorage.clear();
+        
+        //로그인으로 이동
+        location.href = "/";
+      } catch (error) {
+        throw new Error('회원탈퇴에 실패했습니다', error);      
+      }
+
   });
 };
 
