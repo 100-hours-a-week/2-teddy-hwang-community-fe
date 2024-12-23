@@ -167,6 +167,7 @@ const initializeLinks = () => {
 
     if (logoutLink) {
         logoutLink.addEventListener('click', () => {
+            sessionStorage.clear();
             window.location.href = '/';
         });
     }
