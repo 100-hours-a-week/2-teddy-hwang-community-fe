@@ -5,14 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
   loadUser();
   changeImage();
 });
-
 let nicknameValid = false;
 const modalContainer = document.querySelector(".modal-container");
 const body = document.body;
 
 const userId = Number(sessionStorage.getItem('userId'));
 
+const basicProfileImage = "https://kbt-community-s3.s3.ap-northeast-2.amazonaws.com/profile-image.jpg";
 let selectedImageFile = '';
+
 
 // 공통으로 사용할 스타일 설정 함수
 const openModal = (modal) => {
@@ -83,6 +84,7 @@ const nicknameInput = () => {
     if (nickname === "") {
       helpertext.textContent = "*닉네임을 입력해주세요.";
       nicknameValid = false;
+      updateButtonState(nicknameValid);
       return;
     }
     if (!nicknameIsValid(nickname)) {
@@ -90,12 +92,14 @@ const nicknameInput = () => {
       if (nickname.includes(" ")) {
         helpertext.textContent = "*띄어쓰기를 없애주세요.";
         nicknameValid = false;
+        updateButtonState(nicknameValid);
         return;
       }
       //닉네임 길이가 10글자 초과하는 경우
       if (nickname.length > 10) {
         helpertext.textContent = "*닉네임은 최대 10자 까지 작성 가능합니다.";
         nicknameValid = false;
+        updateButtonState(nicknameValid);
         return;
       }
     }
@@ -108,10 +112,12 @@ const nicknameInput = () => {
       if(!result.data) {
         helpertext.textContent = "*중복된 닉네임 입니다.";
         nicknameValid = false;
+        updateButtonState(nicknameValid);
         return;
       }else {
         helpertext.textContent = "";
         nicknameValid = true;
+        updateButtonState(nicknameValid);
         toastMessage();
         return;
       }
@@ -123,7 +129,7 @@ const nicknameInput = () => {
   modifyBtn.addEventListener("click", async () => {
     await showNicknameError(nicknameInput.value);
     if (nicknameValid) {
-      updateUser(nicknameInput);
+      await updateUser(nicknameInput);
     }
   });
 };
@@ -133,6 +139,18 @@ const nicknameIsValid = (nickname) => {
   const nicknamePattern = /^[^\s]{1,10}$/;
   return nicknamePattern.test(nickname);
 };
+
+//닉네임 유효성 검사 후 색상 및 버튼 상태 변경
+const updateButtonState = (isValid) => {
+  const modifyBtn = document.getElementById("modify-btn");
+
+  if (isValid) {
+    modifyBtn.disabled = false;
+  } else {
+    modifyBtn.disabled = true; 
+  }
+};
+
 //토스트 메시지 1초 보여주기
 const toastMessage = () => {
   const toast = document.getElementById("toast");
@@ -167,58 +185,97 @@ const loadUser = async () => {
 }
 //유저 정보 수정 api
 const updateUser = async (nicknameInput) => {
-  const profileImage = document.querySelector('.profile-image');
 
-  const userData = {
-    nickname: nicknameInput.value,
-    profile_image: profileImage.src
+  const formData = new FormData();
+  formData.append('nickname', nicknameInput.value);
+
+  //새 이미지가 선택된 경우에만 이미지 전송
+  if(selectedImageFile && selectedImageFile !== '') {
+    formData.append('image', selectedImageFile);
   }
+
   try {
     const response = await fetch(`${address}/api/users/${userId}/profile`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       credentials: 'include',
-      body: JSON.stringify(userData)
+      body: formData
     });
 
     if(!response.ok) {
       throw new Error('유저 수정을 실패했습니다.');       
     }
+    
+    const result = await response.json();
+
+    const profileImage = document.querySelector('.profile-image');
+ 
+    //유저 정보 업데이트
+    profileImage.src = result.data.profile_image;
+    nicknameInput.value = result.data.nickname;
+
+    //헤더 프로필 이미지 업데이트
+    await updateHeaderProfileImage(result.data.profile_image);
+    
   } catch (error) {
     throw new Error('유저 수정을 실패했습니다.', error);
   }
 }
-//이미지 올리는 함수(s3로 올리는건 따로 구현해야함)
-const loadImage = (fileInput) => {
-  fileInput.addEventListener("change", (event) => {
-    const fileReader = new FileReader();
-    //이미지 하나만 등록
-    const image = event.target.files[0];
-    const profileImage = document.querySelector('.profile-image');
-    
-    if (image) {
-      //선택된 파일 저장
-      selectedImageFile = image;
-      //이미지를 읽어서 원에 넣기
-      fileReader.onload = (e) => {
-        profileImage.src = e.target.result;      
-      };    
-      fileReader.readAsDataURL(image); 
-    } 
-  });
+
+//헤더의 프로필 이미지 업데이트 함수
+const updateHeaderProfileImage = async (newProfileImage) => {
+  try {
+      // 헤더에서 프로필 이미지 요소 찾기
+      const headerProfileImage = document.querySelector('.account-image');
+      if (headerProfileImage) {
+          headerProfileImage.src = newProfileImage;
+      }
+  } catch (error) {
+      console.error('헤더 프로필 이미지 업데이트 실패:', error);
+  }
 };
-//이미지 변경(원 안에만 변경 src는 추후 구현)
+
 const changeImage = () => {
   const fileInput = document.getElementById('file-input');
   const modifyFileBtn = document.querySelector('.modify-file-btn');
+  const profileImage = document.querySelector(".profile-image");
 
+  // 파일 선택 창 열기
   modifyFileBtn.addEventListener('click', () => {
     fileInput.click();
   });
 
-  loadImage(fileInput);
-}
+  // 파일 선택 후 change 이벤트 리스너 추가
+  fileInput.addEventListener("change", (event) => {
+    const fileReader = new FileReader();
+    const image = event.target.files[0]; // 선택한 파일
+
+    // 파일을 선택하지 않았을 경우 (취소 버튼 클릭)
+    if (!image) {
+      console.log("취소!!");
+      profileImage.src = basicProfileImage;  // 기본 이미지로 되돌리기
+      return;
+    }
+
+    // 이미지가 선택되었을 경우
+    selectedImageFile = image;
+
+    // 이미지 파일 읽기
+    fileReader.onload = (e) => {
+      profileImage.src = e.target.result;  // 프로필 이미지에 새 이미지 적용
+    };
+
+    // 선택된 이미지 파일을 읽기
+    fileReader.readAsDataURL(image);
+  });
+
+  // click 이벤트에서 취소 처리
+  fileInput.addEventListener('click', () => {
+    // 파일이 비어있는 경우 취소가 된 것으로 판단
+    if (fileInput.value.length === 0) {
+      profileImage.src = basicProfileImage;  // 기본 이미지로 되돌리기
+    }
+  });
+};
+
 
 
