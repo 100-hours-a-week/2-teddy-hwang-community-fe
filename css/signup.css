@@ -133,7 +133,7 @@ input::placeholder {
 
 .signup-form small {
   display: flex;
-  height: 15px;
+  height: auto;
   font-size: 12px;
   font-weight: 400;
   line-height: 14.52px;
