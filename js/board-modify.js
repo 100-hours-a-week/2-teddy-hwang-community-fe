@@ -29,7 +29,7 @@ const loadPost = async () => {
 
     try {
         //해당 글 조회
-        const response = await fetchData(`${address}/api/posts/${postId}`);
+        const response = await fetchData(`${address}/api/posts/${postId}/without-view`);
         title.value = response.data.title;
         content.value = response.data.content;
         //파일명 추출
@@ -67,6 +67,9 @@ const loadImage = (fileInput) => {
         if (image) {
           fileName.textContent = image.name;
           boardImage = image;
+        } else {
+          fileName.textContent = "";
+          boardImage = "";
         }
     });
 };
