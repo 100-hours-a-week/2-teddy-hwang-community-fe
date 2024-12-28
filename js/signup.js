@@ -140,6 +140,11 @@ const handlePasswordValidation = (passwordInput, passwordHelpertext) => {
   formState.values.password = password;
   // 비밀번호 확인 입력 활성화
   passwordCheckInput.disabled = false;
+
+  // 비밀번호 확인 입력칸에 포커스를 강제로 이동시킴
+  if (passwordCheckInput.disabled === false) {
+    passwordCheckInput.focus();
+  }
   
   // 비밀번호 확인 입력값이 있다면 확인 검증 실행
   if (passwordCheckInput.value) {
@@ -266,18 +271,18 @@ const handlePasswordCheckValidation = (passwordInput, passwordCheckInput, passwo
   // 비밀번호 확인 입력칸 초기 비활성화
   passwordCheckInput.disabled = true;
 
-  emailInput.addEventListener('input', () => {
+  emailInput.addEventListener('blur', () => {
     handleEmailValidation(emailInput, document.getElementById("email-helpertext"));
   });
 
-  passwordInput.addEventListener('input', () => {
+  passwordInput.addEventListener('blur', () => {
     handlePasswordValidation(
       passwordInput,
       document.getElementById("password-helpertext")
     );
   });
 
-  passwordCheckInput.addEventListener('input', () => {
+  passwordCheckInput.addEventListener('blur', () => {
     handlePasswordCheckValidation(
       passwordInput,
       passwordCheckInput,
@@ -285,7 +290,7 @@ const handlePasswordCheckValidation = (passwordInput, passwordCheckInput, passwo
     );
   });
 
-  nicknameInput.addEventListener('input', () => {
+  nicknameInput.addEventListener('blur', () => {
     handleNicknameValidation(nicknameInput, document.getElementById("nickname-helpertext"));
   });
 
