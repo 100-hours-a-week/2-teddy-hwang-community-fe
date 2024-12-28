@@ -26,14 +26,14 @@ const fetchData = async (url) => {
 const createBoardArticle = (post) => {
   const boardArticle = document.createElement("article");
   boardArticle.classList.add("board");
-  boardArticle.setAttribute("id", `${post.id}`);
+  boardArticle.setAttribute("id", `${post.post_id}`);
   boardArticle.innerHTML = `
         <span class="title">${post.title}</span>
         <article class="board-info">
             <span class="like-count">좋아요 ${numToK(post.like_count)}</span>
             <span class="reply-count">댓글 ${numToK(post.comment_count)}</span>
             <span class="view-count">조회수 ${numToK(post.view_count)}</span>
-            <span class="created-at">${post.created_at}</span>
+            <span class="created-at">${post.modified_at}</span>
         </article>
         <hr> 
         <article class="user-info">
@@ -45,7 +45,7 @@ const createBoardArticle = (post) => {
     `;
 
   boardArticle.addEventListener("click", () => {
-    location.href = `/posts/${post.id}`;
+    location.href = `/posts/${post.post_id}`;
   });
 
   return boardArticle;
