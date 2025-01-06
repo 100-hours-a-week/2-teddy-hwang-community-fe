@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
-    loadPost();
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadPost();
     uploadImage();
     updatePost();
 });
@@ -32,6 +32,8 @@ const loadPost = async () => {
         const response = await fetchData(`${address}/api/posts/${postId}/without-view`);
         title.value = response.data.title;
         content.value = response.data.content;
+        boardImage = response.data.post_image;
+        console.log(boardImage);
         //파일명 추출
         const decodeFilename = decodeURIComponent(response.data.post_image);
         const originalFilename = decodeFilename.split('/').pop();
@@ -74,19 +76,18 @@ const loadImage = (fileInput) => {
     });
 };
 //게시글 수정
-const updatePost = () => {
+const updatePost = async () => {
     const title = document.getElementById('title');
     const content = document.getElementById('content');
     const helpertext = document.querySelector('.helpertext');
     const modifyBtn = document.getElementById('modify-btn');
-    const fileName = document.getElementById("file-name");
+  
     modifyBtn.addEventListener("click", async () => {
         if (title.value.trim() === "" || content.value.trim() === "") {
           helpertext.textContent = "제목,내용을 모두 작성해주세요";
         } else {
           helpertext.textContent = ""; 
           
-          //수정할 데이터(이미지, 유저ID 추후 수정)
           const formData = new FormData();
 
           formData.append('title', title.value);
@@ -95,6 +96,7 @@ const updatePost = () => {
           
           //이미지 파일이 없을 때도 처리
           if (boardImage) {
+            console.log('보드 이미지!!!!!', boardImage);
             formData.append('image', boardImage);
           }else {
             formData.append('image', "");
