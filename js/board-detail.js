@@ -218,10 +218,10 @@ const displayPost = (post) => {
                         <p class="reply-content">${comment.content}</p>
                     </article>
                 </article>
-                ${comment.user_id === parseInt(userId) ? `
+                ${comment.author.user_id === userId ? `
                     <article class="reply-btn-container">
-                        <button type="button" class="modify-reply-btn" comment-id=${comment.id}>수정</button>
-                        <button type="button" class="delete-reply-btn" comment-id=${comment.id}>삭제</button>
+                        <button type="button" class="modify-reply-btn" comment-id=${comment.comment_id}>수정</button>
+                        <button type="button" class="delete-reply-btn" comment-id=${comment.comment_id}>삭제</button>
                     </article>
                 ` : ''}
             </div>
@@ -279,7 +279,8 @@ const handleComment = () => {
             const commentData = {
                 user_id: userId,
                 post_id: postId,
-                content: content
+                content: content,
+                comment_id: commentId
             }
 
             //수정 모드와 작성 구분
