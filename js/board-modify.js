@@ -33,7 +33,6 @@ const loadPost = async () => {
         title.value = response.data.title;
         content.value = response.data.content;
         boardImage = response.data.post_image;
-        console.log(boardImage);
         //파일명 추출
         const decodeFilename = decodeURIComponent(response.data.post_image);
         const originalFilename = decodeFilename.split('/').pop();
@@ -96,7 +95,6 @@ const updatePost = async () => {
           
           //이미지 파일이 없을 때도 처리
           if (boardImage) {
-            console.log('보드 이미지!!!!!', boardImage);
             formData.append('image', boardImage);
           }else {
             formData.append('image', "");
