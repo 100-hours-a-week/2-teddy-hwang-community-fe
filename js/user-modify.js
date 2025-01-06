@@ -1,9 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadUser();
+  changeImage();
   userDeleteText();
   userModal();
   nicknameInput();
-  loadUser();
-  changeImage();
 });
 let nicknameValid = false;
 const modalContainer = document.querySelector(".modal-container");
@@ -193,6 +193,7 @@ const loadUser = async () => {
     email.textContent = result.data.email;
     nicknameInput.value = result.data.nickname;
     profileImage.src = result.data.profile_image;
+    selectedImageFile = result.data.profile_image;
 
   } catch (error) {
     throw new Error('유저 조회를 실패했습니다.', error);
@@ -203,11 +204,8 @@ const updateUser = async (nicknameInput) => {
 
   const formData = new FormData();
   formData.append('nickname', nicknameInput.value);
+  formData.append('image', selectedImageFile);
 
-  //새 이미지가 선택된 경우에만 이미지 전송
-  if(selectedImageFile && selectedImageFile !== '') {
-    formData.append('image', selectedImageFile);
-  }
 
   try {
     const response = await fetch(`${address}/api/users/${userId}/profile`, {
@@ -264,15 +262,14 @@ const changeImage = () => {
     const fileReader = new FileReader();
     const image = event.target.files[0]; // 선택한 파일
 
-    // 파일을 선택하지 않았을 경우 (취소 버튼 클릭)
+    // 파일을 선택하지 않았을 경우
     if (!image) {
-      console.log("취소!!");
       profileImage.src = basicProfileImage;  // 기본 이미지로 되돌리기
-      return;
+      selectedImageFile = basicProfileImage;
+    }else {
+      // 이미지가 선택되었을 경우
+      selectedImageFile = image;
     }
-
-    // 이미지가 선택되었을 경우
-    selectedImageFile = image;
 
     // 이미지 파일 읽기
     fileReader.onload = (e) => {
@@ -287,7 +284,8 @@ const changeImage = () => {
   fileInput.addEventListener('click', () => {
     // 파일이 비어있는 경우 취소가 된 것으로 판단
     if (fileInput.value.length === 0) {
-      profileImage.src = basicProfileImage;  // 기본 이미지로 되돌리기
+      profileImage.src = basicProfileImage; // 기본 이미지로 되돌리기
+      selectedImageFile = basicProfileImage;
     }
   });
 };
