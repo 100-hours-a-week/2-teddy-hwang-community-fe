@@ -4,7 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
   uploadImage();
 });
 let boardImage = '';
-const userId = Number(sessionStorage.getItem('userId'));
+const userId = authManager.getUserInfo()?.id;
+if (!userId) {
+  alert('로그인이 필요한 서비스입니다.');
+  location.href = '/';
+}
+
 /**
  * 제목은 26자까지 작성 가능
  * 27자 이상 작성시 작성 안됨
@@ -71,9 +76,12 @@ const createBoard = async (title, content, image) => {
     }else {
       formData.append('image', "");
     }
-
+    
+    const headers = await authManager.getAuthHeader();
     const response = await fetch(`${address}/api/posts`, {
       method: 'POST',
+      headers,
+      credentials: 'include',
       body: formData
     });
 
@@ -107,7 +115,6 @@ const uploadImage = () => {
 const loadImage = (fileInput) => {
   fileInput.addEventListener("change", (event) => {
     const fileName = document.getElementById("file-name");
-    const fileReader = new FileReader();
     //이미지 하나만 등록
     const profileImage = event.target.files[0];
 
@@ -117,4 +124,3 @@ const loadImage = (fileInput) => {
     }
   });
 };
-
