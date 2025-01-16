@@ -1,137 +1,116 @@
 /* 폰트 추가 */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
 
-/* 페이지 설정 */
-body {
-    display: flex;
-    align-items: center;
-    flex-direction: column;    
-    background: #F4F5F7;
-    font-family: "Noto Sans KR", sans-serif;
-}
-
-header {
-    display: flex;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    width: 1920px;
-    height: 103px;
-    border-bottom: 1px solid #000000;
-    top: 0;
-}
-
-header h1 {
-    display: flex;
-    width: 206px;
-    height: 32px;
-  
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 32px;
-    text-align: center;
-    color: #000000;
-}
-
 .wrap {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    height: 100vh;
-    max-width: 392px;
-    background-color: transparent;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 392px;
+  background-color: transparent;
 }
 
 .wrap h2 {
-    font-family: Pretendard;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 38.19px;
-    text-align: center;
-    margin: 0px 0px 49px 0px;
+  font-family: Pretendard;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 38.19px;
+  text-align: center;
+  margin: 0px 0px 49px 0px;
 }
 
 .login-form {
-    width: 392px;
-    height: 198px;
-    margin-bottom: 20px;
+  width: 392px;
+  height: 198px;
+  margin-bottom: 20px;
 }
 
-label {
-    display: flex;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 17.9px;
-    margin: 18px 18px;
-    text-align: center;
+#email-label {
+  display: flex;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 17.9px;
+  text-align: center;
+  margin: 18px 18px 8px 18px;
+}
+
+#password-label {
+  display: flex;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 17.9px;
+  text-align: center;
+  margin: 16px 18px 8px 18px;
 }
 
 input {
-    display: flex;
-    justify-content: center;
-    width: 351px;
-    height: 33px;
-    border-radius: 4px;
-    border: 1px solid #000000;
-    margin: 0px 18px;
-    background-color: #F4F5F7;
+  display: flex;
+  justify-content: center;
+  width: 341px;
+  height: 29px;
+  padding-left: 10px;
+  border-radius: 4px;
+  border: 1px solid #000000;
+  margin: 0px 18px;
+  background-color: #f4f5f7;
 }
 
 input::placeholder {
-    font-family: Pretendard;
-    padding-left: 10px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16.71px;
-    color: black;
+  font-family: Pretendard;
+  padding: 8px 0px 8px 0px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.71px;
+  color: black;
 }
 
 small {
-    display: flex;
-    font-family: Inter;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 14.52px;
-    text-align: left;
-    margin: 4px 0px 19px 18px;
-    color: red;
+  display: flex;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  text-align: left;
+  margin: 4px 0px 19px 18px;
+  color: red;
 }
 
 button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 355px;
-    height: 33px;
-    border-radius: 4px;
-    border: none;
-    background: #ACA0EB;
-    margin: 0px 18px 0px 18px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 355px;
+  height: 33px;
+  border-radius: 4px;
+  border: none;
+  background: #aca0eb;
+  margin: 0px 18px 0px 18px;
 
-    font-family: Pretendard;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 16.71px;
-    text-align: center;
-    color: white;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16.71px;
+  text-align: center;
+  color: white;
+  cursor: pointer;
 }
 
 .signup-link {
-    display: flex;
-    margin-top: 12px;
-    justify-content: center;
+  display: flex;
+  margin-top: 12px;
+  justify-content: center;
 }
 
 a {
-    display: flex;
-    width: 55px;
-    height: 17px;
+  display: flex;
+  width: 49px;
+  height: 17px;
 
-    font-family: Pretendard;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16.71px;
-    text-align: left;
-    color: black;
-    text-decoration-line: none;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.71px;
+  text-align: left;
+  color: black;
+  text-decoration-line: none;
 }

@@ -1,48 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../css/board-create.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/board-create.css" />
+    <link rel="stylesheet" href="/css/header.css" />
+    
     <title>게시글 작성 페이지</title>
-</head>
+  </head>
 
-<body>
-    <header>
-        <div class="back-icon-container">
-            <span class="material-icons">arrow_back_ios</span>
-        </div>
-        <h1>아무 말 대잔치</h1>
-        <div class="account-container">
-            <span class="account-box">
-                <img class="account-image" src="../images/profile-image.jpg">
-            </span>
-        </div>
-    </header>
+  <body>
+    <div id="header-container"></div>
     <section class="wrap">
-        <h2>게시글 작성</h2>
-        <form>
-            <p class="title-star">제목*</p>
-            <hr>
-            <input type="text" id="title" placeholder="제목을 입력해주세요. (최대 26글자)" required>
-            <hr>
-            <p class="content-star">내용*</p>
-            <hr>
-            <textarea rows="11" id="content" placeholder="내용을 입력해주세요."></textarea>
-            <hr>
-            <p class="helpertext">* helpertext</p>
-            <article class="image-container">
-                <p class="image-text">이미지</p>
-                <article class="file-container">
-                    <button type="file" class="select-file-btn">파일 선택</button>
-                    <p class="file-name">파일을 선택해주세요.</p>
-                </article>             
-            </article>
-            <button type="submit" class="create-btn">완료</button>
-        </form>
+      <h2>게시글 작성</h2>
+      <form>
+        <p class="title-star">제목*</p>
+        <hr />
+        <input
+          type="text"
+          id="title"
+          placeholder="제목을 입력해주세요. (최대 26글자)"
+          oninput="titleMaxLength(this, 26)"
+        />
+        <hr />
+        <p class="content-star">내용*</p>
+        <hr />
+        <textarea
+          rows="11"
+          id="content"
+          placeholder="내용을 입력해주세요."
+        ></textarea>
+        <hr />
+        <p class="helpertext" id="helpertext"></p>
+        <article class="image-container">
+          <p class="image-text">이미지</p>
+          <article class="file-container">
+            <input
+              type="file"
+              id="file-input"
+              accept="image/*"
+              style="display: none"
+            />
+            <button type="button" class="select-file-btn" id="select-file-btn">
+              파일 선택
+            </button>
+            <p class="file-name" id="file-name">파일을 선택해주세요.</p>
+          </article>
+        </article>
+        <button type="button" class="create-btn" id="create-btn">완료</button>
+      </form>
     </section>
-</body>
-
+    <script src="/js/config.js"></script>
+    <script src="/js/auth-manager.js"></script>
+    <script src="/js/header.js"></script>
+    <script src="/js/board-create.js"></script>
+  </body>
 </html>

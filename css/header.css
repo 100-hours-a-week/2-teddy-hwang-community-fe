@@ -1,0 +1,123 @@
+/* body에 추가 */
+body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: #f4f5f7;
+    font-family: "Noto Sans KR", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+span,
+label,
+h1,
+h2,
+p,
+small {
+  cursor: default;
+}
+
+/* header 수정 */
+header {
+    display: flex;
+    position: fixed;
+    left: 50%;              /* 중앙 정렬을 위한 설정 */
+    transform: translateX(-50%); /* 중앙 정렬을 위한 설정 */
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background: #f4f5f7;
+    width: 1920px;
+    height: 103px;
+    border-bottom: 1px solid #000000;
+    top: 0;
+}
+  
+  header h1 {
+    display: flex;
+    width: 206px;
+    height: 32px;
+  
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 32px;
+    text-align: center;
+    color: #000000;
+  }
+  
+  .back-icon-container {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 684px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .material-icons {
+    width: 10.93px;
+    height: 18.89px;
+    cursor: pointer;
+  }
+  
+  .account-container {
+    position: absolute;
+    right: 688px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .account-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 70%;
+    overflow: hidden;
+  }
+  
+  .account-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  
+  .dropdown {
+    display: none;
+    position: absolute;
+    width: 115px;
+    height: 105px;
+    background: #f4f5f7;
+    margin-top: 8px;
+    right: 0px;
+  }
+  
+  .dropdown ul {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .dropdown li {
+    display: block;
+    list-style: none;
+    padding: 6px 0px;
+    text-align: center;
+  }
+  
+  .dropdown li:hover {
+    background-color: #e9e9e9;
+  }
+  
+  .dropdown a {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.52px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    text-decoration-line: none;
+    color: #000000;
+  }
