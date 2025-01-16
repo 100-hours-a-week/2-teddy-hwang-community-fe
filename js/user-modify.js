@@ -9,9 +9,11 @@ let nicknameValid = false;
 const modalContainer = document.querySelector(".modal-container");
 const body = document.body;
 
-const userId = Number(sessionStorage.getItem('userId'));
-
-const basicProfileImage = "https://kbt-community-s3.s3.ap-northeast-2.amazonaws.com/profile-image.jpg";
+const userId = authManager.getUserInfo()?.id;
+if (!userId) {
+    alert('로그인이 필요한 서비스입니다.');
+    location.href = '/';
+}
 let selectedImageFile = '';
 
 
@@ -52,9 +54,10 @@ const userDeleteText = () => {
   });
 };
 //회원탈퇴 모달창 취소, 확인
-const userModal = () => {
+const userModal = async () => {
   const userCancelBtn = document.getElementById("user-cancel-btn");
   const userCheckBtn = document.getElementById("user-check-btn");
+  const headers = await authManager.getAuthHeader();
   //취소
   userCancelBtn.addEventListener("click", () => {
     closeModal();
@@ -65,19 +68,28 @@ const userModal = () => {
       try {
         const response = await fetch(`${address}/api/users/${userId}`, {
           method: 'DELETE',
+          headers,
           credentials: 'include' 
         });
 
         if(!response.ok) {
           throw new Error('회원탈퇴에 실패했습니다');
         }
-        //세션 제거
-        sessionStorage.clear();
+
+        // 로그아웃 처리
+        await fetch(`${address}/api/auth/logout`, {
+          method: 'POST',
+          headers,
+          credentials: 'include'
+        });
+
+        // Access Token 삭제
+        authManager.refreshAccessToken();
         
         //로그인으로 이동
         location.href = "/";
       } catch (error) {
-        throw new Error('회원탈퇴에 실패했습니다', error);      
+        throw new Error('회원탈퇴에 실패했습니다', error);    
       }
 
   });
@@ -89,10 +101,11 @@ const userModal = () => {
  * 닉네임 중복시 -> *중복된 닉네임 입니다.
  * 닉네임 11자 이상 작성시 -> *닉네임은 최대 10자 까지 작성 가능합니다.
  */
-const nicknameInput = () => {
+const nicknameInput = async () => {
   const nicknameInput = document.getElementById("nickname");
   const modifyBtn = document.getElementById("modify-btn");
   const helpertext = document.getElementById("helpertext");
+  const headers = await authManager.getAuthHeader();
 
   const showNicknameError = async (nickname) => {
     //닉네임을 입력하지 않은 경우
@@ -118,12 +131,14 @@ const nicknameInput = () => {
         return;
       }
     }
-    // 닉네임 중복시 
+   
     try {
       const response = await fetch(`${address}/api/users/profile/nickname/${nickname}`, {
+        headers,
         credentials: 'include'
       });
       result = await response.json();
+      // 닉네임 중복시 
       if(!result.data) {
         helpertext.textContent = "*중복된 닉네임 입니다.";
         nicknameValid = false;
@@ -179,8 +194,10 @@ const loadUser = async () => {
   const email = document.querySelector('.user-email');
   const nicknameInput = document.getElementById('nickname');
   const profileImage = document.querySelector('.profile-image');
+  const headers = await authManager.getAuthHeader();
   try {
     const response = await fetch(`${address}/api/users/${userId}`, {
+      headers,
       credentials: 'include'
     });
     
@@ -206,10 +223,12 @@ const updateUser = async (nicknameInput) => {
   formData.append('nickname', nicknameInput.value);
   formData.append('image', selectedImageFile);
 
+  const headers = await authManager.getAuthHeader();
 
   try {
     const response = await fetch(`${address}/api/users/${userId}/profile`, {
       method: 'PATCH',
+      headers,
       credentials: 'include',
       body: formData
     });
@@ -289,6 +308,5 @@ const changeImage = () => {
     }
   });
 };
-
 
 
