@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', async () => {   
     try {     
         // 동적으로 header HTML 생성
@@ -16,31 +15,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-const getProfileImage = async () => {
-    try {
-        const userId = Number(sessionStorage.getItem('userId'));
-        const response = await fetch(`${address}/api/users/${userId}`, {
-            credentials: 'include'
-        });
-        if(!response.ok) throw new Error('유저 정보 조회에 실패했습니다.');
-        const result = await response.json();
-        return result.data.profile_image;
-    } catch (error) {
-        throw new Error('유저 정보 조회에 실패했습니다', error);
-    }
-}
-
 //html을 뿌려줄 건데 동적인 요소가 들어감
 const generateHeaderHtml = async () => {
     const path = window.location.pathname;
-    let profileImage;
     try {
-        const userId = Number(sessionStorage.getItem('userId'));
-        if(userId !== 0) {
-            profileImage = await getProfileImage();
-        }else {
-            profileImage = '/images/profile-image.jpg';
-        }
         const headerConfig = {
             //모두 없는 페이지
             '/': { showBackIcon: false, showAccount: false },
@@ -66,19 +44,23 @@ const generateHeaderHtml = async () => {
         }
 
         const config = headerConfig[path];
+
+        // 계정 컨테이너 html 생성
+           // 계정 컨테이너 HTML 생성
+        const accountHtml = config.showAccount 
+        ? `<span class="account-box">
+                <img class="account-image" src="${authManager.getUserInfo()?.profile_image || basicProfileImage}" alt="profile" />
+                <div id="dropdown-container"></div>
+            </span>`
+        : '';
         return `
             <header>
                 <div class="back-icon-container">
                     ${config.showBackIcon ? '<span class="material-icons">arrow_back_ios</span>' : ''}
                 </div>
-                <h1>아무 말 대잔치</h1>
+                <h1 class="site-title" style="cursor: pointer">아무 말 대잔치</h1>
                 <div class="account-container">
-                    ${config.showAccount ? `
-                        <span class="account-box">
-                            <img class="account-image" src="${profileImage}" alt="profile" />
-                            <div id="dropdown-container"></div>
-                        </span>
-                    ` : ''}
+                    ${accountHtml}
                 </div>
             </header>
         `;
@@ -92,6 +74,19 @@ const initializeHeader = async () => {
     try {
         const hasAccountImage = document.querySelector(".account-image");
 
+        // 제목 클릭 이벤트 추가
+        const siteTitle = document.querySelector(".site-title");
+        if (siteTitle) {
+            siteTitle.addEventListener("click", () => {
+                const token = authManager.getAccessToken();
+                if (!token) {
+                    alert('로그인이 필요한 서비스입니다.');
+                    location.href = '/';
+                    return;
+                }
+                location.href = '/posts';
+            });
+        }
         // 계정 이미지가 있을 때만 드롭다운 로드
         if (hasAccountImage) {
             const dropdownResponse = await fetch('/html/dropdown.html');
@@ -166,9 +161,31 @@ const initializeLinks = () => {
     }
 
     if (logoutLink) {
-        logoutLink.addEventListener('click', () => {
-            sessionStorage.clear();
-            window.location.href = '/';
+        const token = authManager.getAccessToken();
+        logoutLink.addEventListener('click', async () => {
+            try {
+                const response = await fetch(`${address}/api/auth/logout`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    credentials: 'include'  // Refresh Token 쿠키를 위해 필요
+                });
+    
+                if(!response.ok) {
+                    throw new Error('로그아웃에 실패했습니다.');
+                }
+    
+                // 클라이언트 측 토큰 제거
+                authManager.removeAccessToken();
+            
+                window.location.href = '/';
+            } catch (error) {
+                console.error('로그아웃에 실패했습니다.', error);
+                
+                authManager.removeAccessToken();
+                window.location.href = '/';
+            }
         });
     }
 };
