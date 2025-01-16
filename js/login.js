@@ -89,14 +89,13 @@ const formState = {
   loginButton.style.backgroundColor = isFormValid ? "#7F6AEE" : "#ACA0EB";
   loginButton.disabled = !isFormValid;
  };
- 
  // 로그인 처리
  const handleLogin = async (helpertext) => {
   try {
-    const response = await fetch(`${address}/api/users/login`, {
+    const response = await fetch(`${address}/api/auth/login`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       credentials: 'include',
       body: JSON.stringify({
@@ -115,8 +114,12 @@ const formState = {
     if (!response.ok) {
       throw new Error('로그인에 실패했습니다.');
     }
- 
-    sessionStorage.setItem('userId', result.data.user_id);
+
+    // Access Token 저장
+    if (result.data.accessToken) {
+      authManager.setAccessToken(result.data.accessToken);
+    }
+
     location.href = '/posts';
  
   } catch (error) {
