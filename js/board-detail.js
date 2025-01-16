@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     loadBoardData();
-    postDelete();
+    postDelete();   
     postModal();
     commentDelete();
     commentModal();
@@ -15,8 +15,11 @@ let deleteCommentId = null;
 //경로 파라미터 추출
 const pathname = window.location.pathname;
 const postId = Number(pathname.split('/')[2]); 
-const userId = Number(sessionStorage.getItem('userId'));
-
+const userId = authManager.getUserInfo()?.id;
+if (!userId) {
+    alert('로그인이 필요한 서비스입니다.');
+    location.href = '/';
+}
 
 // 공통으로 사용할 스타일 설정 함수
 const openModal = (modal) => {
@@ -71,9 +74,10 @@ const postDelete = () => {
 };
 
 //글 삭제 모달창 취소, 확인
-const postModal = () => {
+const postModal = async () => {
     const postCancelBtn = document.getElementById('board-cancel-btn');
     const postCheckBtn = document.getElementById('board-check-btn');
+    const headers = await authManager.getAuthHeader();
     //취소
     postCancelBtn.addEventListener('click', () => {
         closeModal();
@@ -83,6 +87,7 @@ const postModal = () => {
         try {
             const response = await fetch(`${address}/api/posts/${postId}`, {
                 method: 'DELETE',
+                headers,
                 credentials: 'include'
             });
             
@@ -117,9 +122,10 @@ const commentDelete = () => {
 };
 
 //댓글 삭제 모달창 취소, 확인
-const commentModal = () => {
+const commentModal = async () => {
     const commentCancelBtn = document.getElementById('reply-cancel-btn');
     const commentCheckBtn = document.getElementById('reply-check-btn');
+    const headers = await authManager.getAuthHeader();
     //취소
     commentCancelBtn.addEventListener('click', () => {
         closeModal();
@@ -131,6 +137,7 @@ const commentModal = () => {
         try {
             const response = await fetch(`${address}/api/comments/${deleteCommentId}`, {
                 method: 'DELETE',
+                headers,
                 credentials: 'include'
             });
             
@@ -146,15 +153,24 @@ const commentModal = () => {
     });
 }
 
-//데이터를 가져오는 함수
+// 게시글 데이터를 가져오는 함수
 const fetchData = async (url) => {
+    const headers = await authManager.getAuthHeader();
+  
     const response = await fetch(url, {
-        credentials: 'include'
+      headers,
+      credentials: 'include'
     });
+  
+    if (response.status === 401) {
+      alert('인증이 만료되었습니다. 다시 로그인 해주세요.');
+      location.href = '/';
+      return;
+    }
+  
     if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
     return await response.json();
-};
-
+  };
 //게시판을 렌더링하는 함수
 const loadBoardData = async (increaseView = true) => {
     try {
@@ -204,38 +220,61 @@ const displayPost = (post) => {
     replyListContainer.innerHTML = ''; // 기존 내용 초기화
 
     post.comments.forEach(comment => {
-        const replyHTML = `
-            <div class="reply-item">
-                <article class="reply-info">
-                    <article class="reply-info-wrap">
-                        <span class="reply-box">
-                            <img class="reply-profile-image" src="${comment.author.profile_image}" />
-                        </span>
-                        <span class="reply-username">${comment.author.nickname}</span>
-                        <span class="reply-created-at">${comment.modified_at}</span>
-                    </article>
-                    <article class="reply-content-container">
-                        <p class="reply-content">${comment.content}</p>
-                    </article>
+        // 댓글 컨테이너 생성
+        const replyItem = document.createElement('div');
+        replyItem.className = 'reply-item';
+
+        // 댓글 기본 구조 생성
+        replyItem.innerHTML = `
+            <article class="reply-info">
+                <article class="reply-info-wrap">
+                    <span class="reply-box">
+                        <img class="reply-profile-image" src="${comment.author.profile_image}" />
+                    </span>
+                    <span class="reply-created-at">${comment.modified_at}</span>
                 </article>
-                ${comment.author.user_id === userId ? `
-                    <article class="reply-btn-container">
-                        <button type="button" class="modify-reply-btn" comment-id=${comment.comment_id}>수정</button>
-                        <button type="button" class="delete-reply-btn" comment-id=${comment.comment_id}>삭제</button>
-                    </article>
-                ` : ''}
-            </div>
+                <article class="reply-content-container">
+                    <p class="reply-content"></p>
+                </article>
+            </article>
         `;
-        replyListContainer.insertAdjacentHTML('beforeend', replyHTML);
+
+        // username을 textContent로 추가
+        const usernameSpan = document.createElement('span');
+        usernameSpan.className = 'reply-username';
+        usernameSpan.textContent = comment.author.nickname;
+        replyItem.querySelector('.reply-info-wrap').insertBefore(
+            usernameSpan,
+            replyItem.querySelector('.reply-created-at')
+        );
+
+        // 댓글 내용을 textContent로 추가
+        replyItem.querySelector('.reply-content').textContent = comment.content;
+
+        // 작성자인 경우 수정/삭제 버튼 추가
+        if (comment.author.user_id === userId) {
+            const btnContainer = document.createElement('article');
+            btnContainer.className = 'reply-btn-container';
+            btnContainer.innerHTML = `
+                <button type="button" class="modify-reply-btn" comment-id="${comment.comment_id}">수정</button>
+                <button type="button" class="delete-reply-btn" comment-id="${comment.comment_id}">삭제</button>
+            `;
+            replyItem.appendChild(btnContainer);
+        }
+
+        replyListContainer.appendChild(replyItem);
     });
 }
 
 // 댓글 작성 및 수정 통합
-const handleComment = () => {
+const handleComment = async () => {
     const commentList = document.querySelector('.reply-list');
     const commentInput = document.getElementById('reply-textarea');
     const commentBtn = document.getElementById('reply-btn');
     let commentId = null;
+    const headers = await authManager.getAuthHeader();
+    headers['Content-Type'] = 'application/json';
+
 
     //버튼 스타일 변경 함수
     const updateButtonStyle = (value) => {
@@ -288,9 +327,7 @@ const handleComment = () => {
                 //수정 
                 response = await fetch(`${address}/api/comments/${commentId}`, {
                     method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers,
                     credentials: 'include',
                     body: JSON.stringify(commentData)
                 });
@@ -299,9 +336,7 @@ const handleComment = () => {
                 //작성
                 response = await fetch(`${address}/api/comments`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers,
                     credentials: 'include',
                     body: JSON.stringify(commentData)
                 });   
@@ -327,6 +362,9 @@ const handleComment = () => {
 const handleLike = async () => {
     const likeBtn = document.querySelector('.like-square'); 
     const likeCount = document.getElementById('like-count');
+    const headers = await authManager.getAuthHeader();
+    headers['Content-Type'] = 'application/json';
+    let isLiked = false; 
 
     //초기 좋아요 상태 로드
     const loadLikeStatus = async () => {
@@ -352,9 +390,7 @@ const handleLike = async () => {
                 // 좋아요 추가
                 apiResponse = await fetch(`${address}/api/posts/${postId}/like`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers,
                     credentials: 'include',
                     body: JSON.stringify({ user_id: userId })
                 });
@@ -366,6 +402,7 @@ const handleLike = async () => {
                 // 좋아요 취소
                 apiResponse = await fetch(`${address}/api/posts/${postId}/like?userId=${userId}`, {
                     method: 'DELETE',
+                    headers,
                     credentials: 'include'
                 });
                 
