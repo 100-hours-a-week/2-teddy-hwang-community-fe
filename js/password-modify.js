@@ -3,7 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let passwordValid = false;
-const userId = Number(sessionStorage.getItem('userId'));
+const userId = authManager.getUserInfo()?.id;
+if (!userId) {
+    alert('로그인이 필요한 서비스입니다.');
+    location.href = '/';
+}
 
 
 /**
@@ -93,6 +97,8 @@ const modifyBtnState = () => {
         modifyBtn.disabled = false;
   
         modifyBtn.addEventListener('click', async () => {
+          const headers = await authManager.getAuthHeader();
+          headers['Content-Type'] = 'application/json';
           //body 데이터
           const passwordData = {
             password: password,
@@ -100,9 +106,7 @@ const modifyBtnState = () => {
           //PATCH 요청
           const response = await fetch(`${address}/api/users/${userId}/password`, {
             method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json'
-            },
+            headers,
             credentials: 'include',
             body: JSON.stringify(passwordData)
           });
