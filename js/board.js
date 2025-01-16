@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
   createPostBtn();
 });
 
-
 /**
  * 게시글 작성 버튼을 누를 시 게시글 작성 페이지로 이동
  */
@@ -15,9 +14,19 @@ const createPostBtn = () => {
 };
 //게시글 데이터를 가져오는 함수
 const fetchData = async (url) => {
+  const headers = await authManager.getAuthHeader();
+
   const response = await fetch(url, {
+    headers,
     credentials: 'include'
   });
+
+  if (response.status === 401) {
+    alert('인증이 만료되었습니다. 다시 로그인 해주세요.');
+    location.href = '/';
+    return;
+  }
+
   if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
   return await response.json();
 };
@@ -27,8 +36,15 @@ const createBoardArticle = (post) => {
   const boardArticle = document.createElement("article");
   boardArticle.classList.add("board");
   boardArticle.setAttribute("id", `${post.post_id}`);
-  boardArticle.innerHTML = `
-        <span class="title">${post.title}</span>
+
+  const titleSpan = document.createElement('span');
+  titleSpan.classList.add('title');
+  titleSpan.textContent = post.title;
+
+
+
+  const content = document.createElement('div');
+  content.innerHTML = `
         <article class="board-info">
             <span class="like-count">좋아요 ${numToK(post.like_count)}</span>
             <span class="reply-count">댓글 ${numToK(post.comment_count)}</span>
@@ -40,10 +56,17 @@ const createBoardArticle = (post) => {
             <span class="box">
                 <img class="profile-image" src="${post.author.profile_image}" alt="Profile Image">
             </span>
-            <span class="username">${post.author.nickname}</span>
         </article>     
     `;
 
+  const usernameSpan = document.createElement('span');
+  usernameSpan.classList.add('username');
+  usernameSpan.textContent = post.author.nickname;
+  
+  boardArticle.appendChild(titleSpan);
+  boardArticle.appendChild(content);
+  content.querySelector('.user-info').appendChild(usernameSpan);
+  
   boardArticle.addEventListener("click", () => {
     location.href = `/posts/${post.post_id}`;
   });
