@@ -15,17 +15,11 @@ const createPostBtn = () => {
 //게시글 데이터를 가져오는 함수
 const fetchData = async (url) => {
   const headers = await authManager.getAuthHeader();
-
+  
   const response = await fetch(url, {
     headers,
     credentials: 'include'
   });
-
-  if (response.status === 401) {
-    alert('인증이 만료되었습니다. 다시 로그인 해주세요.');
-    location.href = '/';
-    return;
-  }
 
   if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
   return await response.json();
