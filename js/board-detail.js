@@ -151,7 +151,6 @@ const commentModal = async () => {
 
 // 게시글 데이터를 가져오는 함수
 const fetchData = async (url) => {
-
     const response = await fetch(url, {
       credentials: 'include'
     });
@@ -415,7 +414,7 @@ const handleLike = async () => {
                     headers,
                     credentials: 'include'
                 });
-                
+
                 if(apiResponse.status === 401) {
                     alert('로그인이 필요한 서비스입니다.');
                     location.href = '/';
