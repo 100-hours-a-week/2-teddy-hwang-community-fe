@@ -7,10 +7,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 const pathname = window.location.pathname;
 const postId = Number(pathname.split('/')[2]); 
 const userId = authManager.getUserInfo()?.id;
-if (!userId) {
-    alert('로그인이 필요한 서비스입니다.');
-    location.href = '/';
-}
 
 let boardImage = "";
 
@@ -23,11 +19,6 @@ const fetchData = async (url) => {
     credentials: 'include'
   });
 
-  if (response.status === 401) {
-    alert('인증이 만료되었습니다. 다시 로그인 해주세요.');
-    location.href = '/';
-    return;
-  }
 
   if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
   return await response.json();
