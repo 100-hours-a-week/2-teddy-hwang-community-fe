@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
-    loadBoardData();
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadBoardData();
     postDelete();   
     postModal();
     commentDelete();
@@ -16,10 +16,6 @@ let deleteCommentId = null;
 const pathname = window.location.pathname;
 const postId = Number(pathname.split('/')[2]); 
 const userId = authManager.getUserInfo()?.id;
-if (!userId) {
-    alert('로그인이 필요한 서비스입니다.');
-    location.href = '/';
-}
 
 // 공통으로 사용할 스타일 설정 함수
 const openModal = (modal) => {
@@ -155,18 +151,10 @@ const commentModal = async () => {
 
 // 게시글 데이터를 가져오는 함수
 const fetchData = async (url) => {
-    const headers = await authManager.getAuthHeader();
-  
+
     const response = await fetch(url, {
-      headers,
       credentials: 'include'
     });
-  
-    if (response.status === 401) {
-      alert('인증이 만료되었습니다. 다시 로그인 해주세요.');
-      location.href = '/';
-      return;
-    }
   
     if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
     return await response.json();
@@ -342,6 +330,12 @@ const handleComment = async () => {
                 });   
             }
 
+            if (response.status === 401) {
+                alert('로그인이 필요한 서비스입니다.');
+                location.href = '/';
+                return;
+            }
+
             if(!response.ok) {
                 throw new Error(commentId ? '댓글 수정에 실패했습니다.' : '댓글 작성에 실패했습니다.');
             }
@@ -368,9 +362,19 @@ const handleLike = async () => {
 
     //초기 좋아요 상태 로드
     const loadLikeStatus = async () => {
+        // 로그인 상태 체크
+        if (!userId) {
+            isLiked = false;
+            updateLikeUI();
+            return;
+        }
         try {
-            const response = await fetchData(`${address}/api/posts/${postId}/like?userId=${userId}`);
-            isLiked = response.is_liked;
+            const response = await fetch(`${address}/api/posts/${postId}/like?userId=${userId}`, {
+                headers,
+                credentials: 'include'
+            });
+            const data = await response.json();
+            isLiked = data.is_liked;
             //UI 업데이트
             updateLikeUI();
         } catch (error) {
@@ -395,6 +399,12 @@ const handleLike = async () => {
                     body: JSON.stringify({ user_id: userId })
                 });
                 
+                if(apiResponse.status === 401) {
+                    alert('로그인이 필요한 서비스입니다.');
+                    location.href = '/';
+                    return;  
+                }
+                
                 if (!apiResponse.ok) {
                     throw new Error('좋아요 추가를 실패했습니다.');
                 }
@@ -406,6 +416,12 @@ const handleLike = async () => {
                     credentials: 'include'
                 });
                 
+                if(apiResponse.status === 401) {
+                    alert('로그인이 필요한 서비스입니다.');
+                    location.href = '/';
+                    return;  
+                }
+
                 if (!apiResponse.ok) {
                     throw new Error('좋아요 취소를 실패했습니다.');
                 }
