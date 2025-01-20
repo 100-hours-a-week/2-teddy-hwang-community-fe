@@ -1,5 +1,37 @@
 document.addEventListener('DOMContentLoaded', async () => {   
     try {     
+        const path = window.location.pathname;
+
+        // 인증이 필요하지 않은 페이지 목록
+        const publicPaths = [
+            '/',  // 로그인 페이지
+            '/signup',  // 회원가입
+            '/posts'  // 글 전체조회
+        ];
+        
+        // 글 상세조회 페이지 체크
+        const isPostDetailPage = path.match(/^\/posts\/\d+$/); 
+         
+        // 현재 페이지가 인증이 필요한지 체크
+        const requiresAuth = !publicPaths.includes(path) && !isPostDetailPage;
+        
+        if (requiresAuth) {
+            // 인증 체크를 위한 API 요청
+            const headers = await authManager.getAuthHeader();
+            const userId = authManager.getUserInfo()?.id;
+
+            const response = await fetch(`${address}/api/users/${userId}`, {
+                headers,
+                credentials: 'include'
+            });
+
+            if (response.status === 401) {
+                alert('로그인이 필요한 서비스입니다.');
+                location.href = '/';
+                return;
+            }
+        }
+
         // 동적으로 header HTML 생성
         const headerHtml = await generateHeaderHtml();
         
@@ -45,8 +77,7 @@ const generateHeaderHtml = async () => {
 
         const config = headerConfig[path];
 
-        // 계정 컨테이너 html 생성
-           // 계정 컨테이너 HTML 생성
+        // 계정 컨테이너 HTML 생성
         const accountHtml = config.showAccount 
         ? `<span class="account-box">
                 <img class="account-image" src="${authManager.getUserInfo()?.profile_image || basicProfileImage}" alt="profile" />
