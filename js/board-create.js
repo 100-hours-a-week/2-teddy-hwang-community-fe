@@ -5,10 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 let boardImage = '';
 const userId = authManager.getUserInfo()?.id;
-if (!userId) {
-  alert('로그인이 필요한 서비스입니다.');
-  location.href = '/';
-}
 
 /**
  * 제목은 26자까지 작성 가능
