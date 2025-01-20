@@ -10,10 +10,6 @@ const modalContainer = document.querySelector(".modal-container");
 const body = document.body;
 
 const userId = authManager.getUserInfo()?.id;
-if (!userId) {
-    alert('로그인이 필요한 서비스입니다.');
-    location.href = '/';
-}
 let selectedImageFile = '';
 
 
