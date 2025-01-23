@@ -1,10 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
-    loadBoardData();
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadBoardData();
+    await handleComment();
     postDelete();   
     postModal();
     commentDelete();
     commentModal();
-    handleComment();
     postModify();
     handleLike();
 });
@@ -16,10 +16,6 @@ let deleteCommentId = null;
 const pathname = window.location.pathname;
 const postId = Number(pathname.split('/')[2]); 
 const userId = authManager.getUserInfo()?.id;
-if (!userId) {
-    alert('로그인이 필요한 서비스입니다.');
-    location.href = '/';
-}
 
 // 공통으로 사용할 스타일 설정 함수
 const openModal = (modal) => {
@@ -77,7 +73,6 @@ const postDelete = () => {
 const postModal = async () => {
     const postCancelBtn = document.getElementById('board-cancel-btn');
     const postCheckBtn = document.getElementById('board-check-btn');
-    const headers = await authManager.getAuthHeader();
     //취소
     postCancelBtn.addEventListener('click', () => {
         closeModal();
@@ -85,13 +80,9 @@ const postModal = async () => {
     //확인
     postCheckBtn.addEventListener('click', async () => {
         try {
-            const response = await fetch(`${address}/api/posts/${postId}`, {
-                method: 'DELETE',
-                headers,
-                credentials: 'include'
-            });
+            const response = await apiDelete(`${address}/api/posts/${postId}`);
             
-            if(!response.ok){
+            if(!response.response.ok){
                 throw new Error('글 삭제에 실패했습니다.');
             }
             closeModal();
@@ -125,7 +116,6 @@ const commentDelete = () => {
 const commentModal = async () => {
     const commentCancelBtn = document.getElementById('reply-cancel-btn');
     const commentCheckBtn = document.getElementById('reply-check-btn');
-    const headers = await authManager.getAuthHeader();
     //취소
     commentCancelBtn.addEventListener('click', () => {
         closeModal();
@@ -135,13 +125,9 @@ const commentModal = async () => {
     commentCheckBtn.addEventListener('click', async () => {
         if(!deleteCommentId) return;
         try {
-            const response = await fetch(`${address}/api/comments/${deleteCommentId}`, {
-                method: 'DELETE',
-                headers,
-                credentials: 'include'
-            });
+            const response = await apiDelete(`${address}/api/comments/${deleteCommentId}`);
             
-            if(!response.ok){
+            if(!response.response.ok){
                 throw new Error('댓글 삭제에 실패했습니다.');
             }
             closeModal();
@@ -152,25 +138,6 @@ const commentModal = async () => {
         }        
     });
 }
-
-// 게시글 데이터를 가져오는 함수
-const fetchData = async (url) => {
-    const headers = await authManager.getAuthHeader();
-  
-    const response = await fetch(url, {
-      headers,
-      credentials: 'include'
-    });
-  
-    if (response.status === 401) {
-      alert('인증이 만료되었습니다. 다시 로그인 해주세요.');
-      location.href = '/';
-      return;
-    }
-  
-    if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
-    return await response.json();
-  };
 //게시판을 렌더링하는 함수
 const loadBoardData = async (increaseView = true) => {
     try {
@@ -178,9 +145,9 @@ const loadBoardData = async (increaseView = true) => {
         ? `${address}/api/posts/${postId}`
         : `${address}/api/posts/${postId}/without-view`; 
         
-        const post = await fetchData(endpoint);
+        const post = await apiGet(endpoint);
 
-        displayPost(post.data);
+        displayPost(post.data.data);
 
     } catch (error) {
         console.error('잘못된 요청입니다.', error);
@@ -272,9 +239,6 @@ const handleComment = async () => {
     const commentInput = document.getElementById('reply-textarea');
     const commentBtn = document.getElementById('reply-btn');
     let commentId = null;
-    const headers = await authManager.getAuthHeader();
-    headers['Content-Type'] = 'application/json';
-
 
     //버튼 스타일 변경 함수
     const updateButtonStyle = (value) => {
@@ -318,31 +282,21 @@ const handleComment = async () => {
             const commentData = {
                 user_id: userId,
                 post_id: postId,
-                content: content,
-                comment_id: commentId
+                content: content
             }
 
             //수정 모드와 작성 구분
             if(commentId) {
-                //수정 
-                response = await fetch(`${address}/api/comments/${commentId}`, {
-                    method: 'PATCH',
-                    headers,
-                    credentials: 'include',
-                    body: JSON.stringify(commentData)
-                });
+                //수정
+                commentData.comment_id = commentId; // 수정 시에만 댓글 ID 추가
+                response = await apiPatch(`${address}/api/comments/${commentId}`, JSON.stringify(commentData));
                 
             } else {
                 //작성
-                response = await fetch(`${address}/api/comments`, {
-                    method: 'POST',
-                    headers,
-                    credentials: 'include',
-                    body: JSON.stringify(commentData)
-                });   
+                response = await apiPost(`${address}/api/comments`, JSON.stringify(commentData));   
             }
 
-            if(!response.ok) {
+            if(!response.response.ok) {
                 throw new Error(commentId ? '댓글 수정에 실패했습니다.' : '댓글 작성에 실패했습니다.');
             }
             await loadBoardData(false); 
@@ -362,15 +316,19 @@ const handleComment = async () => {
 const handleLike = async () => {
     const likeBtn = document.querySelector('.like-square'); 
     const likeCount = document.getElementById('like-count');
-    const headers = await authManager.getAuthHeader();
-    headers['Content-Type'] = 'application/json';
     let isLiked = false; 
 
     //초기 좋아요 상태 로드
     const loadLikeStatus = async () => {
+        // 로그인 상태 체크
+        if (!userId) {
+            isLiked = false;
+            updateLikeUI();
+            return;
+        }
         try {
-            const response = await fetchData(`${address}/api/posts/${postId}/like?userId=${userId}`);
-            isLiked = response.is_liked;
+            const response = await apiGet(`${address}/api/posts/${postId}/like?userId=${userId}`);
+            isLiked = response.data.data.is_liked;
             //UI 업데이트
             updateLikeUI();
         } catch (error) {
@@ -388,31 +346,24 @@ const handleLike = async () => {
             let apiResponse;
             if (!isLiked) {
                 // 좋아요 추가
-                apiResponse = await fetch(`${address}/api/posts/${postId}/like`, {
-                    method: 'POST',
-                    headers,
-                    credentials: 'include',
-                    body: JSON.stringify({ user_id: userId })
-                });
+                apiResponse = await apiPost(`${address}/api/posts/${postId}/like`, JSON.stringify({ user_id: userId }));
                 
-                if (!apiResponse.ok) {
-                    throw new Error('좋아요 추가를 실패했습니다.');
+                if(apiResponse.status === 401) {
+                    alert('로그인이 필요한 서비스입니다.');
+                    location.href = '/';
+                    return;  
                 }
             } else {
                 // 좋아요 취소
-                apiResponse = await fetch(`${address}/api/posts/${postId}/like?userId=${userId}`, {
-                    method: 'DELETE',
-                    headers,
-                    credentials: 'include'
-                });
-                
-                if (!apiResponse.ok) {
-                    throw new Error('좋아요 취소를 실패했습니다.');
+                apiResponse = await apiDelete(`${address}/api/posts/${postId}/like?userId=${userId}`);
+
+                if(apiResponse.status === 401) {
+                    alert('로그인이 필요한 서비스입니다.');
+                    location.href = '/';
+                    return;  
                 }
             }
-            
-            const result = await apiResponse.json();
-            likeCount.textContent = numToK(result.data.like_count);
+            likeCount.textContent = numToK(apiResponse.data.data.like_count);
             isLiked = !isLiked; // 상태 토글
             updateLikeUI(); // UI 업데이트
 

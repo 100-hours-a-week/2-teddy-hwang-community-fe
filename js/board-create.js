@@ -5,10 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 let boardImage = '';
 const userId = authManager.getUserInfo()?.id;
-if (!userId) {
-  alert('로그인이 필요한 서비스입니다.');
-  location.href = '/';
-}
 
 /**
  * 제목은 26자까지 작성 가능
@@ -77,21 +73,13 @@ const createBoard = async (title, content, image) => {
       formData.append('image', "");
     }
     
-    const headers = await authManager.getAuthHeader();
-    const response = await fetch(`${address}/api/posts`, {
-      method: 'POST',
-      headers,
-      credentials: 'include',
-      body: formData
-    });
+    const response = await apiPostFormData(`${address}/api/posts`, formData);
 
-    if(!response.ok) {
+    if(!response.response.ok) {
       throw new Error('게시글 저장에 실패했습니다');
     }
-    
-    const result = await response.json();
 
-    location.href = `/posts/${result.data.post_id}`;
+    location.href = `/posts/${response.data.data.post_id}`;
 
   }catch(error) {
     throw new Error('게시글을 저장하는데 오류가 발생했습니다.', error);

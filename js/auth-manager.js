@@ -31,6 +31,11 @@ const authManager = {
                 method: 'POST',
                 credentials: 'include'
             });
+            
+            // 429 에러 처리
+            if(response.status === 429) {
+                return this.getAccessToken();
+            }
 
             if (!response.ok) {
                 this.removeAccessToken();
@@ -53,21 +58,25 @@ const authManager = {
     async getAuthHeader() {
         let token = this.getAccessToken();
 
-        if (!token) {
-            alert('로그인이 필요한 서비스입니다.');
-            location.href = '/';
-            return {};
+        if(!token) {
+            return {
+                'Authorization': `Bearer `
+            }
         }
-        
+
         // 토큰이 만료되었으면 갱신
         if (this.isTokenExpired()) {
             token = await this.refreshAccessToken();
-            if (!token) return {};
+            if(!token) {
+                return {
+                    'Authorization': `Bearer `
+                }
+            }
         }
 
-        return token ? {
+        return {
             'Authorization': `Bearer ${token}`
-        } : {};
+        };
     },
     getUserInfo() {
         const token = this.getAccessToken();
