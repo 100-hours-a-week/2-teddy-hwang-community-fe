@@ -62,13 +62,9 @@ const userModal = async () => {
   userCheckBtn.addEventListener("click", async () => {
       //탈퇴 처리
       try {
-        const response = await fetch(`${address}/api/users/${userId}`, {
-          method: 'DELETE',
-          headers,
-          credentials: 'include' 
-        });
+        const response = await apiDelete(`${address}/api/users/${userId}`);
 
-        if(!response.ok) {
+        if(!response.response.ok) {
           throw new Error('회원탈퇴에 실패했습니다');
         }
 
@@ -129,13 +125,10 @@ const nicknameInput = async () => {
     }
    
     try {
-      const response = await fetch(`${address}/api/users/profile/nickname/${nickname}`, {
-        headers,
-        credentials: 'include'
-      });
-      result = await response.json();
+      const response = await apiGet(`${address}/api/users/profile/nickname/${nickname}`);
+  
       // 닉네임 중복시 
-      if(!result.data) {
+      if(!response.data.data) {
         helpertext.textContent = "*중복된 닉네임 입니다.";
         nicknameValid = false;
         updateButtonState(nicknameValid);
@@ -190,23 +183,18 @@ const loadUser = async () => {
   const email = document.querySelector('.user-email');
   const nicknameInput = document.getElementById('nickname');
   const profileImage = document.querySelector('.profile-image');
-  const headers = await authManager.getAuthHeader();
   try {
-    const response = await fetch(`${address}/api/users/${userId}`, {
-      headers,
-      credentials: 'include'
-    });
+    const response = await apiGet(`${address}/api/users/${userId}`);
     
-    if(!response.ok) {
+    if(!response.response.response.ok) {
       throw new Error('유저 조회를 실패했습니다.');   
     }
-
-    const result = await response.json();
+    
     //유저 정보 채우기
-    email.textContent = result.data.email;
-    nicknameInput.value = result.data.nickname;
-    profileImage.src = result.data.profile_image;
-    selectedImageFile = result.data.profile_image;
+    email.textContent = response.data.data.email;
+    nicknameInput.value = response.data.data.nickname;
+    profileImage.src = response.data.data.profile_image;
+    selectedImageFile = response.data.data.profile_image;
 
   } catch (error) {
     throw new Error('유저 조회를 실패했습니다.', error);
@@ -219,30 +207,21 @@ const updateUser = async (nicknameInput) => {
   formData.append('nickname', nicknameInput.value);
   formData.append('image', selectedImageFile);
 
-  const headers = await authManager.getAuthHeader();
-
   try {
-    const response = await fetch(`${address}/api/users/${userId}/profile`, {
-      method: 'PATCH',
-      headers,
-      credentials: 'include',
-      body: formData
-    });
+    const response = await apiPatchFormData(`${address}/api/users/${userId}/profile`, formData);
 
-    if(!response.ok) {
+    if(!response.response.ok) {
       throw new Error('유저 수정을 실패했습니다.');       
     }
-    
-    const result = await response.json();
 
     const profileImage = document.querySelector('.profile-image');
  
     //유저 정보 업데이트
-    profileImage.src = result.data.profile_image;
-    nicknameInput.value = result.data.nickname;
+    profileImage.src = response.data.data.profile_image;
+    nicknameInput.value = response.data.data.nickname;
 
     //헤더 프로필 이미지 업데이트
-    await updateHeaderProfileImage(result.data.profile_image);
+    await updateHeaderProfileImage(response.data.data.profile_image);
     
   } catch (error) {
     throw new Error('유저 수정을 실패했습니다.', error);

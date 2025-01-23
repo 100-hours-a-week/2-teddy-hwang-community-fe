@@ -17,18 +17,6 @@ const createPostBtn = () => {
     location.href = `/posts/create`;
   });
 };
-// 게시글 데이터를 가져오는 함수
-const fetchData = async (url) => {
-  const headers = await authManager.getAuthHeader();
-  
-  const response = await fetch(url, {
-    headers,
-    credentials: 'include'
-  });
-
-  if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
-  return await response.json();
-};
 
 // 게시글의 HTML 요소 생성 함수
 const createBoardArticle = (post) => {
@@ -100,21 +88,21 @@ const displayBoard = async () => {
     if(isLoading) return;
 
     isLoading = true;
-    const postData = await fetchData(`${address}/api/posts?page=${currentPage}&limit=10`);
+    const postData = await apiGet(`${address}/api/posts?page=${currentPage}&limit=10`);
     const boardContainer = document.querySelector(".board-container");
 
     // 더이상 불러올 게시글이 없는 경우
-    if(postData.data.posts.length === 0) {
+    if(postData.data.data.posts.length === 0) {
       hasMore = false;
       isLoading = false;
       return;
     }
-    postData.data.posts.forEach((post) => { 
+    postData.data.data.posts.forEach((post) => { 
       const boardArticle = createBoardArticle(post);
       boardContainer.appendChild(boardArticle);
     });
 
-    hasMore = postData.data.hasMore;
+    hasMore = postData.data.data.hasMore;
     isLoading = false;
     
   } catch (error) {

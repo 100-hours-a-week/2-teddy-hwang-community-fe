@@ -9,20 +9,6 @@ const postId = Number(pathname.split('/')[2]);
 const userId = authManager.getUserInfo()?.id;
 
 let boardImage = "";
-
-// 게시글 데이터를 가져오는 함수
-const fetchData = async (url) => {
-  const headers = await authManager.getAuthHeader();
-
-  const response = await fetch(url, {
-    headers,
-    credentials: 'include'
-  });
-
-
-  if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
-  return await response.json();
-};
 /**
  * 1. 글 조회
  * 2. 제목, 내용, 이미지에 넣어주기
@@ -34,12 +20,12 @@ const loadPost = async () => {
 
     try {
         //해당 글 조회
-        const response = await fetchData(`${address}/api/posts/${postId}/without-view`);
-        title.value = response.data.title;
-        content.value = response.data.content;
-        boardImage = response.data.post_image;
+        const response = await apiGet(`${address}/api/posts/${postId}/without-view`);
+        title.value = response.data.data.title;
+        content.value = response.data.data.content;
+        boardImage = response.data.data.post_image;
         //파일명 추출
-        const decodeFilename = decodeURIComponent(response.data.post_image);
+        const decodeFilename = decodeURIComponent(response.data.data.post_image);
         const originalFilename = decodeFilename.split('/').pop();
         //UUID 이후 문자열은 파일명
         const realFilename = originalFilename.replace(/^.*?-[\da-f]{8}(-[\da-f]{4}){3}-[\da-f]{12}-/, '');
@@ -109,14 +95,9 @@ const updatePost = async () => {
      
           try {
             //게시글 수정 api 호출
-            const response = await fetch(`${address}/api/posts/${postId}`, {
-                method: 'PATCH',
-                headers,
-                credentials: 'include',
-                body: formData
-            });
+            const response = await apiPatchFormData(`${address}/api/posts/${postId}`, formData);
 
-            if(!response.ok){
+            if(!response.response.ok){
                 throw new Error('글 수정에 실패했습니다.')
             }
 

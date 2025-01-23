@@ -98,8 +98,8 @@ const formState = {
   }
  
   try {
-    const response = await fetchData(`${address}/api/users/email/${email}`);
-    if (!response.data) {
+    const response = await apiGetNoHeader(`${address}/api/users/email/${email}`);
+    if (!response.data.data) {
       helpertext.textContent = errorMessages.email.duplicate;
       formState.isValid.email = false;
       return;
@@ -209,8 +209,8 @@ const handlePasswordCheckValidation = (passwordInput, passwordCheckInput, passwo
   }
  
   try {
-    const response = await fetchData(`${address}/api/users/signup/nickname/${nickname}`);
-    if (!response.data) {
+    const response = await apiGetNoHeader(`${address}/api/users/signup/nickname/${nickname}`);
+    if (!response.data.data) {
       helpertext.textContent = errorMessages.nickname.duplicate;
       formState.isValid.nickname = false;
       return;
@@ -242,16 +242,11 @@ const handlePasswordCheckValidation = (passwordInput, passwordCheckInput, passwo
   formData.append('email', formState.values.email);
   formData.append('password', formState.values.password);
   formData.append('nickname', formState.values.nickname);
-  formData.append('image', formState.values.profileImage || "");
+  formData.append('image', formState.values.profileImage);
  
   try {
-    const response = await fetch(`${address}/api/users`, {
-      method: 'POST',
-      body: formData
-    });
- 
-    if (!response.ok) throw new Error('회원가입에 실패했습니다.');
-    const result = await response.json();
+    const result = await apiPostFormDataNoHeader(`${address}/api/users`, formData);
+
     if (result) location.href = '/';
   } catch (error) {
     console.error('회원가입 실패:', error);
@@ -297,9 +292,3 @@ const handlePasswordCheckValidation = (passwordInput, passwordCheckInput, passwo
   submitButton.addEventListener('click', handleSubmit);
 });
  
- // API 호출 유틸리티
- const fetchData = async (url) => {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`네트워크 에러: ${url}`);
-  return await response.json();
- };

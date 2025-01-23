@@ -100,17 +100,11 @@ const modifyBtnState = () => {
             password: password,
           }
           //PATCH 요청
-          const response = await fetch(`${address}/api/users/${userId}/password`, {
-            method: 'PATCH',
-            headers,
-            credentials: 'include',
-            body: JSON.stringify(passwordData)
-          });
+          const response = await apiPatch(`${address}/api/users/${userId}/password`, JSON.stringify(passwordData));
   
-          if(!response.ok) throw new Error('비밀번호 수정에 실패했습니다.');
+          if(!response.response.ok) throw new Error('비밀번호 수정에 실패했습니다.');
   
-          const result = await response.json();
-          if(result) location.href = '/';
+          if(response) location.href = '/';
         });     
       } else {
         modifyBtn.style.backgroundColor = "#ACA0EB";
