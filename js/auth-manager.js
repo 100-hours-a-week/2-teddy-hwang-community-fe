@@ -31,6 +31,11 @@ const authManager = {
                 method: 'POST',
                 credentials: 'include'
             });
+            
+            // 429 에러 처리
+            if(response.status === 429) {
+                return this.getAccessToken();
+            }
 
             if (!response.ok) {
                 this.removeAccessToken();
