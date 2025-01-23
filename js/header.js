@@ -109,12 +109,6 @@ const initializeHeader = async () => {
         const siteTitle = document.querySelector(".site-title");
         if (siteTitle) {
             siteTitle.addEventListener("click", () => {
-                const token = authManager.getAccessToken();
-                if (!token) {
-                    alert('로그인이 필요한 서비스입니다.');
-                    location.href = '/';
-                    return;
-                }
                 location.href = '/posts';
             });
         }
