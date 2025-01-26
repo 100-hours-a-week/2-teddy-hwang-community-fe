@@ -139,13 +139,9 @@ const commentModal = async () => {
     });
 }
 //게시판을 렌더링하는 함수
-const loadBoardData = async (increaseView = true) => {
-    try {
-        const endpoint = increaseView 
-        ? `${address}/api/posts/${postId}`
-        : `${address}/api/posts/${postId}/without-view`; 
-        
-        const post = await apiGet(endpoint);
+const loadBoardData = async () => {
+    try {        
+        const post = await apiGet(`${address}/api/posts/${postId}`);
 
         displayPost(post.data.data);
 
@@ -328,7 +324,7 @@ const handleLike = async () => {
         }
         try {
             const response = await apiGet(`${address}/api/posts/${postId}/like?userId=${userId}`);
-            isLiked = response.data.data.is_liked;
+            isLiked = response.data.is_liked;
             //UI 업데이트
             updateLikeUI();
         } catch (error) {
