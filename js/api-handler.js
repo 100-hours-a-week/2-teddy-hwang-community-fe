@@ -29,7 +29,6 @@ const apiGet = async (url) => {
         headers,
         credentials: 'include'
     }));
-    console.log(response);
     return { data: response.data, response };
 };
 
