@@ -135,26 +135,27 @@ const formState = {
  document.addEventListener('DOMContentLoaded', () => {
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
-  const helpertext = document.getElementById("helpertext");
+  const emailHelpertext = document.getElementById("email-helpertext");
+  const passwordHelpertext = document.getElementById("password-helpertext");
   const loginButton = document.getElementById("login-btn");
  
   // 입력 이벤트 리스너
-  emailInput.addEventListener('input', () => handleEmailValidation(emailInput, helpertext));
-  passwordInput.addEventListener('input', () => handlePasswordValidation(passwordInput, helpertext));
+  emailInput.addEventListener('input', () => handleEmailValidation(emailInput, emailHelpertext));
+  passwordInput.addEventListener('input', () => handlePasswordValidation(passwordInput, passwordHelpertext));
   
   // 엔터 키 이벤트 처리
   const handleEnterKey = (event) => {
     if (event.key === 'Enter' && !loginButton.disabled) {
-      handleLogin(helpertext);
+      handleLogin(passwordHelpertext);
     }
   };
-  
+
   // 입력 필드에 엔터 키 이벤트 추가
   emailInput.addEventListener('keydown', handleEnterKey);
   passwordInput.addEventListener('keydown', handleEnterKey);
 
   // 로그인 버튼 클릭 이벤트
-  loginButton.addEventListener('click', () => handleLogin(helpertext));
+  loginButton.addEventListener('click', () => handleLogin(passwordHelpertext));
     
   // 초기 버튼 상태 설정
   updateLoginButton();
