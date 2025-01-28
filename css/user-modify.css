@@ -1,5 +1,12 @@
 /* 폰트 추가 */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap');
+
+@font-face {
+  font-family: 'insungitCutelivelyjisu';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
 
 p {
   margin: 0;
@@ -17,9 +24,10 @@ p {
 
 .wrap h2 {
   display: flex;
-  font-family: Pretendard;
+  font-family: 'insungitCutelivelyjisu';
   font-size: 32px;
   font-weight: 700;
+  color: #8E4C3A;
   line-height: 38.19px;
   margin: auto auto 12px auto;
   text-align: center;
@@ -37,8 +45,9 @@ p {
   display: flex;
   height: 18px;
 
-  font-family: Pretendard;
-  font-size: 15px;
+  font-family: 'Dongle', sans-serif;
+  font-size: 24px;
+  color: #B97A63;
   font-weight: 700;
   line-height: 17.9px;
   text-align: left;
@@ -47,23 +56,24 @@ p {
 
 .profile-area small {
   display: flex;
-  font-family: Inter;
+  font-family: 'insungitCutelivelyjisu';
   font-size: 12px;
   font-weight: 400;
   line-height: 14.52px;
   text-align: left;
   margin: 1px 0px 12px 34px;
-  color: red;
+  color: #FF9999;
 }
 
 .circle {
   display: flex;
   width: 149px;
   height: 149px;
-  background: #c4c4c4;
+  background: #E6C4A5;
   border-radius: 50%;
   margin: 8px auto auto;
   background-size: cover;
+  border: 3px solid #B97A63;
 
   position: relative;
 }
@@ -88,8 +98,8 @@ p {
   left: 48.5px;
   top: 61px;
 
-  font-family: Pretendard;
-  font-size: 15px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 16px;
   font-weight: 700;
   line-height: 17.9px;
   text-align: center;
@@ -107,8 +117,9 @@ p {
 
 label {
   display: flex;
-  font-family: Pretendard;
-  font-size: 15px;
+  font-family: 'Dongle', sans-serif;
+  font-size: 24px;
+  color: #B97A63;
   font-weight: 700;
   line-height: 17.9px;
   text-align: center;
@@ -117,9 +128,10 @@ label {
 
 .user-email {
   height: 17px;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 400;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 17px;
+  font-weight: 500;
+  color: #8E4C3A;
   line-height: 16.71px;
   text-align: left;
   margin: 16px 0px 16px 19px;
@@ -130,30 +142,33 @@ input {
   justify-content: center;
   width: 333px;
   height: 15px;
-  border-radius: 4px;
-  border: 1px solid #000000;
-  background-color: #f4f5f7;
+  border-radius: 12px;
+  border: 2px solid #E6C4A5;
+  background-color: #FEFEFE;
   margin: 8px 18px 0px 19px;
   padding: 8px 10px;
+
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 17px;
+  color: #8E4C3A;
+  transition: all 0.2s ease;
 }
 
-input::placeholder {
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16.71px;
-  color: black;
+input:focus {
+  outline: none;
+  border-color: #B97A63;
+  box-shadow: 0 0 8px rgba(185, 122, 99, 0.2);
 }
 
 .modify-form small {
   height: 15px;
   display: flex;
-  font-family: Inter;
-  font-size: 12px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 15px;
   font-weight: 400;
   line-height: 14.52px;
   text-align: left;
-  color: red;
+  color: #FF9999;
   margin: 4px 0px 4px 20px;
 }
 
@@ -163,19 +178,29 @@ input::placeholder {
   align-items: center;
   width: 355px;
   height: 33px;
-  border-radius: 4px;
+  border-radius: 12px;
   border: none;
-  background: #aca0eb;
+  background: #F6B088;
   margin: 0px 19px 12px 18px;
 
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 700;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 17px;
+  font-weight: 600;
   line-height: 16.71px;
   text-align: center;
   color: white;
 
   cursor: pointer;
+}
+
+.modify-form .modify-btn.active {
+  background: #E07F50;
+  cursor: pointer;
+}
+ 
+.modify-form .modify-btn.active:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
 
 .delete-link {
@@ -191,40 +216,38 @@ input::placeholder {
   height: 17px;
   margin: 6px auto 0px;
 
-  font-family: Pretendard;
-  font-size: 14px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 17px;
   font-weight: 400;
   line-height: 16.71px;
   text-align: left;
-  color: black;
+  color: #B97A63;
   text-decoration-line: none;
-
   cursor: pointer;
 }
 
-#toast {
-  display: flex;
-  width: 102px;
-  height: 46px;
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  padding: 12px 24px;
   border-radius: 30px;
-  border: none;
-  background: #aca0eb;
-  margin: 61px auto auto auto;
-  justify-content: center;
-  align-items: center;
-
-  font-family: Pretendard;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 21.6px;
-  letter-spacing: -0.01em;
-  text-align: center;
+  background: #F6B088;
   color: #ffffff;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 21.6px;
+  text-align: center;
   opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
-#toast.show {
+.toast.show {
   opacity: 1;
+  visibility: visible;
 }
 
 .modal-container {
@@ -235,12 +258,14 @@ input::placeholder {
   bottom: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
 .modal h2 {
-  font-family: Pretendard;
+  font-family: "Gaegu", cursive;
   font-size: 24px;
   font-weight: 700;
+  color: #8E4C3A;
   line-height: 28.64px;
   text-align: center;
   margin: 0;
@@ -248,9 +273,10 @@ input::placeholder {
 }
 
 .modal p {
-  font-family: Pretendard;
+  font-family: "Gaegu", cursive;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 500;
+  color: #B97A63;
   line-height: 23.87px;
   text-align: center;
   margin: 0;
@@ -266,7 +292,7 @@ input::placeholder {
   width: 408px;
   height: 242px;
   border-radius: 12px;
-  background: #ffffff;
+  background: #F8E7D6;
 }
 
 .modal-btn-container {
@@ -276,33 +302,28 @@ input::placeholder {
   margin-top: 24px;
 }
 
-.cancel-btn {
-  width: 127px;
-  height: 44px;
-  border-radius: 12px;
-  border: none;
-  background: #242424;
-
-  font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 23.87px;
-  text-align: center;
-  color: white;
-
-  margin-right: 16px;
-}
-
+.cancel-btn,
 .check-btn {
   width: 127px;
   height: 44px;
   border-radius: 12px;
   border: none;
-  background: #c4a5fa;
+  background-color: #F6B088;
 
-  font-family: Pretendard;
+  margin: 10px;
+
+  font-family: "Gaegu", cursive;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 500;
+  color: #ffffff;
   line-height: 23.87px;
   text-align: center;
+  cursor: pointer;
+}
+
+.cancel-btn:hover,
+.check-btn:hover {
+  background-color: #E07F50;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
