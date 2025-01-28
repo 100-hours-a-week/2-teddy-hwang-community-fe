@@ -122,9 +122,14 @@ const modifyBtnState = () => {
 const toastMessage = () => {
   const toast = document.getElementById("toast");
   toast.classList.add("show");
+
+  // 클릭 차단
+  document.body.classList.add('body-block');
   setTimeout(() => {
     toast.classList.remove("show");
-    logout();
+    // 클릭 차단 해제
+    document.body.classList.remove('body-block');
+    location.href = '/posts'
   }, 2000);
 };
 
