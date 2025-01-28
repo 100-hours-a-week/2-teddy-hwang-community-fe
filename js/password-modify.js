@@ -28,6 +28,10 @@ const passwordInput = () => {
   const passwordHelpertext = document.getElementById("password-helpertext");
   const passwordCheckHelpertext = document.getElementById("password-check-helpertext");
 
+  // 비밀번호와 비밀번호 확인 모두 유효한지 추적
+  let isPasswordValid = false;
+  let isPasswordMatchValid = false;
+
   // 초기에 비밀번호 확인 입력 비활성화
   passwordCheckInput.disabled = true;
 
@@ -73,9 +77,18 @@ const passwordInput = () => {
       };
   };
 
-  const updatePasswordUI = (validation, helpertext) => {
+  const updatePasswordUI = (validation, helpertext, isMatch = false) => {
       helpertext.textContent = validation.message;
-      passwordValid = validation.isValid;
+      
+      // 비밀번호 확인인 경우
+      if (isMatch) {
+          isPasswordMatchValid = validation.isValid;
+      } else {
+          isPasswordValid = validation.isValid;
+      }
+      
+      // 둘 다 유효할 때만 passwordValid를 true로 설정
+      passwordValid = isPasswordValid && isPasswordMatchValid;
       modifyBtnState();
   };
 
@@ -91,6 +104,7 @@ const passwordInput = () => {
       if (passwordCheckInput.value) {
           passwordCheckInput.value = '';
           passwordCheckHelpertext.textContent = '';
+          isPasswordMatchValid = false;
           passwordValid = false;
           modifyBtnState();
       }
@@ -99,7 +113,7 @@ const passwordInput = () => {
   // 비밀번호 확인 필드 이벤트
   passwordCheckInput.addEventListener("input", () => {
       const matchValidation = validatePasswordMatch(passwordInput.value, passwordCheckInput.value);
-      updatePasswordUI(matchValidation, passwordCheckHelpertext);
+      updatePasswordUI(matchValidation, passwordCheckHelpertext, true);
       
       // 비밀번호가 다른 경우 에러 메시지 표시
       if (!matchValidation.isValid && passwordCheckInput.value) {
@@ -155,7 +169,7 @@ const toastMessage = () => {
     toast.classList.remove("show");
     // 클릭 차단 해제
     document.body.classList.remove('body-block');
-    location.href = '/posts'
+    logout();
   }, 2000);
 };
 
