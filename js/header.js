@@ -89,7 +89,7 @@ const generateHeaderHtml = async () => {
                 <div class="back-icon-container">
                     ${config.showBackIcon ? '<span class="material-icons">arrow_back_ios</span>' : ''}
                 </div>
-                <h1 class="site-title" style="cursor: pointer">아무 말 대잔치</h1>
+                <h1 class="site-title" style="cursor: pointer">🧸Teddy's House</h1>
                 <div class="account-container">
                     ${accountHtml}
                 </div>
@@ -139,7 +139,6 @@ const initializeBackButton = () => {
             }
         }, false);
     }
-
     headerContainer.addEventListener('click', (e) => {    
         if (e.target.classList.contains('material-icons')) {
             if (window.history.length > 1) {  
@@ -152,7 +151,7 @@ const initializeBackButton = () => {
 };
 //드롭다운 초기화
 const initializeDropdown = () => {
-    const profileImage = document.querySelector(".account-image");
+    const profileImage = document.querySelector(".account-box");
     const dropdown = document.getElementById("dropdown");
 
     if (!profileImage || !dropdown) return;
