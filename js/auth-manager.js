@@ -10,21 +10,73 @@ const authManager = {
     removeAccessToken() {
         localStorage.removeItem('accessToken');
     },
-    // Access Token 만료 확인 추가
+
+    // 토큰 검증 함수
+    validateToken(token) {
+        if (!token) return false;
+
+        try {
+            // JWT 형식 검증
+            const parts = token.split('.');
+            if (parts.length !== 3) return false;
+
+            // Base64URL 디코딩을 위한 패딩 처리
+            const payloadBase64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+            const pad = payloadBase64.length % 4;
+            const paddedPayloadBase64 = pad ? payloadBase64 + '='.repeat(4 - pad) : payloadBase64;
+
+            // payload 디코딩
+            const decodedPayload = atob(paddedPayloadBase64);
+            const decoder = new TextDecoder('utf-8');
+            const utf8String = decoder.decode(
+                new Uint8Array([...decodedPayload].map(char => char.charCodeAt(0)))
+            );
+            const payload = JSON.parse(utf8String);
+
+            // 필수 클레임 확인
+            if (!payload.exp || !payload.iat || !payload.id) {
+                return false;
+            }
+
+            return payload;
+        } catch {
+            return false;
+        }
+    },
+
+    // 개선된 토큰 만료 확인
     isTokenExpired() {
         const token = this.getAccessToken();
-        if (!token) return true;
+        const payload = this.validateToken(token);
         
+        if (!payload) return true;
+
         try {
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            const expirationTime = payload.exp * 1000;
-            return Date.now() >= expirationTime;
+            const currentTime = Math.floor(Date.now() / 1000);
+            
+            // 토큰 만료 시간과 현재 시간 비교
+            if (payload.exp <= currentTime) {
+                return true;
+            }
+
+            // 토큰 발급 시간 확인 (발급 시간이 미래인 경우 invalid)
+            if (payload.iat > currentTime) {
+                return true;
+            }
+
+            // 토큰의 유효 기간이 너무 긴 경우 체크 (예: 24시간 이상)
+            const tokenDuration = payload.exp - payload.iat;
+            if (tokenDuration > 24 * 60 * 60) {
+                return true;
+            }
+
+            return false;
         } catch {
             return true;
         }
     },
 
-    // 토큰 갱신 함수 추가
+    // 토큰 갱신 함수 개선
     async refreshAccessToken() {
         try {
             const response = await fetch(`${address}/api/auth/refresh`, {
@@ -32,8 +84,7 @@ const authManager = {
                 credentials: 'include'
             });
             
-            // 429 에러 처리
-            if(response.status === 429) {
+            if (response.status === 429) {
                 return this.getAccessToken();
             }
 
@@ -44,8 +95,17 @@ const authManager = {
             }
 
             const result = await response.json();
-            this.setAccessToken(result.data.accessToken);
-            return result.data.accessToken;
+            const newToken = result.data.accessToken;
+
+            // 새로 받은 토큰 검증
+            if (!this.validateToken(newToken)) {
+                this.removeAccessToken();
+                location.href = '/';
+                return null;
+            }
+
+            this.setAccessToken(newToken);
+            return newToken;
         } catch (error) {
             console.error('토큰 갱신 실패:', error);
             this.removeAccessToken();
@@ -54,23 +114,21 @@ const authManager = {
         }
     },
 
-    // API 요청용 헤더 가져오기 수정
     async getAuthHeader() {
         let token = this.getAccessToken();
 
-        if(!token) {
+        if (!token) {
             return {
-                'Authorization': `Bearer `
-            }
+                'Authorization': 'Bearer '
+            };
         }
 
-        // 토큰이 만료되었으면 갱신
         if (this.isTokenExpired()) {
             token = await this.refreshAccessToken();
-            if(!token) {
+            if (!token) {
                 return {
-                    'Authorization': `Bearer `
-                }
+                    'Authorization': 'Bearer '
+                };
             }
         }
 
@@ -78,33 +136,22 @@ const authManager = {
             'Authorization': `Bearer ${token}`
         };
     },
+
     getUserInfo() {
         const token = this.getAccessToken();
-        // 1. 토큰 존재 확인
-        if (!token) {
-            return null;
-        }
-
-        try {
-            // JWT 형식 검증
-            const parts = token.split('.');
-            if (parts.length !== 3) return null;
-
-            // Base64URL 디코딩을 위한 패딩 처리
-            const payloadBase64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
-            const pad = payloadBase64.length % 4;
-            const paddedPayloadBase64 = pad ? payloadBase64 + '='.repeat(4 - pad) : payloadBase64;
-
-            const decodedPayload = atob(paddedPayloadBase64);
-            const decoder = new TextDecoder('utf-8');
-            const utf8String = decoder.decode(
-                new Uint8Array([...decodedPayload].map(char => char.charCodeAt(0)))
-            );
-
-            return JSON.parse(utf8String);
-        } catch (error) {
-            console.error('JWT 디코딩 실패:', error);
-            return null;
-        }
+        return this.validateToken(token);
     }
 };
+
+// 홈페이지 리다이렉션 처리
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.pathname === '/') {
+        const token = authManager.getAccessToken();
+        const isValid = authManager.validateToken(token);
+        const isNotExpired = !authManager.isTokenExpired();
+
+        if (token && isValid && isNotExpired) {
+            window.location.href = '/posts';
+        }
+    }
+});
