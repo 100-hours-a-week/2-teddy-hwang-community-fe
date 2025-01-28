@@ -10,6 +10,15 @@ const userId = authManager.getUserInfo()?.id;
 
 let boardImage = "";
 /**
+ * 제목은 26자까지 작성 가능
+ * 27자 이상 작성시 작성 안됨
+ */
+const titleMaxLength = (input, maxLength) => {
+  if (input.value.length > maxLength) {
+    input.value = input.value.slice(0, maxLength);
+  }
+};
+/**
  * 1. 글 조회
  * 2. 제목, 내용, 이미지에 넣어주기
  */
@@ -20,7 +29,7 @@ const loadPost = async () => {
 
     try {
         //해당 글 조회
-        const response = await apiGet(`${address}/api/posts/${postId}/without-view`);
+        const response = await apiGet(`${address}/api/posts/${postId}`);
         title.value = response.data.data.title;
         content.value = response.data.data.content;
         boardImage = response.data.data.post_image;
@@ -50,20 +59,25 @@ const uploadImage = () => {
   };
 //이미지 업로드
 const loadImage = (fileInput) => {
+  const fileName = document.querySelector('.file-name');
     fileInput.addEventListener("change", (event) => {
-        const fileName = document.getElementById("file-name");
-        const fileReader = new FileReader();
-        //이미지 하나만 등록
+      if (event.target.files.length === 0) {
+        fileName.textContent = "";
+        boardImage = "";
+        return;
+      }
+    
+        // 이미지 하나만 등록
         const image = event.target.files[0];
-
-        if (image) {
-          fileName.textContent = image.name;
-          boardImage = image;
-        } else {
-          fileName.textContent = "";
-          boardImage = "";
-        }
+        fileName.textContent = image.name;
+        boardImage = image;
     });
+    // fileInput의 click 이벤트에서 처리
+    fileInput.addEventListener("click", () => {
+      // 클릭했을 때 기존값 초기화
+      fileName.textContent = "";
+      boardImage = "";
+  });
 };
 //게시글 수정
 const updatePost = async () => {
@@ -71,40 +85,56 @@ const updatePost = async () => {
     const content = document.getElementById('content');
     const helpertext = document.querySelector('.helpertext');
     const modifyBtn = document.getElementById('modify-btn');
-    const headers = await authManager.getAuthHeader();
 
-  
-    modifyBtn.addEventListener("click", async () => {
-        if (title.value.trim() === "" || content.value.trim() === "") {
-          helpertext.textContent = "제목,내용을 모두 작성해주세요";
+    // 버튼 상태 업데이트 함수
+    const updateButtonState = () => {
+        const isTitleValid = title.value.trim() !== "";
+        const isContentValid = content.value.trim() !== "";
+        
+        if (isTitleValid && isContentValid) {
+            modifyBtn.classList.add('active');
+            helpertext.textContent = ""; 
+            modifyBtn.disabled = false;
         } else {
-          helpertext.textContent = ""; 
-          
-          const formData = new FormData();
-
-          formData.append('title', title.value);
-          formData.append('content', content.value);
-          formData.append('user_id', userId);
-          
-          //이미지 파일이 없을 때도 처리
-          if (boardImage) {
-            formData.append('image', boardImage);
-          }else {
-            formData.append('image', "");
-          }
-     
-          try {
-            //게시글 수정 api 호출
-            const response = await apiPatchFormData(`${address}/api/posts/${postId}`, formData);
-
-            if(!response.response.ok){
-                throw new Error('글 수정에 실패했습니다.')
-            }
-
-            location.href = `/posts/${postId}`;
-          } catch (error) {
-            throw new Error('글 수정에 실패했습니다.', error);
-          }        
+            modifyBtn.classList.remove('active');
+            helpertext.textContent = "제목,내용을 모두 작성해주세요";
+            modifyBtn.disabled = true;
         }
+    };
+
+    // 초기 버튼 상태 설정
+    updateButtonState();
+
+    // 입력값 변경시마다 버튼 상태 업데이트
+    title.addEventListener('input', updateButtonState);
+    content.addEventListener('input', updateButtonState);
+  
+    modifyBtn.addEventListener("click", async () => {             
+        const formData = new FormData();
+
+        formData.append('title', title.value);
+        formData.append('content', content.value);
+        formData.append('user_id', userId);
+        
+        //이미지 파일이 없을 때도 처리
+        if (boardImage) {
+          formData.append('image', boardImage);
+        }else {
+          formData.append('image', "");
+        }
+    
+        try {
+          //게시글 수정 api 호출
+          const response = await apiPatchFormData(`${address}/api/posts/${postId}`, formData);
+
+          if(!response.response.ok){
+              throw new Error('글 수정에 실패했습니다.')
+          }
+
+          location.href = `/posts/${postId}`;
+        } catch (error) {
+          throw new Error('글 수정에 실패했습니다.', error);
+        }        
+        
     });
 }
