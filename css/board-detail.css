@@ -134,6 +134,8 @@ hr {
   line-height: 1.6;
   text-align: left;
   word-break: break-all;
+
+  white-space: pre-line;
 }
 
 .board-info {
@@ -327,6 +329,8 @@ input {
   text-align: left;
   margin: 8px 0px 0px 46px;
   word-break: break-all;
+  
+  white-space: pre-line;
 }
 
 .reply-btn-container {
