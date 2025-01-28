@@ -82,18 +82,19 @@ const formState = {
  };
  
  // 이메일 유효성 검사
- const handleEmailValidation = async (emailInput, helpertext) => {
+const handleEmailValidation = async (emailInput, helpertext) => {
   const email = emailInput.value.trim();
+  formState.isValid.email = false; // 초기값 false로 설정
   
   if (!email) {
     helpertext.textContent = errorMessages.email.empty;
-    formState.isValid.email = false;
+    updateSubmitButton();
     return;
   }
  
   if (!validators.email(email)) {
     helpertext.textContent = errorMessages.email.invalid;
-    formState.isValid.email = false;
+    updateSubmitButton();
     return;
   }
  
@@ -101,7 +102,7 @@ const formState = {
     const response = await apiGetNoHeader(`${address}/api/users/email/${email}`);
     if (!response.data.data) {
       helpertext.textContent = errorMessages.email.duplicate;
-      formState.isValid.email = false;
+      updateSubmitButton();
       return;
     }
     helpertext.textContent = "";
@@ -109,46 +110,87 @@ const formState = {
     formState.values.email = email;
   } catch (error) {
     helpertext.textContent = "*이메일 확인 중 오류가 발생했습니다.";
-    formState.isValid.email = false;
   }
   updateSubmitButton();
- };
+};
+
+// 닉네임 유효성 검사
+const handleNicknameValidation = async (nicknameInput, helpertext) => {
+  const nickname = nicknameInput.value.trim();
+  formState.isValid.nickname = false; // 초기값 false로 설정
  
+  if (!nickname) {
+    helpertext.textContent = errorMessages.nickname.empty;
+    updateSubmitButton();
+    return;
+  }
+ 
+  if (nickname.includes(" ")) {
+    helpertext.textContent = errorMessages.nickname.space;
+    updateSubmitButton();
+    return;
+  }
+ 
+  if (!validators.nickname(nickname)) {
+    if (nickname.includes(" ")) {
+      helpertext.textContent = errorMessages.nickname.space;
+    } else if (nickname.length > 10) {
+      helpertext.textContent = errorMessages.nickname.length;
+    }
+    updateSubmitButton();
+    return;
+  }
+ 
+  try {
+    const response = await apiGetNoHeader(`${address}/api/users/signup/nickname/${nickname}`);
+    if (!response.data.data) {
+      helpertext.textContent = errorMessages.nickname.duplicate;
+      updateSubmitButton();
+      return;
+    }
+    helpertext.textContent = "";
+    formState.isValid.nickname = true;
+    formState.values.nickname = nickname;
+  } catch (error) {
+    helpertext.textContent = "*닉네임 확인 중 오류가 발생했습니다.";
+  }
+  updateSubmitButton();
+};
+
 // 비밀번호 입력칸 유효성 검사
 const handlePasswordValidation = (passwordInput, passwordHelpertext) => {
   const password = passwordInput.value;
   const passwordCheckInput = document.getElementById("password-check");
+  formState.isValid.password = false; // 초기값 false로 설정
 
   if (!password) {
     passwordHelpertext.textContent = errorMessages.password.empty;
-    formState.isValid.password = false;
-    // 비밀번호가 비어있으면 비밀번호 확인 입력 비활성화
     passwordCheckInput.disabled = true;
+    updateSubmitButton();
     return;
   }
 
   if (!validators.password(password)) {
     passwordHelpertext.textContent = errorMessages.password.invalid;
-    formState.isValid.password = false;
-    // 비밀번호가 유효하지 않으면 비밀번호 확인 입력 비활성화
     passwordCheckInput.disabled = true;
+    updateSubmitButton();
     return;
   }
 
-  // 비밀번호가 유효하면
   passwordHelpertext.textContent = "";
   formState.values.password = password;
-  // 비밀번호 확인 입력 활성화
   passwordCheckInput.disabled = false;
 
-  // 비밀번호 확인 입력칸에 포커스를 강제로 이동시킴
   if (passwordCheckInput.disabled === false) {
     passwordCheckInput.focus();
   }
   
-  // 비밀번호 확인 입력값이 있다면 확인 검증 실행
   if (passwordCheckInput.value) {
-    handlePasswordCheckValidation(passwordInput, passwordCheckInput, document.getElementById("password-check-helpertext"));
+    handlePasswordCheckValidation(
+      passwordInput, 
+      passwordCheckInput, 
+      document.getElementById("password-check-helpertext")
+    );
   }
 
   updateSubmitButton();
@@ -158,80 +200,37 @@ const handlePasswordValidation = (passwordInput, passwordHelpertext) => {
 const handlePasswordCheckValidation = (passwordInput, passwordCheckInput, passwordCheckHelpertext) => {
   const password = passwordInput.value;
   const passwordCheck = passwordCheckInput.value;
+  formState.isValid.password = false; // 초기값 false로 설정
 
   if (!passwordCheck) {
     passwordCheckHelpertext.textContent = errorMessages.password.confirmEmpty;
-    formState.isValid.password = false;
+    updateSubmitButton();
     return;
   }
 
   if (password !== passwordCheck) {
     passwordCheckHelpertext.textContent = errorMessages.password.mismatch;
-    formState.isValid.password = false;
+    updateSubmitButton();
     return;
   }
 
-  // 비밀번호 일치
   passwordCheckHelpertext.textContent = "";
   formState.isValid.password = true;
   updateSubmitButton();
 };
  
- // 닉네임 유효성 검사
- const handleNicknameValidation = async (nicknameInput, helpertext) => {
-  const nickname = nicknameInput.value.trim();
- 
-  if (!nickname) {
-    helpertext.textContent = errorMessages.nickname.empty;
-    formState.isValid.nickname = false;
-    return;
-  }
- 
-  if (nickname.includes(" ")) {
-    helpertext.textContent = errorMessages.nickname.space;
-    formState.isValid.nickname = false;
-    return;
-  }
- 
-  // 닉네임 유효성 검사가 실패한 경우
-  if (!validators.nickname(nickname)) {
-    // 띄어쓰기 체크
-    if (nickname.includes(" ")) {
-      helpertext.textContent = errorMessages.nickname.space;
-    } 
-    // 길이 체크
-    else if (nickname.length > 10) {
-      helpertext.textContent = errorMessages.nickname.length;
-    }
-    formState.isValid.nickname = false;
-    updateSubmitButton();
-    return;
-  }
- 
-  try {
-    const response = await apiGetNoHeader(`${address}/api/users/signup/nickname/${nickname}`);
-    if (!response.data.data) {
-      helpertext.textContent = errorMessages.nickname.duplicate;
-      formState.isValid.nickname = false;
-      return;
-    }
-    helpertext.textContent = "";
-    formState.isValid.nickname = true;
-    formState.values.nickname = nickname;
-  } catch (error) {
-    helpertext.textContent = "*닉네임 확인 중 오류가 발생했습니다.";
-    formState.isValid.nickname = false;
-  }
-  updateSubmitButton();
- };
- 
  // 제출 버튼 상태 업데이트
  const updateSubmitButton = () => {
   const submitButton = document.getElementById("create-user-btn");
   const isFormValid = Object.values(formState.isValid).every(Boolean);
- 
-  submitButton.style.backgroundColor = isFormValid ? "#7F6AEE" : "#ACA0EB";
-  submitButton.disabled = !isFormValid;
+
+  if(isFormValid) {
+    submitButton.classList.add('active');
+    submitButton.disabled = false;
+  } else {
+    submitButton.classList.remove('active');
+    submitButton.disabled = true;
+  }
  };
  
  // 폼 제출 처리
@@ -255,6 +254,7 @@ const handlePasswordCheckValidation = (passwordInput, passwordCheckInput, passwo
  
  // 초기화
  document.addEventListener('DOMContentLoaded', () => {
+  window.scrollTo(0, document.body.scrollHeight * 0.165);
   handleProfileImage();
 
   const emailInput = document.getElementById("email");
@@ -262,6 +262,8 @@ const handlePasswordCheckValidation = (passwordInput, passwordCheckInput, passwo
   const passwordCheckInput = document.getElementById("password-check");
   const nicknameInput = document.getElementById("nickname");
   const submitButton = document.getElementById("create-user-btn");
+
+  submitButton.disabled = true;
 
   // 비밀번호 확인 입력칸 초기 비활성화
   passwordCheckInput.disabled = true;
