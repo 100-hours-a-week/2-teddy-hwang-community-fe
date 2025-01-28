@@ -23,63 +23,89 @@ const passwordIsValid = (password) => {
  * 비밀번호 확인 입력 안했을 시 -> *비밀번호를 한번더 입력해주세요.
  */
 const passwordInput = () => {
-    const passwordInput = document.getElementById("password");
-    const passwordCheckInput = document.getElementById("password-check");
-    const passwordHelpertext = document.getElementById("password-helpertext");
-    const passwordCheckHelpertext = document.getElementById("password-check-helpertext");
-  
-    // 비밀번호 오류 메시지 처리 함수
-    const showPasswordError = (inputValue, helpertext, checkMatch) => {
-      // 비밀번호 확인 검사
-      if (checkMatch) {
-        // 비밀번호 확인 입력이 비어있는 경우
-        if (passwordCheckInput.value === "") {
-          helpertext.textContent = "*비밀번호를 한번 더 입력해주세요.";
-          passwordValid = false;
-          return;
-        }
-        // 비밀번호와 비밀번호 확인 값이 일치하지 않는 경우
-        if (passwordInput.value !== passwordCheckInput.value) {
-          helpertext.textContent = "*비밀번호가 다릅니다.";
-          passwordHelpertext.textContent = "*비밀번호가 다릅니다.";
-          passwordValid = false;
-          return;
-        } else {
-          helpertext.textContent = "";
-          passwordHelpertext.textContent = "";
-          passwordValid = true;
-        }
+  const passwordInput = document.getElementById("password");
+  const passwordCheckInput = document.getElementById("password-check");
+  const passwordHelpertext = document.getElementById("password-helpertext");
+  const passwordCheckHelpertext = document.getElementById("password-check-helpertext");
+
+  // 초기에 비밀번호 확인 입력 비활성화
+  passwordCheckInput.disabled = true;
+
+  const validatePassword = (password) => {
+      if (!password) {
+          return {
+              isValid: false,
+              message: "*비밀번호를 입력해주세요."
+          };
       }
-      // 비밀번호 입력이 비어있는 경우
-      if (inputValue === "") {
-        helpertext.textContent = "*비밀번호를 입력해주세요.";
-        passwordValid = false;
-        return;
+
+      if (!passwordIsValid(password)) {
+          return {
+              isValid: false,
+              message: "*비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다."
+          };
       }
-  
-      // 비밀번호 형식이 맞지 않는 경우
-      if (!passwordIsValid(inputValue)) {
-        helpertext.textContent =
-          "*비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.";
-        passwordValid = false;
-        return;
-      } else {
-        helpertext.textContent = "";
+
+      return {
+          isValid: true,
+          message: ""
+      };
+  };
+
+  const validatePasswordMatch = (password, passwordCheck) => {
+      if (!passwordCheck) {
+          return {
+              isValid: false,
+              message: "*비밀번호를 한번 더 입력해주세요."
+          };
       }
-  
-      passwordValid = checkMatch;
-      return;
-    };
-  
-    passwordInput.addEventListener("blur", () => {
-      showPasswordError(passwordInput.value, passwordHelpertext, false);
+
+      if (password !== passwordCheck) {
+          return {
+              isValid: false,
+              message: "*비밀번호가 다릅니다."
+          };
+      }
+
+      return {
+          isValid: true,
+          message: ""
+      };
+  };
+
+  const updatePasswordUI = (validation, helpertext) => {
+      helpertext.textContent = validation.message;
+      passwordValid = validation.isValid;
       modifyBtnState();
-    });
-  
-    passwordCheckInput.addEventListener("blur", () => {
-      showPasswordError(passwordCheckInput.value, passwordCheckHelpertext, true);
-      modifyBtnState();
-    });
+  };
+
+  // 비밀번호 입력 필드 이벤트
+  passwordInput.addEventListener("input", () => {
+      const validation = validatePassword(passwordInput.value);
+      updatePasswordUI(validation, passwordHelpertext);
+
+      // 비밀번호가 유효하면 확인 입력 활성화
+      passwordCheckInput.disabled = !validation.isValid;
+      
+      // 비밀번호가 변경되면 확인 필드 초기화
+      if (passwordCheckInput.value) {
+          passwordCheckInput.value = '';
+          passwordCheckHelpertext.textContent = '';
+          passwordValid = false;
+          modifyBtnState();
+      }
+  });
+
+  // 비밀번호 확인 필드 이벤트
+  passwordCheckInput.addEventListener("input", () => {
+      const matchValidation = validatePasswordMatch(passwordInput.value, passwordCheckInput.value);
+      updatePasswordUI(matchValidation, passwordCheckHelpertext);
+      
+      // 비밀번호가 다른 경우 에러 메시지 표시
+      if (!matchValidation.isValid && passwordCheckInput.value) {
+          passwordCheckHelpertext.textContent = matchValidation.message;
+      }
+  });
 };
 
 const modifyBtnState = () => {
