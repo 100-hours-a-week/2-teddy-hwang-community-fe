@@ -89,7 +89,7 @@ const modifyBtnState = () => {
     
       //모든 조건 만족 시
       if (passwordValid) {
-        modifyBtn.style.backgroundColor = "#7F6AEE";
+        modifyBtn.classList.add('active');
         modifyBtn.disabled = false;
   
         modifyBtn.addEventListener('click', async () => {
@@ -104,16 +104,58 @@ const modifyBtnState = () => {
   
           if(!response.response.ok) throw new Error('비밀번호 수정에 실패했습니다.');
   
-          if(response) location.href = '/';
+          if(response) {
+            toastMessage();
+
+          } 
         });     
       } else {
-        modifyBtn.style.backgroundColor = "#ACA0EB";
+        modifyBtn.classList.remove('active');
         modifyBtn.disabled = true;
       }
     }catch(error) {
       throw new Error('비밀번호 수정에 실패했습니다', error);
     }
 };
+
+// 토스트 메시지 2초 보여주기
+const toastMessage = () => {
+  const toast = document.getElementById("toast");
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+    logout();
+  }, 2000);
+};
+
+// 로그아웃 로직 및 로그인 창으로 이동
+const logout = async () => {
+  try {
+    const response = await fetch(`${address}/api/auth/logout`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        credentials: 'include'  // Refresh Token 쿠키를 위해 필요
+    });
+
+    if(!response.ok) {
+        throw new Error('로그아웃에 실패했습니다.');
+    }
+
+    // 클라이언트 측 토큰 제거
+    authManager.removeAccessToken();
+
+    window.location.href = '/';
+  } catch (error) {
+      console.error('로그아웃에 실패했습니다.', error);
+      
+      authManager.removeAccessToken();
+      window.location.href = '/';
+  }
+};
+
+
 
 
   
