@@ -97,7 +97,7 @@ const updatePost = async () => {
             modifyBtn.disabled = false;
         } else {
             modifyBtn.classList.remove('active');
-            helpertext.textContent = "제목,내용을 모두 작성해주세요";
+            helpertext.textContent = "*제목,내용을 모두 작성해주세요";
             modifyBtn.disabled = true;
         }
     };
