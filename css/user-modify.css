@@ -250,6 +250,10 @@ input:focus {
   visibility: visible;
 }
 
+.body-block {
+  pointer-events: none;
+}
+
 .modal-container {
   display: none;
   position: fixed;
