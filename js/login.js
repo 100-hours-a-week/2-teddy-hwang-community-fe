@@ -86,7 +86,11 @@ const formState = {
   const loginButton = document.getElementById("login-btn");
   const isFormValid = Object.values(formState.isValid).every(Boolean);
  
-  loginButton.style.backgroundColor = isFormValid ? "#7F6AEE" : "#ACA0EB";
+  if(isFormValid) {
+    loginButton.classList.add('active');
+  } else {
+    loginButton.classList.remove('active');
+  }
   loginButton.disabled = !isFormValid;
  };
  // 로그인 처리
@@ -138,9 +142,20 @@ const formState = {
   emailInput.addEventListener('input', () => handleEmailValidation(emailInput, helpertext));
   passwordInput.addEventListener('input', () => handlePasswordValidation(passwordInput, helpertext));
   
+  // 엔터 키 이벤트 처리
+  const handleEnterKey = (event) => {
+    if (event.key === 'Enter' && !loginButton.disabled) {
+      handleLogin(helpertext);
+    }
+  };
+  
+  // 입력 필드에 엔터 키 이벤트 추가
+  emailInput.addEventListener('keydown', handleEnterKey);
+  passwordInput.addEventListener('keydown', handleEnterKey);
+
   // 로그인 버튼 클릭 이벤트
   loginButton.addEventListener('click', () => handleLogin(helpertext));
- 
+    
   // 초기 버튼 상태 설정
   updateLoginButton();
  });
