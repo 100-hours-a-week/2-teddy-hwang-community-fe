@@ -20,7 +20,13 @@
       <form>
         <p class="title-star">제목*</p>
         <hr />
-        <input type="text" id="title" value="제목 1" required />
+        <input
+        type="text"
+        id="title"
+        placeholder="제목을 입력해주세요. (최대 26글자)"
+        oninput="titleMaxLength(this, 26)"
+        required
+      />
         <hr />
         <p class="content-star">내용*</p>
         <hr />
