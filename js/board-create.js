@@ -36,24 +36,29 @@ const completeBtn = () => {
 
   // 제목과 본문 작성 여부에 따라 버튼 색상 변경
   const completeBtnStyle = () => {
-    if (title.value.trim() !== "" && content.value.trim() !== "") {
-      completeBtn.style.backgroundColor = "#7F6AEE"; // 활성화 색상
+    const isTitleValid = title.value.trim() !== "";
+    const isContentValid = content.value.trim() !== "";
+
+    if (isTitleValid && isContentValid) {
+      completeBtn.classList.add('active');
+      helpertext.textContent = ""; 
+      completeBtn.disabled = false;
     } else {
-      completeBtn.style.backgroundColor = "#ACA0EB"; // 비활성화 색상
+        completeBtn.classList.remove('active');
+        helpertext.textContent = "*제목,내용을 모두 작성해주세요";
+        completeBtn.disabled = true;
     }
   };
+
+  // 초기 버튼 상태 설정
+  completeBtnStyle();
 
   title.addEventListener("input", completeBtnStyle);
   content.addEventListener("input", completeBtnStyle);
 
   completeBtn.addEventListener("click", async() => {
-    if (title.value.trim() == "" || content.value.trim() == "") {
-      helpertext.textContent = "제목,내용을 모두 작성해주세요";
-    } else {
-      helpertext.textContent = "";     
-      //이후 완료 로직 처리
-      await createBoard(title.value, content.value, boardImage);
-    }
+    // 클릭 시 글 생성
+    await createBoard(title.value, content.value, boardImage);   
   });
 };
 //게시글 저장 함수
@@ -101,14 +106,17 @@ const uploadImage = () => {
 };
 //이미지 업로드
 const loadImage = (fileInput) => {
+  const fileName = document.getElementById("file-name");
   fileInput.addEventListener("change", (event) => {
-    const fileName = document.getElementById("file-name");
-    //이미지 하나만 등록
-    const profileImage = event.target.files[0];
-
-    if (profileImage) {
-      fileName.textContent = profileImage.name;
-      boardImage = profileImage;     
+    if (event.target.files.length === 0) {
+      fileName.textContent = "파일을 선택해주세요.";  // 파일명 초기화
+      boardImage = "";  // 게시글 이미지 초기화
+      return;
     }
+
+    // 이미지 하나만 등록
+    const image = event.target.files[0];
+    fileName.textContent = image.name;
+    boardImage = image;
   });
 };
