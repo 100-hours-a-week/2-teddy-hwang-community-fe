@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', async () => {
   await loadUser();
+  window.scrollTo(0, document.documentElement.scrollHeight * 0.1);
+  await nicknameInput();
   changeImage();
   userDeleteText();
   userModal();
-  nicknameInput();
 });
 let nicknameValid = false;
 const modalContainer = document.querySelector(".modal-container");
@@ -97,7 +98,16 @@ const nicknameInput = async () => {
   const nicknameInput = document.getElementById("nickname");
   const modifyBtn = document.getElementById("modify-btn");
   const helpertext = document.getElementById("helpertext");
-  const headers = await authManager.getAuthHeader();
+
+  const initializeState = () => {
+    if (nicknameInput.value.trim()) {
+      nicknameValid = true;
+      updateButtonState(nicknameValid);
+      helpertext.textContent = "";
+    }
+  };
+ 
+  initializeState(); // 함수 호출
 
   const showNicknameError = async (nickname) => {
     //닉네임을 입력하지 않은 경우
@@ -137,7 +147,6 @@ const nicknameInput = async () => {
         helpertext.textContent = "";
         nicknameValid = true;
         updateButtonState(nicknameValid);
-        toastMessage();
         return;
       }
     } catch (error) {
@@ -145,10 +154,14 @@ const nicknameInput = async () => {
     }
   };
 
-  modifyBtn.addEventListener("click", async () => {
+  nicknameInput.addEventListener('input', async () => {
     await showNicknameError(nicknameInput.value);
+  });
+
+  modifyBtn.addEventListener("click", async () => {
     if (nicknameValid) {
       await updateUser(nicknameInput);
+      toastMessage();
     }
   });
 };
@@ -165,18 +178,21 @@ const updateButtonState = (isValid) => {
 
   if (isValid) {
     modifyBtn.disabled = false;
+    modifyBtn.classList.add('active');
   } else {
     modifyBtn.disabled = true; 
+    modifyBtn.classList.remove('active');
   }
 };
 
-//토스트 메시지 1초 보여주기
+// 토스트 메시지 2초 보여주고 게시글 창으로 이동
 const toastMessage = () => {
   const toast = document.getElementById("toast");
   toast.classList.add("show");
   setTimeout(() => {
     toast.classList.remove("show");
-  }, 1000);
+    location.href = '/posts'
+  }, 2000);
 };
 
 const loadUser = async () => {
@@ -222,6 +238,12 @@ const updateUser = async (nicknameInput) => {
 
     //헤더 프로필 이미지 업데이트
     await updateHeaderProfileImage(response.data.data.profile_image);
+
+    // 새로운 accessToken 발급 받기
+    const newToken = await authManager.refreshAccessToken();
+    if (!newToken) {
+      throw new Error('토큰 갱신에 실패했습니다.');
+    }
     
   } catch (error) {
     throw new Error('유저 수정을 실패했습니다.', error);
