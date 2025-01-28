@@ -239,10 +239,10 @@ const handleComment = async () => {
     //버튼 스타일 변경 함수
     const updateButtonStyle = (value) => {
         if (value.trim()) {
-            commentBtn.style.backgroundColor = '#7F6AEE';
+            commentBtn.classList.add('active');
             commentBtn.disabled = false;
         } else {
-            commentBtn.style.backgroundColor = '#ACA0EB';
+            commentBtn.classList.remove('active');
             commentBtn.disabled = true;
         }
     };
@@ -310,7 +310,7 @@ const handleComment = async () => {
 }
 //좋아요 기능 구현
 const handleLike = async () => {
-    const likeBtn = document.querySelector('.like-square'); 
+    const likeBtn = document.querySelector('.like'); 
     const likeCount = document.getElementById('like-count');
     let isLiked = false; 
 
@@ -333,7 +333,29 @@ const handleLike = async () => {
     };
     //UI 업데이트 함수
     const updateLikeUI = () => {
-        likeBtn.style.backgroundColor = isLiked ? '#ACA0EB' : '#D9D9D9';
+        const likeSpacing = "6px";
+
+        likeBtn.animate(
+           isLiked 
+               ? [{transform: 'scale(1)', marginRight: '0'}, {transform: 'scale(1.2)', marginRight: likeSpacing}]
+               : [{transform: 'scale(1.2)', marginRight: likeSpacing}, {transform: 'scale(1)', marginRight: '0'}],
+           {
+               duration: 200,
+               easing: 'ease',
+               fill: 'forwards'
+           }
+        );
+        
+        likeCount.animate(
+           isLiked 
+               ? [{transform: 'scale(1)'}, {transform: 'scale(1.1)'}]
+               : [{transform: 'scale(1.1)'}, {transform: 'scale(1)'}],
+           {
+               duration: 200,
+               easing: 'ease',
+               fill: 'forwards'
+           }
+        );
     };
 
    // 좋아요 토글 함수
