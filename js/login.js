@@ -94,7 +94,7 @@ const formState = {
   loginButton.disabled = !isFormValid;
  };
  // 로그인 처리
- const handleLogin = async (helpertext) => {
+ const handleLogin = async (emailHelpertext, passwordHelpertext) => {
   try {
     const response = await fetch(`${address}/api/auth/login`, {
       method: 'POST',
@@ -111,7 +111,11 @@ const formState = {
     const result = await response.json();
  
     if (response.status === 401) {
-      helpertext.textContent = result.message;
+      if(result.message.includes('이메일')) {
+        emailHelpertext.textContent = result.message;
+      } else {
+        passwordHelpertext.textContent = result.message;
+      }
       return;
     }
  
@@ -146,7 +150,7 @@ const formState = {
   // 엔터 키 이벤트 처리
   const handleEnterKey = (event) => {
     if (event.key === 'Enter' && !loginButton.disabled) {
-      handleLogin(passwordHelpertext);
+      handleLogin(emailHelpertext, passwordHelpertext);
     }
   };
 
@@ -155,7 +159,7 @@ const formState = {
   passwordInput.addEventListener('keydown', handleEnterKey);
 
   // 로그인 버튼 클릭 이벤트
-  loginButton.addEventListener('click', () => handleLogin(passwordHelpertext));
+  loginButton.addEventListener('click', () => handleLogin(emailHelpertext, passwordHelpertext));
     
   // 초기 버튼 상태 설정
   updateLoginButton();
