@@ -5,6 +5,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   changeImage();
   userDeleteText();
   userModal();
+
+  document.querySelector("form").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault(); // 엔터 입력 시 기본 동작(제출) 방지
+    }
+  });
 });
 let nicknameValid = false;
 const modalContainer = document.querySelector(".modal-container");
