@@ -84,7 +84,7 @@ const updatePost = async () => {
     const title = document.getElementById('title');
     const content = document.getElementById('content');
     const helpertext = document.querySelector('.helpertext');
-    const modifyBtn = document.getElementById('modify-btn');
+    const modifyBtn = document.querySelector('.modify-btn');
 
     // 버튼 상태 업데이트 함수
     const updateButtonState = () => {
