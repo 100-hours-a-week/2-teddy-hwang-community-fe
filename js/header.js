@@ -127,25 +127,67 @@ const initializeHeader = async () => {
         console.error('Header initialization failed:', error);
     }
 };
-//뒤로가기 버튼 초기화
+// 뒤로가기 버튼 초기화
 const initializeBackButton = () => {
     const headerContainer = document.getElementById('header-container');
+    let isFormSubmitted = false;  // 제출 여부를 추적하는 플래그
 
-    // 뒤로가기 감지 이벤트 리스너
-    if (document.addEventListener) {
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted || window.performance && window.performance.navigation.type == 2) {
-                location.reload();
-            }
-        }, false);
+    // 네비게이션 처리 공통 함수
+    const handleNavigation = () => {
+        const currentPath = window.location.pathname;
+
+        // 글 상세 페이지에서 뒤로가기
+        if (currentPath.match(/^\/posts\/\d+$/)) {
+            window.location.href = '/posts';
+            return;
+        }
+        
+        // 글 작성 페이지에서 뒤로가기
+        if (currentPath === '/posts/create') {
+            window.location.href = '/posts';          
+            return;
+        }
+        
+        // 글 수정 페이지에서 뒤로가기
+        if (currentPath.match(/^\/posts\/\d+\/edit$/)) {
+            const postId = currentPath.split('/')[2];
+            window.location.href = `/posts/${postId}`;          
+            return;
+        }
+        
+        // 그 외의 경우 기본 동작
+        if (window.history.length > 1) {
+            history.back();
+        } else {
+            window.location.href = '/';
+        }
+    };
+
+    // 경고 메시지 표시 함수
+    const showWarning = (e) => {
+        const path = window.location.pathname;
+        // 작성/수정 페이지이고 정상 제출이 아닌 경우에만 경고 표시
+        if ((path === '/posts/create' || path.match(/^\/posts\/\d+\/edit$/)) && !isFormSubmitted) {
+            e.preventDefault();
+            e.returnValue = '';
+        }
+    };
+
+    // 페이지 로드 시 폼 제출 버튼에 이벤트 리스너 추가
+    const submitBtn = document.getElementById('create-btn') || document.getElementById('modify-button');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', () => {
+            isFormSubmitted = true;  // 폼 제출 시 플래그 설정
+        });
     }
-    headerContainer.addEventListener('click', (e) => {    
+
+    // beforeunload 이벤트 리스너 추가
+    window.addEventListener('beforeunload', showWarning);
+
+    // 헤더의 뒤로가기 버튼 클릭 이벤트
+    headerContainer.addEventListener('click', (e) => {
         if (e.target.classList.contains('material-icons')) {
-            if (window.history.length > 1) {  
-                history.back();  
-            } else {
-                window.location.href = '/';
-            }
+            handleNavigation();
         }
     });
 };
