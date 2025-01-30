@@ -1,24 +1,33 @@
 /* 폰트 추가 */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap');
+
+@font-face {
+  font-family: 'insungitCutelivelyjisu';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
 
 .wrap {
   display: flex;
   justify-content: center;
   flex-direction: column;
   max-width: 392px;
-  background-color: transparent;
+  background-color: #F8E7D6;
   padding-top: 161px;
   margin-top: 104px;
+  border-radius: 24px;
 }
 
 .wrap h2 {
   display: flex;
-  font-family: Pretendard;
-  font-size: 32px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 40px;
   font-weight: 700;
   line-height: 38.19px;
   margin: auto;
   text-align: center;
+  color: #8E4C3A;
 }
 
 .profile-area {
@@ -32,37 +41,43 @@
 .profile-area .profile {
   display: flex;
   height: 18px;
-
-  font-family: Pretendard;
-  font-size: 15px;
+  font-family: 'Dongle', sans-serif;
+  font-size: 24px;
   font-weight: 700;
   line-height: 17.9px;
   text-align: left;
   margin: 12px 0px 4px 33px;
+  color: #B97A63;
 }
 
 .profile-area small {
   display: flex;
   height: 15px;
-  font-family: Inter;
-  font-size: 12px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 14px;
   font-weight: 400;
   line-height: 14.52px;
   text-align: left;
   margin-left: 34px;
-  color: red;
+  color: #FF9999;
 }
 
 .circle {
   display: flex;
   width: 149px;
   height: 149px;
-  background: #c4c4c4;
+  background: #E6C4A5;
   border-radius: 50%;
   margin: 8px auto auto;
   background-size: cover;
-
   cursor: pointer;
+  border: 3px solid #B97A63;
+  transition: border-color 0.2s;
+}
+
+.circle:hover {
+  border-color: #8E4C3A;
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
 
 .cross-container {
@@ -73,9 +88,9 @@
 
 .cross {
   position: absolute;
-  width: 1px;
+  width: 2px;
   height: 24px;
-  background-color: black;
+  background-color: #B97A63;
 }
 
 .cross::before {
@@ -83,32 +98,22 @@
   content: "";
   position: absolute;
   width: 24px;
-  height: 1px;
-  background-color: black;
+  height: 2px;
+  background-color: #B97A63;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-}
-
-.form {
-  display: flex;
-  position: relative;
-  width: 392px;
-  height: 406px;
 }
 
 label {
   display: flex;
-  font-family: Pretendard;
-  font-size: 15px;
+  font-family: 'Dongle', sans-serif;
+  font-size: 24px;
   font-weight: 700;
   line-height: 17.9px;
   text-align: center;
   margin: 4px 0px 8px 19px;
+  color: #B97A63;
 }
 
 input {
@@ -116,29 +121,40 @@ input {
   justify-content: center;
   width: 333px;
   height: 15px;
-  border-radius: 4px;
-  border: 1px solid #000000;
-  background-color: #f4f5f7;
+  border-radius: 12px;
+  border: 2px solid #E6C4A5;
+  background-color: #FEFEFE;
   margin: 0px 18px 0px 19px;
   padding: 8px 10px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 16px;
+  color: #8E4C3A;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #B97A63;
+  box-shadow: 0 0 8px rgba(185, 122, 99, 0.2);
 }
 
 input::placeholder {
-  font-family: Pretendard;
-  font-size: 14px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 16px;
   font-weight: 400;
   line-height: 16.71px;
-  color: black;
+  color: #E6C4A5;
 }
 
 .signup-form small {
   display: flex;
   height: auto;
-  font-size: 12px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 14px;
   font-weight: 400;
   line-height: 14.52px;
   text-align: left;
-  color: red;
+  color: #FF9999;
   margin: 4px 0px 4px 20px;
 }
 
@@ -148,18 +164,27 @@ input::placeholder {
   align-items: center;
   width: 355px;
   height: 33px;
-  border-radius: 4px;
+  border-radius: 12px;
   border: none;
-  background: #aca0eb;
-  margin: 0px 19px 0px 18px;
-
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 700;
+  background: #F6B088;
+  margin: 20px 19px 5px 18px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 18px;
+  font-weight: 600;
   line-height: 16.71px;
   text-align: center;
   color: white;
+  transition: all 0.2s ease;
+}
+
+.signup-form button.active {
+  background: #E07F50;
   cursor: pointer;
+}
+ 
+.signup-form button.active:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
 
 .login-link {
@@ -174,12 +199,18 @@ input::placeholder {
   display: flex;
   height: 17px;
   margin: 6px auto 0px;
-
-  font-family: Pretendard;
-  font-size: 14px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 16px;
   font-weight: 400;
   line-height: 16.71px;
   text-align: left;
-  color: black;
+  color: #B97A63;
   text-decoration-line: none;
+  transition: all 0.2s ease;
+}
+
+.login-link a:hover {
+  color: #8E4C3A;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }

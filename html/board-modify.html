@@ -20,7 +20,13 @@
       <form>
         <p class="title-star">제목*</p>
         <hr />
-        <input type="text" id="title" value="제목 1" required />
+        <input
+        type="text"
+        id="title"
+        placeholder="제목을 입력해주세요. (최대 26글자)"
+        oninput="titleMaxLength(this, 26)"
+        required
+      />
         <hr />
         <p class="content-star">내용*</p>
         <hr />
@@ -42,7 +48,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
             <p class="file-name" id="file-name">기존 파일 명</p>
           </article>
         </article>
-        <button type="button" class="modify-btn" id="modify-btn">수정하기</button>
+        <button type="button" class="modify-btn" id="modify-button">수정하기</button>
       </form>
     </section>
     <script src="/js/config.js"></script>

@@ -1,5 +1,13 @@
 /* 폰트 추가 */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap');
+
+@font-face {
+  font-family: 'insungitCutelivelyjisu';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 .welcome {
   display: flex;
@@ -12,21 +20,12 @@
 
 .welcome .hello {
   display: flex;
-  font-family: Pretendard;
-  font-size: 24px;
-  font-weight: 400;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 28px;
+  font-weight: 500;
   line-height: 31.2px;
   text-align: center;
-}
-
-.welcome .bold {
-  display: inline;
-  font-family: Pretendard;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 31.2px;
-  text-align: center;
-  margin: 0;
+  color: #8E4C3A;
 }
 
 .btn-container {
@@ -39,22 +38,23 @@
   width: 138px;
   height: 39px;
   border-radius: 16px;
-  background: #aca0eb;
-  color: white;
+  background: #F6B088;
   border: none;
-  margin: 24px 0px 24px 0px;
-
-  font-family: Pretendard;
-  font-size: 16px;
+  margin: 24px 0px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 18px;
   font-weight: 700;
   line-height: 25.04px;
   text-align: center;
   color: white;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .create-board-btn:hover {
-  background-color: #7f6aee;
+  background: #E07F50;
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
+  transform: translateY(-1px);
 }
 
 .board-container {
@@ -70,65 +70,50 @@
   border-radius: 16px;
   background: #ffffff;
   margin-bottom: 16px;
-  box-shadow: 3px 4px 4px 0px #cccccc40;
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.board-container .board:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
 
 .board .title {
   display: flex;
-  font-family: Pretendard;
-  font-size: 24px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 26px;
   font-weight: 700;
   line-height: 31.2px;
   text-align: left;
   padding-top: 18px;
   padding-left: 27px;
+  color: #8E4C3A;
 }
 
 .board-info {
   display: flex;
   gap: 10px;
   margin-top: 10px;
+  font-family: 'insungitCutelivelyjisu';
+}
+
+.board-info .like-count,
+.board-info .reply-count,
+.board-info .view-count,
+.board-info .created-at {
+  height: 18px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18.2px;
+  color: #B97A63;
 }
 
 .board-info .like-count {
-  display: inline;
-  font-family: Pretendard;
-  height: 18px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18.2px;
-  text-align: left;
   padding-left: 27px;
 }
 
-.board-info .reply-count {
-  display: inline;
-  height: 18px;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18.2px;
-  text-align: left;
-}
-
-.board-info .view-count {
-  display: inline;
-  height: 18px;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18.2px;
-  text-align: left;
-}
-
 .board-info .created-at {
-  display: inline;
-  height: 18px;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18.2px;
-  text-align: left;
   padding-right: 29px;
   margin-left: auto;
 }
@@ -136,7 +121,7 @@
 hr {
   width: 592px;
   padding: 0px;
-  border: 1px solid #00000029;
+  border: 1px solid #E6C4A5;
 }
 
 .user-info {
@@ -151,6 +136,7 @@ hr {
   overflow: hidden;
   margin-left: 27px;
   margin-top: 16px;
+  border: 2px solid #E6C4A5;
 }
 
 .user-info .profile-image {
@@ -161,11 +147,11 @@ hr {
 
 .user-info .username {
   height: 20px;
-
-  font-family: Pretendard;
-  font-size: 15px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 18px;
   font-weight: 700;
   line-height: 19.5px;
   text-align: left;
   margin-top: 24px;
+  color: #8E4C3A;
 }

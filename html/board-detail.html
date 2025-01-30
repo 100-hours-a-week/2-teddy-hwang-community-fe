@@ -42,20 +42,20 @@
             id="board-image"
           />
           <p class="board-content" id="board-content"></p>
-          <article class="board-info">
-            <span class="like-square">
+          <div class="board-info">
+            <span>
+              <span class="like">🤎 좋아요</span>
               <span class="like-count" id="like-count"></span>
-              <span class="l">좋아요수</span>
             </span>
-            <span class="view-square">
+            <span>
+              <span class="view">👁️ 조회</span>
               <span class="view-count" id="view-count"></span>
-              <span class="v">조회수</span>
             </span>
-            <span class="reply-square">
+            <span>
+              <span class="reply">💭 댓글</span>
               <span class="reply-count" id="reply-count"></span>
-              <span class="r">댓글수</span>
             </span>
-          </article>
+          </div>
         </article>
         <hr />
         <article class="board-bottom">
@@ -63,8 +63,9 @@
             <form>
               <textarea
                 name="reply-textarea"
-                placeholder="댓글을 남겨주세요!"
+                placeholder="댓글을 남겨주세요! (최대 200자)"
                 id="reply-textarea"
+                oninput="replyMaxLength(this, 200)"
               ></textarea>
               <hr />
               <button type="button" class="reply-btn" id="reply-btn">

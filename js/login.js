@@ -86,11 +86,15 @@ const formState = {
   const loginButton = document.getElementById("login-btn");
   const isFormValid = Object.values(formState.isValid).every(Boolean);
  
-  loginButton.style.backgroundColor = isFormValid ? "#7F6AEE" : "#ACA0EB";
+  if(isFormValid) {
+    loginButton.classList.add('active');
+  } else {
+    loginButton.classList.remove('active');
+  }
   loginButton.disabled = !isFormValid;
  };
  // 로그인 처리
- const handleLogin = async (helpertext) => {
+ const handleLogin = async (emailHelpertext, passwordHelpertext) => {
   try {
     const response = await fetch(`${address}/api/auth/login`, {
       method: 'POST',
@@ -107,7 +111,11 @@ const formState = {
     const result = await response.json();
  
     if (response.status === 401) {
-      helpertext.textContent = result.message;
+      if(result.message.includes('이메일')) {
+        emailHelpertext.textContent = result.message;
+      } else {
+        passwordHelpertext.textContent = result.message;
+      }
       return;
     }
  
@@ -131,16 +139,28 @@ const formState = {
  document.addEventListener('DOMContentLoaded', () => {
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
-  const helpertext = document.getElementById("helpertext");
+  const emailHelpertext = document.getElementById("email-helpertext");
+  const passwordHelpertext = document.getElementById("password-helpertext");
   const loginButton = document.getElementById("login-btn");
  
   // 입력 이벤트 리스너
-  emailInput.addEventListener('input', () => handleEmailValidation(emailInput, helpertext));
-  passwordInput.addEventListener('input', () => handlePasswordValidation(passwordInput, helpertext));
+  emailInput.addEventListener('input', () => handleEmailValidation(emailInput, emailHelpertext));
+  passwordInput.addEventListener('input', () => handlePasswordValidation(passwordInput, passwordHelpertext));
   
+  // 엔터 키 이벤트 처리
+  const handleEnterKey = (event) => {
+    if (event.key === 'Enter' && !loginButton.disabled) {
+      handleLogin(emailHelpertext, passwordHelpertext);
+    }
+  };
+
+  // 입력 필드에 엔터 키 이벤트 추가
+  emailInput.addEventListener('keydown', handleEnterKey);
+  passwordInput.addEventListener('keydown', handleEnterKey);
+
   // 로그인 버튼 클릭 이벤트
-  loginButton.addEventListener('click', () => handleLogin(helpertext));
- 
+  loginButton.addEventListener('click', () => handleLogin(emailHelpertext, passwordHelpertext));
+    
   // 초기 버튼 상태 설정
   updateLoginButton();
  });

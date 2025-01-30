@@ -1,5 +1,12 @@
 /* 폰트 추가 */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap');
+
+@font-face {
+  font-family: 'insungitCutelivelyjisu';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
 
 .detail-container {
   display: flex;
@@ -17,13 +24,14 @@
 
 .board-title .title {
   display: inline-block;
-  font-family: Pretendard;
-  font-size: 24px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 28px;
   font-weight: 700;
   line-height: 31.2px;
   text-align: left;
   padding-left: 24px;
   margin-bottom: 12px;
+  color: #8E4C3A;
 }
 
 .board-top {
@@ -38,6 +46,7 @@
   border-radius: 70%;
   overflow: hidden;
   margin-left: 24px;
+  border: 2px solid #E6C4A5;
 }
 
 .board-top .profile-image {
@@ -48,25 +57,19 @@
 
 .board-top .username {
   display: inline-block;
-  height: 20px;
-
-  font-family: Pretendard;
-  font-size: 15px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 18px;
   font-weight: 700;
-  line-height: 19.5px;
-  text-align: left;
+  color: #8E4C3A;
   padding-left: 10px;
   margin-top: 8px;
   margin-right: 24px;
 }
 
 .board-top .created-at {
-  display: inline-block;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18.2px;
-  text-align: right;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 17px;
+  color: #8E4C3A;
   margin-top: 8px;
 }
 
@@ -75,43 +78,35 @@
   margin-left: auto;
 }
 
-.btn-container .modify-btn {
-  width: 50px;
-  height: 27px;
-  border-radius: 8px;
-  border: 1px solid #aca0eb;
-
-  font-family: Pretendard;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 23.48px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: 10px;
-
-  cursor: pointer;
-}
-
+.btn-container .modify-btn,
 .btn-container .delete-btn {
   width: 50px;
   height: 27px;
   border-radius: 8px;
-  border: 1px solid #aca0eb;
+  border: none;
 
-  font-family: Pretendard;
+  font-family: 'insungitCutelivelyjisu';
   font-size: 15px;
-  font-weight: 400;
+  color: #ffffff;
+  font-weight: 600;
   line-height: 23.48px;
   text-align: center;
   margin-left: auto;
   margin-right: 24px;
-
+  background-color: #F6B088;
   cursor: pointer;
 }
+.btn-container .modify-btn:hover,
+.btn-container .delete-btn:hover {
+  background-color: #E07F50;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
+}
+
 
 hr {
   width: 592px;
-  border: 1px solid #00000029;
+  border: 1px solid #E6C4A5;
   margin: 0;
 }
 
@@ -127,118 +122,49 @@ hr {
   width: 544px;
   height: 306px;
   margin: 24px;
-
-  background: #d9d9d9;
+  border: 2px solid #E6C4A5;
 }
 
 .board-middle .board-content {
   display: flex;
   width: 544px;
-
-  font-family: Pretendard;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 21.15px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 18px;
+  color: #8E4C3A;
+  line-height: 1.6;
   text-align: left;
-
   word-break: break-all;
+
+  white-space: pre-line;
 }
 
 .board-info {
   display: flex;
-  width: 392px;
-  height: 105px;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 18px;
-}
-
-.board-info .like-square {
+  gap: 16px;
+  margin: 12px 24px;
+  font-family: 'insungitCutelivelyjisu';
+  color: #8E4C3A;
+ }
+ 
+ .board-info span {
   display: flex;
-  flex-direction: column;
-  width: 116px;
-  height: 77px;
-  border-radius: 16px;
-  background: #d9d9d9;
-  margin-left: 21px;
-  justify-content: center;
   align-items: center;
+  gap: 4px;
+
   cursor: pointer;
-}
-
-.board-info .view-square {
-  display: flex;
-  flex-direction: column;
-  width: 116px;
-  height: 77px;
-  border-radius: 16px;
-  background: #d9d9d9;
-  margin: 0px 7px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.board-info .reply-square {
-  display: flex;
-  flex-direction: column;
-  width: 116px;
-  height: 77px;
-  border-radius: 16px;
-  background: #d9d9d9;
-  margin-right: 7px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.like-square .like-count {
-  font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 26px;
-  text-align: center;
-}
-
-.like-square .l {
-  font-family: Pretendard;
+ }
+ 
+ .like-count,
+ .view-count,
+ .reply-count {
   font-size: 16px;
-  font-weight: 700;
-  line-height: 25.04px;
-  text-align: center;
+  color: #B97A63;
 }
 
-.view-square .view-count {
-  font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 26px;
-  text-align: center;
-}
-
-.view-square .v {
-  font-family: Pretendard;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 25.04px;
-  text-align: center;
-}
-
-.reply-square .reply-count {
-  font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 26px;
-  text-align: center;
-}
-
-.reply-square .r {
-  font-family: Pretendard;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 25.04px;
-  text-align: center;
-}
+ hr {
+  border: 1px solid #E6C4A5;
+  margin: 12px 0;
+ }
 
 .board-bottom .reply-container {
   display: flex;
@@ -246,8 +172,8 @@ hr {
   width: 595px;
   height: 182px;
   border-radius: 8px;
-  border: 4px;
-  background: white;
+  border: 2px solid #E6C4A5;
+  background: #FEFEFE;
   margin-top: 23px;
   margin-bottom: 24px;
 }
@@ -273,15 +199,22 @@ input {
   background-color: transparent;
   resize: none;
   margin: 34px 24px 0px 27px;
+
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 18px;
+  color: #8E4C3A;
 }
 
 .reply-container textarea::placeholder {
-  font-family: Pretendard;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 21.15px;
+  font-family: 'insungitCutelivelyjisu';
+  color: #B97A63;
   text-align: left;
-  color: #000000;
+}
+
+.reply-container textarea:focus {
+  outline: none;
+  border-color: #B97A63;
+  box-shadow: 0 0 8px rgba(185, 122, 99, 0.2);
 }
 
 .reply-container .reply-btn {
@@ -290,22 +223,31 @@ input {
   height: 39px;
   border-radius: 16px;
   border: none;
-  background: #aca0eb;
+  background: #F6B088;
   margin-left: auto;
   margin-top: 6px;
   margin-right: 8px;
   margin-bottom: 9px;
 
-  font-family: Pretendard;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 25.04px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
   justify-content: center;
-  align-items: center;
   text-align: center;
   color: white;
   cursor: pointer;
 }
+.reply-container .reply-btn.active {
+  background: #E07F50;
+  cursor: pointer;
+}
+ 
+.reply-container .reply-btn.active:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
+}
+
 
 .reply-list {
   display: flex;
@@ -325,7 +267,6 @@ input {
 }
 
 .reply-info {
-  flex: 1;
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
@@ -339,6 +280,7 @@ input {
   width: 36px;
   height: 36px;
   border-radius: 70%;
+  border: 2px solid #E6C4A5;
   overflow: hidden;
 }
 
@@ -352,8 +294,9 @@ input {
   display: inline-block;
   height: 20px;
 
-  font-family: Pretendard;
-  font-size: 15px;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 18px;
+  color: #8E4C3A;
   font-weight: 700;
   line-height: 19.5px;
   text-align: left;
@@ -364,9 +307,9 @@ input {
 
 .reply-info .reply-created-at {
   display: inline-block;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 400;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 16px;
+  color: #B97A63;
   line-height: 18.2px;
   text-align: right;
   margin-top: 8px;
@@ -379,13 +322,15 @@ input {
 .reply-content-container .reply-content {
   display: flex;
   width: 100%; 
-  font-family: Pretendard;
-  font-size: 15px;
-  font-weight: 400;
+  font-family: 'insungitCutelivelyjisu';
+  font-size: 18px;
+  color: #8E4C3A;
   line-height: 21.15px;
   text-align: left;
   margin: 8px 0px 0px 46px;
   word-break: break-all;
+  
+  white-space: pre-line;
 }
 
 .reply-btn-container {
@@ -395,34 +340,29 @@ input {
   margin-top: 22px;
 }
 
-.reply-btn-container .modify-reply-btn {
-  width: 50px;
-  height: 27px;
-  border-radius: 8px;
-  border: 1px solid #aca0eb;
-
-  font-family: Pretendard;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 23.48px;
-  text-align: center;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
+.reply-btn-container .modify-reply-btn,
 .reply-btn-container .delete-reply-btn {
   width: 50px;
   height: 27px;
   border-radius: 8px;
-  border: 1px solid #aca0eb;
+  border: none;
 
-  font-family: Pretendard;
+  font-family: 'insungitCutelivelyjisu';
   font-size: 15px;
-  font-weight: 400;
+  color: #ffffff;
+  font-weight: 600;
   line-height: 23.48px;
   text-align: center;
-  margin-right: 10px;
+  margin-left: auto;
+  margin-right: 24px;
+  background-color: #F6B088;
   cursor: pointer;
+}
+.reply-btn-container .modify-reply-btn:hover,
+.reply-btn-container .delete-reply-btn:hover {
+  background-color: #E07F50;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
 
 .modal-container {
@@ -433,20 +373,10 @@ input {
   bottom: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
-#board-modal {
-  display: none;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 408px;
-  height: 242px;
-  border-radius: 12px;
-  background: #ffffff;
-}
-
+#board-modal,
 #reply-modal {
   display: none;
   position: fixed;
@@ -456,13 +386,14 @@ input {
   width: 408px;
   height: 242px;
   border-radius: 12px;
-  background: #ffffff;
+  background: #F8E7D6;
 }
 
 .modal h2 {
-  font-family: Pretendard;
+  font-family: "Gaegu", cursive;
   font-size: 24px;
   font-weight: 700;
+  color: #8E4C3A;
   line-height: 28.64px;
   text-align: center;
   margin: 0;
@@ -470,9 +401,10 @@ input {
 }
 
 .modal p {
-  font-family: Pretendard;
+  font-family: "Gaegu", cursive;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 500;
+  color: #B97A63;
   line-height: 23.87px;
   text-align: center;
   margin: 0;
@@ -486,35 +418,28 @@ input {
   margin-top: 24px;
 }
 
-.cancel-btn {
-  width: 127px;
-  height: 44px;
-  border-radius: 12px;
-  border: none;
-  background: #242424;
-
-  font-family: Pretendard;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 23.87px;
-  text-align: center;
-  color: white;
-
-  margin-right: 16px;
-  cursor: pointer;
-}
-
+.cancel-btn,
 .check-btn {
   width: 127px;
   height: 44px;
   border-radius: 12px;
   border: none;
-  background: #c4a5fa;
+  background-color: #F6B088;
 
-  font-family: Pretendard;
+  margin: 10px;
+
+  font-family: "Gaegu", cursive;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 500;
+  color: #ffffff;
   line-height: 23.87px;
   text-align: center;
   cursor: pointer;
+}
+
+.cancel-btn:hover,
+.check-btn:hover {
+  background-color: #E07F50;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
