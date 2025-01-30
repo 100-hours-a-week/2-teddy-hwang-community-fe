@@ -86,6 +86,8 @@ const postModal = async () => {
                 throw new Error('글 삭제에 실패했습니다.');
             }
             closeModal();
+            // 현재 페이지를 글 목록 페이지로 대체
+            history.replaceState({ postDeleted: true }, '', '/posts');
             location.href = `/posts`;
         } catch (error) {
             throw new Error('글 삭제에 실패했습니다.', error);           
@@ -132,7 +134,7 @@ const commentModal = async () => {
             }
             closeModal();
             deleteCommentId = null;
-            await loadBoardData(false); 
+            await loadBoardData(); 
         } catch (error) {
             throw new Error('댓글 삭제에 실패했습니다.', error);           
         }        
@@ -262,6 +264,9 @@ const handleComment = async () => {
             commentId = editCommentId;
             commentBtn.textContent = '댓글 수정';
             updateButtonStyle(replyContent);
+
+            // 댓글 입력하는 창으로 스크롤
+            commentInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     });
 
@@ -285,8 +290,7 @@ const handleComment = async () => {
             if(commentId) {
                 //수정
                 commentData.comment_id = commentId; // 수정 시에만 댓글 ID 추가
-                response = await apiPatch(`${address}/api/comments/${commentId}`, JSON.stringify(commentData));
-                
+                response = await apiPatch(`${address}/api/comments/${commentId}`, JSON.stringify(commentData));            
             } else {
                 //작성
                 response = await apiPost(`${address}/api/comments`, JSON.stringify(commentData));   
@@ -295,13 +299,16 @@ const handleComment = async () => {
             if(!response.response.ok) {
                 throw new Error(commentId ? '댓글 수정에 실패했습니다.' : '댓글 작성에 실패했습니다.');
             }
-            await loadBoardData(false); 
+            await loadBoardData(); 
 
             // 입력창 초기화
             commentInput.value = '';
             commentId = null;
             commentBtn.textContent = '댓글 등록';
             updateButtonStyle('');
+            
+            // 작성 후 최하단으로 스크롤 이동
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 
         } catch (error) {
             console.error('Error:', error);
@@ -412,3 +419,12 @@ const numToK = (num) => {
         return num;
     }
 }
+/**
+ * 댓글은 200자까지 작성 가능
+ * 200자 이상 작성시 작성 안됨
+ */
+const replyMaxLength = (input, maxLength) => {
+    if (input.value.length > maxLength) {
+      input.value = input.value.slice(0, maxLength);
+    }
+};
