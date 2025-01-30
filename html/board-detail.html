@@ -63,8 +63,9 @@
             <form>
               <textarea
                 name="reply-textarea"
-                placeholder="댓글을 남겨주세요!"
+                placeholder="댓글을 남겨주세요! (최대 200자)"
                 id="reply-textarea"
+                oninput="replyMaxLength(this, 200)"
               ></textarea>
               <hr />
               <button type="button" class="reply-btn" id="reply-btn">
