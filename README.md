@@ -1,9 +1,9 @@
 # 🧸 Teddy's House
-## 프로젝트 소개
+## 📋 프로젝트 소개
 > 카카오 테크 부트캠프 클라우드 네이티브 제주 2기 커뮤니티 과제<br>
 개발기간: 2024.11 ~ 진행 중
 
-## 시연 영상
+## 📹 시연 영상
 https://github.com/user-attachments/assets/75be4080-9314-45ec-b4c7-64cadd1f2892
 
 ## 🛫 시작 가이드
@@ -31,7 +31,7 @@ node app.js
 |  **회원 정보 수정**  |  **비밀번호 수정**  |  
 | <img width="500" alt="user-modify" src="https://github.com/user-attachments/assets/51e02753-674b-4d4a-80b7-2523e2847566" />   |  <img width="500" alt="password-modify" src="https://github.com/user-attachments/assets/e8a7ff1c-fccc-49a1-916c-43c0533ebc93" />|
 
-## 폴더 구조
+## 📁 폴더 구조
 ```
 📦 front
 ├─ .gitignore
