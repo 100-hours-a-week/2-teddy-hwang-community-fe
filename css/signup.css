@@ -3,7 +3,8 @@
 
 @font-face {
   font-family: 'insungitCutelivelyjisu';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2') format('woff2');
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2')
+    format('woff2');
   font-weight: normal;
   font-style: normal;
 }
@@ -13,7 +14,7 @@
   justify-content: center;
   flex-direction: column;
   max-width: 392px;
-  background-color: #F8E7D6;
+  background-color: #f8e7d6;
   padding-top: 161px;
   margin-top: 104px;
   border-radius: 24px;
@@ -27,7 +28,7 @@
   line-height: 38.19px;
   margin: auto;
   text-align: center;
-  color: #8E4C3A;
+  color: #8e4c3a;
 }
 
 .profile-area {
@@ -47,7 +48,7 @@
   line-height: 17.9px;
   text-align: left;
   margin: 12px 0px 4px 33px;
-  color: #B97A63;
+  color: #b97a63;
 }
 
 .profile-area small {
@@ -59,24 +60,24 @@
   line-height: 14.52px;
   text-align: left;
   margin-left: 34px;
-  color: #FF9999;
+  color: #ff9999;
 }
 
 .circle {
   display: flex;
   width: 149px;
   height: 149px;
-  background: #E6C4A5;
+  background: #e6c4a5;
   border-radius: 50%;
   margin: 8px auto auto;
   background-size: cover;
   cursor: pointer;
-  border: 3px solid #B97A63;
+  border: 3px solid #b97a63;
   transition: border-color 0.2s;
 }
 
 .circle:hover {
-  border-color: #8E4C3A;
+  border-color: #8e4c3a;
   box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
 
@@ -90,16 +91,16 @@
   position: absolute;
   width: 2px;
   height: 24px;
-  background-color: #B97A63;
+  background-color: #b97a63;
 }
 
 .cross::before {
   display: flex;
-  content: "";
+  content: '';
   position: absolute;
   width: 24px;
   height: 2px;
-  background-color: #B97A63;
+  background-color: #b97a63;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -113,7 +114,7 @@ label {
   line-height: 17.9px;
   text-align: center;
   margin: 4px 0px 8px 19px;
-  color: #B97A63;
+  color: #b97a63;
 }
 
 input {
@@ -122,19 +123,19 @@ input {
   width: 333px;
   height: 15px;
   border-radius: 12px;
-  border: 2px solid #E6C4A5;
-  background-color: #FEFEFE;
+  border: 2px solid #e6c4a5;
+  background-color: #fefefe;
   margin: 0px 18px 0px 19px;
   padding: 8px 10px;
   font-family: 'insungitCutelivelyjisu';
   font-size: 16px;
-  color: #8E4C3A;
+  color: #8e4c3a;
   transition: all 0.2s ease;
 }
 
 input:focus {
   outline: none;
-  border-color: #B97A63;
+  border-color: #b97a63;
   box-shadow: 0 0 8px rgba(185, 122, 99, 0.2);
 }
 
@@ -143,7 +144,7 @@ input::placeholder {
   font-size: 16px;
   font-weight: 400;
   line-height: 16.71px;
-  color: #E6C4A5;
+  color: #e6c4a5;
 }
 
 .signup-form small {
@@ -154,7 +155,7 @@ input::placeholder {
   font-weight: 400;
   line-height: 14.52px;
   text-align: left;
-  color: #FF9999;
+  color: #ff9999;
   margin: 4px 0px 4px 20px;
 }
 
@@ -166,7 +167,7 @@ input::placeholder {
   height: 33px;
   border-radius: 12px;
   border: none;
-  background: #F6B088;
+  background: #f6b088;
   margin: 20px 19px 5px 18px;
   font-family: 'insungitCutelivelyjisu';
   font-size: 18px;
@@ -178,10 +179,10 @@ input::placeholder {
 }
 
 .signup-form button.active {
-  background: #E07F50;
+  background: #e07f50;
   cursor: pointer;
 }
- 
+
 .signup-form button.active:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
@@ -204,13 +205,13 @@ input::placeholder {
   font-weight: 400;
   line-height: 16.71px;
   text-align: left;
-  color: #B97A63;
+  color: #b97a63;
   text-decoration-line: none;
   transition: all 0.2s ease;
 }
 
 .login-link a:hover {
-  color: #8E4C3A;
+  color: #8e4c3a;
   transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }

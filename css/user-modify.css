@@ -3,7 +3,8 @@
 
 @font-face {
   font-family: 'insungitCutelivelyjisu';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2') format('woff2');
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2')
+    format('woff2');
   font-weight: normal;
   font-style: normal;
 }
@@ -27,7 +28,7 @@ p {
   font-family: 'insungitCutelivelyjisu';
   font-size: 32px;
   font-weight: 700;
-  color: #8E4C3A;
+  color: #8e4c3a;
   line-height: 38.19px;
   margin: auto auto 12px auto;
   text-align: center;
@@ -47,7 +48,7 @@ p {
 
   font-family: 'Dongle', sans-serif;
   font-size: 24px;
-  color: #B97A63;
+  color: #b97a63;
   font-weight: 700;
   line-height: 17.9px;
   text-align: left;
@@ -62,18 +63,18 @@ p {
   line-height: 14.52px;
   text-align: left;
   margin: 1px 0px 12px 34px;
-  color: #FF9999;
+  color: #ff9999;
 }
 
 .circle {
   display: flex;
   width: 149px;
   height: 149px;
-  background: #E6C4A5;
+  background: #e6c4a5;
   border-radius: 50%;
   margin: 8px auto auto;
   background-size: cover;
-  border: 3px solid #B97A63;
+  border: 3px solid #b97a63;
 
   position: relative;
 }
@@ -119,7 +120,7 @@ label {
   display: flex;
   font-family: 'Dongle', sans-serif;
   font-size: 24px;
-  color: #B97A63;
+  color: #b97a63;
   font-weight: 700;
   line-height: 17.9px;
   text-align: center;
@@ -131,7 +132,7 @@ label {
   font-family: 'insungitCutelivelyjisu';
   font-size: 17px;
   font-weight: 500;
-  color: #8E4C3A;
+  color: #8e4c3a;
   line-height: 16.71px;
   text-align: left;
   margin: 16px 0px 16px 19px;
@@ -143,20 +144,20 @@ input {
   width: 333px;
   height: 15px;
   border-radius: 12px;
-  border: 2px solid #E6C4A5;
-  background-color: #FEFEFE;
+  border: 2px solid #e6c4a5;
+  background-color: #fefefe;
   margin: 8px 18px 0px 19px;
   padding: 8px 10px;
 
   font-family: 'insungitCutelivelyjisu';
   font-size: 17px;
-  color: #8E4C3A;
+  color: #8e4c3a;
   transition: all 0.2s ease;
 }
 
 input:focus {
   outline: none;
-  border-color: #B97A63;
+  border-color: #b97a63;
   box-shadow: 0 0 8px rgba(185, 122, 99, 0.2);
 }
 
@@ -168,7 +169,7 @@ input:focus {
   font-weight: 400;
   line-height: 14.52px;
   text-align: left;
-  color: #FF9999;
+  color: #ff9999;
   margin: 4px 0px 4px 20px;
 }
 
@@ -180,7 +181,7 @@ input:focus {
   height: 33px;
   border-radius: 12px;
   border: none;
-  background: #F6B088;
+  background: #f6b088;
   margin: 0px 19px 12px 18px;
 
   font-family: 'insungitCutelivelyjisu';
@@ -194,10 +195,10 @@ input:focus {
 }
 
 .modify-form .modify-btn.active {
-  background: #E07F50;
+  background: #e07f50;
   cursor: pointer;
 }
- 
+
 .modify-form .modify-btn.active:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
@@ -221,7 +222,7 @@ input:focus {
   font-weight: 400;
   line-height: 16.71px;
   text-align: left;
-  color: #B97A63;
+  color: #b97a63;
   text-decoration-line: none;
   cursor: pointer;
 }
@@ -233,7 +234,7 @@ input:focus {
   transform: translateX(-50%);
   padding: 12px 24px;
   border-radius: 30px;
-  background: #F6B088;
+  background: #f6b088;
   color: #ffffff;
   font-family: 'insungitCutelivelyjisu';
   font-size: 18px;
@@ -242,7 +243,9 @@ input:focus {
   text-align: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
 }
 
 .toast.show {
@@ -266,10 +269,10 @@ input:focus {
 }
 
 .modal h2 {
-  font-family: "Gaegu", cursive;
+  font-family: 'Gaegu', cursive;
   font-size: 24px;
   font-weight: 700;
-  color: #8E4C3A;
+  color: #8e4c3a;
   line-height: 28.64px;
   text-align: center;
   margin: 0;
@@ -277,10 +280,10 @@ input:focus {
 }
 
 .modal p {
-  font-family: "Gaegu", cursive;
+  font-family: 'Gaegu', cursive;
   font-size: 20px;
   font-weight: 500;
-  color: #B97A63;
+  color: #b97a63;
   line-height: 23.87px;
   text-align: center;
   margin: 0;
@@ -296,7 +299,7 @@ input:focus {
   width: 408px;
   height: 242px;
   border-radius: 12px;
-  background: #F8E7D6;
+  background: #f8e7d6;
 }
 
 .modal-btn-container {
@@ -312,11 +315,11 @@ input:focus {
   height: 44px;
   border-radius: 12px;
   border: none;
-  background-color: #F6B088;
+  background-color: #f6b088;
 
   margin: 10px;
 
-  font-family: "Gaegu", cursive;
+  font-family: 'Gaegu', cursive;
   font-size: 20px;
   font-weight: 500;
   color: #ffffff;
@@ -327,7 +330,7 @@ input:focus {
 
 .cancel-btn:hover,
 .check-btn:hover {
-  background-color: #E07F50;
+  background-color: #e07f50;
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }

@@ -3,7 +3,8 @@
 
 @font-face {
   font-family: 'insungitCutelivelyjisu';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2') format('woff2');
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2')
+    format('woff2');
   font-weight: normal;
   font-style: normal;
 }
@@ -31,7 +32,7 @@
   text-align: left;
   padding-left: 24px;
   margin-bottom: 12px;
-  color: #8E4C3A;
+  color: #8e4c3a;
 }
 
 .board-top {
@@ -46,7 +47,7 @@
   border-radius: 70%;
   overflow: hidden;
   margin-left: 24px;
-  border: 2px solid #E6C4A5;
+  border: 2px solid #e6c4a5;
 }
 
 .board-top .profile-image {
@@ -60,7 +61,7 @@
   font-family: 'insungitCutelivelyjisu';
   font-size: 18px;
   font-weight: 700;
-  color: #8E4C3A;
+  color: #8e4c3a;
   padding-left: 10px;
   margin-top: 8px;
   margin-right: 24px;
@@ -69,7 +70,7 @@
 .board-top .created-at {
   font-family: 'insungitCutelivelyjisu';
   font-size: 17px;
-  color: #8E4C3A;
+  color: #8e4c3a;
   margin-top: 8px;
 }
 
@@ -93,20 +94,19 @@
   text-align: center;
   margin-left: auto;
   margin-right: 24px;
-  background-color: #F6B088;
+  background-color: #f6b088;
   cursor: pointer;
 }
 .btn-container .modify-btn:hover,
 .btn-container .delete-btn:hover {
-  background-color: #E07F50;
+  background-color: #e07f50;
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
 
-
 hr {
   width: 592px;
-  border: 1px solid #E6C4A5;
+  border: 1px solid #e6c4a5;
   margin: 0;
 }
 
@@ -122,7 +122,7 @@ hr {
   width: 544px;
   height: 306px;
   margin: 24px;
-  border: 2px solid #E6C4A5;
+  border: 2px solid #e6c4a5;
 }
 
 .board-middle .board-content {
@@ -130,7 +130,7 @@ hr {
   width: 544px;
   font-family: 'insungitCutelivelyjisu';
   font-size: 18px;
-  color: #8E4C3A;
+  color: #8e4c3a;
   line-height: 1.6;
   text-align: left;
   word-break: break-all;
@@ -143,28 +143,28 @@ hr {
   gap: 16px;
   margin: 12px 24px;
   font-family: 'insungitCutelivelyjisu';
-  color: #8E4C3A;
- }
- 
- .board-info span {
+  color: #8e4c3a;
+}
+
+.board-info span {
   display: flex;
   align-items: center;
   gap: 4px;
 
   cursor: pointer;
- }
- 
- .like-count,
- .view-count,
- .reply-count {
-  font-size: 16px;
-  color: #B97A63;
 }
 
- hr {
-  border: 1px solid #E6C4A5;
+.like-count,
+.view-count,
+.reply-count {
+  font-size: 16px;
+  color: #b97a63;
+}
+
+hr {
+  border: 1px solid #e6c4a5;
   margin: 12px 0;
- }
+}
 
 .board-bottom .reply-container {
   display: flex;
@@ -172,8 +172,8 @@ hr {
   width: 595px;
   height: 182px;
   border-radius: 8px;
-  border: 2px solid #E6C4A5;
-  background: #FEFEFE;
+  border: 2px solid #e6c4a5;
+  background: #fefefe;
   margin-top: 23px;
   margin-bottom: 24px;
 }
@@ -202,18 +202,18 @@ input {
 
   font-family: 'insungitCutelivelyjisu';
   font-size: 18px;
-  color: #8E4C3A;
+  color: #8e4c3a;
 }
 
 .reply-container textarea::placeholder {
   font-family: 'insungitCutelivelyjisu';
-  color: #B97A63;
+  color: #b97a63;
   text-align: left;
 }
 
 .reply-container textarea:focus {
   outline: none;
-  border-color: #B97A63;
+  border-color: #b97a63;
   box-shadow: 0 0 8px rgba(185, 122, 99, 0.2);
 }
 
@@ -223,7 +223,7 @@ input {
   height: 39px;
   border-radius: 16px;
   border: none;
-  background: #F6B088;
+  background: #f6b088;
   margin-left: auto;
   margin-top: 6px;
   margin-right: 8px;
@@ -239,15 +239,14 @@ input {
   cursor: pointer;
 }
 .reply-container .reply-btn.active {
-  background: #E07F50;
+  background: #e07f50;
   cursor: pointer;
 }
- 
+
 .reply-container .reply-btn.active:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
-
 
 .reply-list {
   display: flex;
@@ -280,7 +279,7 @@ input {
   width: 36px;
   height: 36px;
   border-radius: 70%;
-  border: 2px solid #E6C4A5;
+  border: 2px solid #e6c4a5;
   overflow: hidden;
 }
 
@@ -296,7 +295,7 @@ input {
 
   font-family: 'insungitCutelivelyjisu';
   font-size: 18px;
-  color: #8E4C3A;
+  color: #8e4c3a;
   font-weight: 700;
   line-height: 19.5px;
   text-align: left;
@@ -309,7 +308,7 @@ input {
   display: inline-block;
   font-family: 'insungitCutelivelyjisu';
   font-size: 16px;
-  color: #B97A63;
+  color: #b97a63;
   line-height: 18.2px;
   text-align: right;
   margin-top: 8px;
@@ -321,15 +320,15 @@ input {
 
 .reply-content-container .reply-content {
   display: flex;
-  width: 100%; 
+  width: 100%;
   font-family: 'insungitCutelivelyjisu';
   font-size: 18px;
-  color: #8E4C3A;
+  color: #8e4c3a;
   line-height: 21.15px;
   text-align: left;
   margin: 8px 0px 0px 46px;
   word-break: break-all;
-  
+
   white-space: pre-line;
 }
 
@@ -355,12 +354,12 @@ input {
   text-align: center;
   margin-left: auto;
   margin-right: 24px;
-  background-color: #F6B088;
+  background-color: #f6b088;
   cursor: pointer;
 }
 .reply-btn-container .modify-reply-btn:hover,
 .reply-btn-container .delete-reply-btn:hover {
-  background-color: #E07F50;
+  background-color: #e07f50;
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
@@ -386,14 +385,14 @@ input {
   width: 408px;
   height: 242px;
   border-radius: 12px;
-  background: #F8E7D6;
+  background: #f8e7d6;
 }
 
 .modal h2 {
-  font-family: "Gaegu", cursive;
+  font-family: 'Gaegu', cursive;
   font-size: 24px;
   font-weight: 700;
-  color: #8E4C3A;
+  color: #8e4c3a;
   line-height: 28.64px;
   text-align: center;
   margin: 0;
@@ -401,10 +400,10 @@ input {
 }
 
 .modal p {
-  font-family: "Gaegu", cursive;
+  font-family: 'Gaegu', cursive;
   font-size: 20px;
   font-weight: 500;
-  color: #B97A63;
+  color: #b97a63;
   line-height: 23.87px;
   text-align: center;
   margin: 0;
@@ -424,11 +423,11 @@ input {
   height: 44px;
   border-radius: 12px;
   border: none;
-  background-color: #F6B088;
+  background-color: #f6b088;
 
   margin: 10px;
 
-  font-family: "Gaegu", cursive;
+  font-family: 'Gaegu', cursive;
   font-size: 20px;
   font-weight: 500;
   color: #ffffff;
@@ -439,7 +438,7 @@ input {
 
 .cancel-btn:hover,
 .check-btn:hover {
-  background-color: #E07F50;
+  background-color: #e07f50;
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }
