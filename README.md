@@ -41,7 +41,7 @@ node app.js
 |  **회원 정보 수정**  |  **비밀번호 수정**  |  
 | <img width="500" alt="user-modify" src="https://github.com/user-attachments/assets/51e02753-674b-4d4a-80b7-2523e2847566" />   |  <img width="500" alt="password-modify" src="https://github.com/user-attachments/assets/e8a7ff1c-fccc-49a1-916c-43c0533ebc93" />|
 
-## 📁 폴더 구조
+## 📁 프로젝트 구조
 ```
 📦 front
 ├─ .gitignore
