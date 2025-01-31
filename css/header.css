@@ -2,18 +2,18 @@
 
 @font-face {
   font-family: 'insungitCutelivelyjisu';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2') format('woff2');
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2')
+    format('woff2');
   font-weight: normal;
   font-style: normal;
 }
-
 
 /* body에 추가 */
 body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background: #F8E7D6;
+  background: #f8e7d6;
   margin: 0;
   padding: 0;
 }
@@ -24,22 +24,22 @@ h1,
 h2,
 p,
 small {
-cursor: default;
+  cursor: default;
 }
 
 /* header 수정 */
 header {
   display: flex;
   position: fixed;
-  left: 50%;              /* 중앙 정렬을 위한 설정 */
+  left: 50%; /* 중앙 정렬을 위한 설정 */
   transform: translateX(-50%); /* 중앙 정렬을 위한 설정 */
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  background: #F8E7D6;
+  background: #f8e7d6;
   width: 1920px;
   height: 103px;
-  border-bottom: 1px solid #8E4C3A;
+  border-bottom: 1px solid #8e4c3a;
   top: 0;
   z-index: 99;
 }
@@ -48,13 +48,13 @@ header h1 {
   display: flex;
   width: auto;
   height: 32px;
-    
+
   font-family: 'insungitCutelivelyjisu';
   font-size: 32px;
   font-weight: 700;
   line-height: 32px;
   text-align: center;
-  color: #8E4C3A;
+  color: #8e4c3a;
 }
 
 .back-icon-container {
@@ -65,14 +65,13 @@ header h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  
 }
 
 .material-icons {
   width: 10.93px;
   height: 18.89px;
   cursor: pointer;
-  color: #8E4C3A;
+  color: #8e4c3a;
 }
 
 .account-container {
@@ -85,11 +84,13 @@ header h1 {
 .account-box {
   width: 36px;
   height: 36px;
-  border: 2px solid #8E4C3A;
+  border: 2px solid #8e4c3a;
   border-radius: 70%;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .account-image {
@@ -107,7 +108,7 @@ header h1 {
   position: absolute;
   width: 115px;
   height: 95px;
-  background: #F6B088;
+  background: #f6b088;
   margin-top: 8px;
   right: 0px;
   border-radius: 16px;
@@ -127,7 +128,7 @@ header h1 {
 
 .dropdown li:hover {
   border-radius: 16px;
-  background-color: #E07F50;
+  background-color: #e07f50;
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
 }

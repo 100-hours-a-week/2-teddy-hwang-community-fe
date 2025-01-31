@@ -3,11 +3,11 @@
 
 @font-face {
   font-family: 'insungitCutelivelyjisu';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2') format('woff2');
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2')
+    format('woff2');
   font-weight: normal;
   font-style: normal;
 }
-
 
 .welcome {
   display: flex;
@@ -25,7 +25,7 @@
   font-weight: 500;
   line-height: 31.2px;
   text-align: center;
-  color: #8E4C3A;
+  color: #8e4c3a;
 }
 
 .btn-container {
@@ -38,7 +38,7 @@
   width: 138px;
   height: 39px;
   border-radius: 16px;
-  background: #F6B088;
+  background: #f6b088;
   border: none;
   margin: 24px 0px;
   font-family: 'insungitCutelivelyjisu';
@@ -52,7 +52,7 @@
 }
 
 .create-board-btn:hover {
-  background: #E07F50;
+  background: #e07f50;
   box-shadow: 0 4px 8px rgba(185, 122, 99, 0.15);
   transform: translateY(-1px);
 }
@@ -88,7 +88,7 @@
   text-align: left;
   padding-top: 18px;
   padding-left: 27px;
-  color: #8E4C3A;
+  color: #8e4c3a;
 }
 
 .board-info {
@@ -106,7 +106,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 18.2px;
-  color: #B97A63;
+  color: #b97a63;
 }
 
 .board-info .like-count {
@@ -121,7 +121,7 @@
 hr {
   width: 592px;
   padding: 0px;
-  border: 1px solid #E6C4A5;
+  border: 1px solid #e6c4a5;
 }
 
 .user-info {
@@ -136,7 +136,7 @@ hr {
   overflow: hidden;
   margin-left: 27px;
   margin-top: 16px;
-  border: 2px solid #E6C4A5;
+  border: 2px solid #e6c4a5;
 }
 
 .user-info .profile-image {
@@ -153,5 +153,5 @@ hr {
   line-height: 19.5px;
   text-align: left;
   margin-top: 24px;
-  color: #8E4C3A;
+  color: #8e4c3a;
 }
