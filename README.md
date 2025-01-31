@@ -10,10 +10,20 @@ https://github.com/user-attachments/assets/75be4080-9314-45ec-b4c7-64cadd1f2892
 ### [📃 백엔드 레포지토리](https://github.com/100-hours-a-week/2-teddy-hwang-community-be)
 백엔드 레포지토리 설치 및 실행 후 진행해주세요❗️
 ### 설치 및 실행
+1. git clone
 ``` shell 
 git clone https://github.com/100-hours-a-week/2-teddy-hwang-community-fe.git
+```
+2. 폴더 이동
+``` shell
 cd 2-teddy-hwang-community-fe
+```
+3. 의존성 설치
+``` shell
 npm install
+```
+4. 실행
+``` shell
 node app.js
 ```
 
