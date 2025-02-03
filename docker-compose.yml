@@ -2,6 +2,7 @@ version: '3'
 services:
   frontend-blue:
     image: spchan1/teddy-front:1.0
+    platform: linux/amd64
     container_name: frontend-blue
     environment:
       - PORT=3000
@@ -15,6 +16,7 @@ services:
 
   frontend-green:
     image: spchan1/teddy-front:1.0
+    platform: linux/amd64
     container_name: frontend-green
     environment:
       - PORT=3001
