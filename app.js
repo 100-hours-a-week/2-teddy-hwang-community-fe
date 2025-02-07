@@ -39,6 +39,23 @@ app.get('/users/profile', (req, res) => {
 app.get('/users/password', (req, res) => {
   res.sendFile(path.join(__dirname, '/html/password-modify.html')); // 비밀번호 수정
 });
+//헬스 체크
+app.get('/health-check', (req, res) => {
+  const health = {
+    status: 'ok',
+    uptime: process.uptime(),
+    timestamp: new Date(),
+    service: 'frontend'
+  }
+
+  try {
+    res.status(200).json(health);
+  } catch (error) {
+    health.status = 'error';
+    health.message = error.message;
+    res.status(503).json(health);
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
