@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "localtunnel": "^2.0.2",
     "prettier": "^3.3.3"
